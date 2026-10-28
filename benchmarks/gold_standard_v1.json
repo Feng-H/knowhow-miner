@@ -1,0 +1,180 @@
+{
+  "version": "1.0.0",
+  "description": "Gold Standard Ground Truth Benchmark for Industrial FPD Manufacturing Incident Mining",
+  "incidents": [
+    {
+      "id": "GT_001_M2_AL_CORROSION",
+      "meta": {
+        "title": "M2 Aluminum Corrosion and Line Open Defect in Contact Holes",
+        "station": "DET / Photo",
+        "layer": "M2_SourceDrain",
+        "product": "5.99_FHD",
+        "expected_intent": "DISPUTE"
+      },
+      "symptom": {
+        "description": "Lighting test reports Data dark line / open circuit; AOI reports AZ99 M2 corrosion defects exceeding 1000 pcs per plate, concentrated at the edge of ILD contact holes on Poly left side.",
+        "defect_code": "AZ99",
+        "affected_structures": ["ILD Via", "M2 Metal Line"]
+      },
+      "disputes": [
+        {
+          "dept": "Integration / PI",
+          "hypothesis": "Suspects DET dry etch chamber moisture leakage or Photo PR thickness insufficient."
+        },
+        {
+          "dept": "Photo / Photolithography",
+          "hypothesis": "Coating thickness and bake temperature are strictly within POR; resist etch resistance margin is nominal."
+        },
+        {
+          "dept": "Etch / DET",
+          "hypothesis": "No chamber-to-chamber difference observed; issue only explodes on new 5.99 inch product layout."
+        }
+      ],
+      "validation_probe": {
+        "method": "Worst-case layout tolerance stack budget comparison between legacy protected designs and new zero-margin products."
+      },
+      "ground_truth_physics": {
+        "mechanism": "DRC tolerance stack breakdown: ILD via etch CD 2.5±0.7μm, M2 Photo CD 2.5±0.6μm, combined with stepper overlay shift ±0.8μm. Under worst-case alignment, M2 fails to enclose the ILD via completely. The exposed aluminum sidewall is directly bombarded by chlorine gases (Cl2/BCl3) during dry etch, producing hygroscopic AlCl3 trapped in micro-crevices. Upon ambient humidity contact, autocatalytic electrochemical corrosion occurs: AlCl3 + 3H2O -> Al(OH)3 + 3HCl, eroding the metal line.",
+        "chemical_reaction": "AlCl3 + 3H2O -> Al(OH)3 + 3HCl",
+        "root_cause_category": "TOLERANCE_STACK_BREAKDOWN"
+      },
+      "pr_vs_physics_decoupling": {
+        "external_8d_narrative": "Attributed to machine PM cycle fluctuation and temporary micro-particle contamination; resolved via in-situ passivated pump-down purge to prevent batch containment.",
+        "internal_ground_truth": "Layout DRC enclosure failure leading to dry etch Cl2 chemical attack and moisture-induced corrosion."
+      },
+      "pca_solution": {
+        "action": "Tape-out mask revision enforcing unilateral 1.5μm sizing out enclosure of M2 over ILD vias; strictly enforce dry etch to wet strip Q-Time < 4 hours."
+      },
+      "dfm_rule": {
+        "rule_id": "FPD-DFM-MET02-001",
+        "name": "Via Enclosure Anti-Corrosion Margin Rule",
+        "formula": "Enclosure_Margin >= (Tol_Via + Tol_Metal) / 2 + Max_Overlay",
+        "min_enclosure_um": 1.5
+      }
+    },
+    {
+      "id": "GT_002_ITO2_CD_PHOTOSPEED_JUMP",
+      "meta": {
+        "title": "ITO2 Line Width Step Jump Caused by Photoresist Photospeed Shift",
+        "station": "Photo / Track",
+        "layer": "ITO2_PixelElectrode",
+        "product": "7.85_Tablet",
+        "expected_intent": "DOE_EXPERIMENT"
+      },
+      "symptom": {
+        "description": "All exposure steppers across multiple lines show sudden upward step shift in ITO2 CD mean value (+0.12μm) exceeding specification upper control limit.",
+        "defect_code": "CD_OOC",
+        "affected_structures": ["Pixel Slit", "ITO2 Pattern"]
+      },
+      "disputes": [
+        {
+          "dept": "Photo Equipment",
+          "hypothesis": "Suspected stepper illuminance sensor degradation or Track TMAH developer concentration decay."
+        },
+        {
+          "dept": "Process Engineering",
+          "hypothesis": "Correlated across all steppers simultaneously regardless of developer lot; suspected PR raw chemical batch shift."
+        }
+      ],
+      "validation_probe": {
+        "method": "Align lot timing with PR batch changeover and perform photospeed (Eth) pulse sensitivity test on standard dummy substrates."
+      },
+      "ground_truth_physics": {
+        "mechanism": "PR supplier (Merck AZ SR-210) adjusted internal PAC blend ratio from 60.4:39.6 to 59.5:40.5 to satisfy internal synthesis CPK without prior notification. The photospeed Eth shifted from 23.5mJ to 25.0mJ (+1.5mJ/cm2), slowing down the positive photoresist response and causing incomplete photochemical cleavage under standard POR dose, leaving broader residual lines.",
+        "chemical_reaction": "PAC photoactive compound cleavage kinetics delta",
+        "root_cause_category": "RAW_MATERIAL_PHOTOSPEED_STEP"
+      },
+      "pr_vs_physics_decoupling": {
+        "external_8d_narrative": "Standard seasonal environmental temperature/humidity compensation and Track bake plate thermal tuning.",
+        "internal_ground_truth": "Supplier unannounced PR PAC ratio modification altering photochemical cleavage threshold Eth."
+      },
+      "pca_solution": {
+        "action": "Implement incoming QA pulse Eth testing checkpoint for every incoming PR batch; apply feedforward exposure dose offset +1.2mJ for affected batches."
+      },
+      "dfm_rule": {
+        "rule_id": "FPD-DFM-PHT-003",
+        "name": "Raw Material Batch Feedforward Offset Rule",
+        "formula": "Dose_Comp = Dose_POR * (Eth_Batch / Eth_Baseline)",
+        "min_enclosure_um": 0.0
+      }
+    },
+    {
+      "id": "GT_003_ITO_THIN_FILM_INTERFERENCE",
+      "meta": {
+        "title": "PVD ITO Thickness Fluctuation Induced Optical Standing Wave CD Drift",
+        "station": "PVD / Photo",
+        "layer": "ITO_ThinFilm",
+        "product": "All_LTPS_FHD",
+        "expected_intent": "DISPUTE"
+      },
+      "symptom": {
+        "description": "After PVD ITO deposition, ADI inspection measures periodic 0.1μm CD fluctuation across glass substrate; steppers report nominal dose and focus.",
+        "defect_code": "ADI_CD_SWING",
+        "affected_structures": ["ITO Transparent Electrode"]
+      },
+      "disputes": [
+        {
+          "dept": "Photolithography",
+          "hypothesis": "Suspects PVD sputtering thickness uniformity failure."
+        },
+        {
+          "dept": "Thin Film / PVD",
+          "hypothesis": "ITO film thickness is within 450±25Å spec; argues photolithography exposure dose fluctuates."
+        }
+      ],
+      "validation_probe": {
+        "method": "Optical swing curve simulation and multi-angle ellipsometer reflection spectral analysis."
+      },
+      "ground_truth_physics": {
+        "mechanism": "Transparent ITO thin film (refractive index n ≈ 2.0) creates optical standing wave multi-beam interference under 365nm i-line exposure. The optical path difference OPD = 2 * n * d matches the destructive interference condition. A slight 200Å thickness change shifts the interference phase by 90 degrees, modulating the effective light dose coupled into the photoresist by 10-15%, which directly manifests as a 0.1μm pseudo-exposure CD drift.",
+        "chemical_reaction": "Multi-beam optical path difference OPD = 2 * n * d * cos(theta)",
+        "root_cause_category": "THIN_FILM_STANDING_WAVE_INTERFERENCE"
+      },
+      "pr_vs_physics_decoupling": {
+        "external_8d_narrative": "Coating speed optimization and exposure lamp calibration.",
+        "internal_ground_truth": "Thin-film optical interference phase swing amplifying PVD 200Å thickness tolerance into downstream CD variation."
+      },
+      "pca_solution": {
+        "action": "Lock PVD target thickness strictly at the extrema (flat derivative dE/dd ≈ 0) of the optical swing curve; integrate anti-reflective bottom coating (BARC) on critical layers."
+      },
+      "dfm_rule": {
+        "rule_id": "FPD-DFM-OPT-002",
+        "name": "Optical Swing Curve Extremum Target Rule",
+        "formula": "d_target = k * (lambda / (4 * n)), where k is odd integer for destructive node",
+        "min_enclosure_um": 0.0
+      }
+    },
+    {
+      "id": "GT_004_ROUTINE_HANDOVER",
+      "meta": {
+        "title": "Shift Handover Log and Daily Passdown",
+        "station": "Photo",
+        "layer": "General",
+        "product": "All",
+        "expected_intent": "ROUTINE"
+      },
+      "symptom": {
+        "description": "Daily passdown notes: Line 1 WIP count is 420 sheets; Stepper FX68-02 completed PM filter replacement; all shifts nominal.",
+        "defect_code": "NONE",
+        "affected_structures": []
+      },
+      "disputes": [],
+      "validation_probe": {
+        "method": "None required for routine shift handover."
+      },
+      "ground_truth_physics": {
+        "mechanism": "Nominal operational status handover; no defect or causal dispute identified.",
+        "chemical_reaction": "N/A",
+        "root_cause_category": "ROUTINE_OPERATION"
+      },
+      "pr_vs_physics_decoupling": {
+        "external_8d_narrative": "N/A",
+        "internal_ground_truth": "N/A"
+      },
+      "pca_solution": {
+        "action": "Maintain routine maintenance logs."
+      },
+      "dfm_rule": null
+    }
+  ]
+}

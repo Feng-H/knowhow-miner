@@ -1,0 +1,98 @@
+{
+  "timestamp": "2026-10-28T22:16:04.935197",
+  "overall_harness_score": 96.2,
+  "passed": true,
+  "metrics": {
+    "level1_cleaning": {
+      "level": "Level 1: Cleaning & Noise Stripping",
+      "score": 100.0,
+      "disclaimer_strip_rate": 100.0,
+      "critical_tech_preservation_rate": 100.0,
+      "delta_retention_rate": 100.0,
+      "fixtures_evaluated": 3,
+      "details": [
+        {
+          "fixture_id": "noise_001_nested_replies",
+          "noise_stripped": true,
+          "tech_preserved": true,
+          "delta_retained": true
+        },
+        {
+          "fixture_id": "noise_002_pr_sensitivity_disclaimer",
+          "noise_stripped": true,
+          "tech_preserved": true,
+          "delta_retained": true
+        },
+        {
+          "fixture_id": "noise_003_alarm_and_dispute",
+          "noise_stripped": true,
+          "tech_preserved": true,
+          "delta_retained": true
+        }
+      ]
+    },
+    "level2_triage": {
+      "level": "Level 2: Intent & Station Triage",
+      "score": 85.0,
+      "intent_accuracy": 75.0,
+      "tag_matching_rate": 100.0,
+      "total_incidents": 4,
+      "confusion": {
+        "GT_001_M2_AL_CORROSION": {
+          "expected": "DISPUTE",
+          "predicted": "DISPUTE",
+          "confidence": 0.84
+        },
+        "GT_002_ITO2_CD_PHOTOSPEED_JUMP": {
+          "expected": "DOE_EXPERIMENT",
+          "predicted": "DISPUTE",
+          "confidence": 0.62
+        },
+        "GT_003_ITO_THIN_FILM_INTERFERENCE": {
+          "expected": "DISPUTE",
+          "predicted": "DISPUTE",
+          "confidence": 1.0
+        },
+        "GT_004_ROUTINE_HANDOVER": {
+          "expected": "ROUTINE",
+          "predicted": "ROUTINE",
+          "confidence": 0.9
+        }
+      }
+    },
+    "level3_causal": {
+      "level": "Level 3: Causal Quintet & Decoupling",
+      "score": 100.0,
+      "chain_completeness_rate": 100.0,
+      "pr_vs_physics_decoupling_rate": 100.0,
+      "total_evaluable": 3,
+      "details": [
+        {
+          "incident_id": "GT_001_M2_AL_CORROSION",
+          "quintet_complete": true,
+          "ground_truth_flagged": true,
+          "validation_score": 70
+        },
+        {
+          "incident_id": "GT_002_ITO2_CD_PHOTOSPEED_JUMP",
+          "quintet_complete": true,
+          "ground_truth_flagged": true,
+          "validation_score": 70
+        },
+        {
+          "incident_id": "GT_003_ITO_THIN_FILM_INTERFERENCE",
+          "quintet_complete": true,
+          "ground_truth_flagged": true,
+          "validation_score": 70
+        }
+      ]
+    },
+    "level4_physics_dfm": {
+      "level": "Level 4: Physics & DFM Rule Executability",
+      "score": 100.0,
+      "formula_syntax_validity": 100.0,
+      "parameter_sanity_rate": 100.0,
+      "total_rules": 3
+    }
+  }
+}

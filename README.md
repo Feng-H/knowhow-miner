@@ -34,8 +34,22 @@ The system architecture is inspired by frontline engineering experiences as a **
 - `miner/causal_extractor.py`: Distills structured causal quintets, recipe offsets, and DFM redline rules.
 - `miner/validator.py`: Physics boundary verification and dual-reality decoupling (8D public defense vs physical ground truth).
 - `miner/graph_builder.py`: Constructs the domain knowledge graph and exports interactive dark-themed HTML diagrams (Vis.js network).
+- `miner/eval_runner.py`: The automated evaluation benchmark runner testing cleaning precision, triage accuracy, and physical sanity.
 - `miner/mock_generator.py`: Generates realistic mock incident datasets.
 - `miner/pipeline.py`: End-to-end batch processing pipeline orchestrator.
+
+### Evaluation Harness & Benchmark Suite
+The repository bundles an automated, four-tier evaluation harness (`miner/eval_runner.py`) paired with open-source sanitized benchmarks (`benchmarks/`):
+- **Level 1 (Cleaning Fidelity)**: Verifies legal disclaimer stripping, 10+ nested thread de-duplication, and zero-false-positive preservation of critical engineering tokens (e.g., `HP04`, `slot 4-6`, `AZ SR-210`, `Cl2`).
+- **Level 2 (Operational Triage)**: Tests intent classification precision/recall across `DISPUTE`, `DOE_EXPERIMENT`, `REPORT_8D`, and `ROUTINE`.
+- **Level 3 (Causal Ground Truth)**: Verifies the 5-element causal chain completeness and enforces decoupling of customer 8D public defenses from physical internal mechanisms.
+- **Level 4 (Physical & DFM Validity)**: Validates mathematical formula syntax and unit dimensional sanity.
+
+To run the benchmark suite out-of-the-box:
+```bash
+python3 -m miner.eval_runner
+```
+*Expected baseline score: ~96.2 / 100 [PASS].*
 
 ### Privacy & Data Safety
 **This public repository contains ZERO proprietary corporate emails or confidential fab records.** 
@@ -94,7 +108,21 @@ If you are evaluating this engine on your own internal fab communications (such 
 - `miner/validator.py`: 物理与工程逻辑守门员，内置曝光能量、焦深、温度等机台物理硬门禁，并实现**“对外客户防御免责话术（如偶发颗粒）”与“对内物理真实根因（如材质腐蚀、DRC公差断裂）”的双轨解耦**。
 - `miner/graph_builder.py`: 工业制造因果知识图谱引擎，自动构建拓扑网络并导出交互式深色主题 HTML 动态图表（Vis.js 驱动，支持缩放、拖拽与节点点击查看完整机理）。
 - `miner/mock_generator.py`: 合成数据生成器，供外部开发者快速体验管线逻辑。
+- `miner/eval_runner.py`: 自动化工业评测运行器（Eval Harness），多级指标量化评测清洗保真度、意图分类与物理因果。
 - `miner/pipeline.py`: 端到端批量提炼执行入口。
+
+### 自动化评测套件与基准测试（Evaluation Harness）
+本项目内置四级量化评估套件（`miner/eval_runner.py`）与公开基准测试集（`benchmarks/`）：
+- **第一级：清洗脱水保真度（Level 1）**：量化检验免责声明过滤率、多层嵌套引用（10层以上）剥离率，以及机台参数（如 `HP04`、`slot 4-6`、`AZ SR-210`、`Cl2`）的零误删率（0 False Positives）。
+- **第二级：工序与意图分流准确度（Level 2）**：评测 `DISPUTE`（推诿争论）、`DOE_EXPERIMENT`（分件验证）、`REPORT_8D`（结案报告）、`ROUTINE`（日常流水）的分类召回与准确率。
+- **第三级：因果事实与物理根因保真度（Level 3）**：五元组链条完整度打分，并严格执行“对外公关话术”与“对内物理真实根因”的双轨解耦校验。
+- **第四级：DFM 设计红线数学有效性（Level 4）**：校验派生规则公式的数学运算符（`>=`）、量纲单位及物理边界。
+
+运行基准评测：
+```bash
+python3 -m miner.eval_runner
+```
+*基准基线得分：~96.2 / 100 [PASS]。*
 
 ### 隐私与安全隔离承诺
 **本开源代码库绝不包含任何工厂真实邮件、商业机密或未脱敏数据。** 

@@ -1,0 +1,74 @@
+{
+  "version": "1.0.0",
+  "description": "Evaluation fixtures for Level 1 Cleaning & Noise Reduction in Industrial Manufacturing Emails",
+  "fixtures": [
+    {
+      "id": "noise_001_nested_replies",
+      "description": "5-level deep nested reply with corporate disclaimers and Chinese/English email signatures",
+      "raw_text": "张工，\n刻蚀那边昨晚做了 slot 4-6 的条件拆件，测出来过孔边铝腐蚀依旧存在，建议光刻这边复核一下 M2 PHT 的套刻 Overlay 是否超差，另外确认 HP04 热板温控是否正常。\n\nBR,\n李工 / 工艺整合部\nTel: 0592-1234567 分机: 8890\nMobile: 13800000000\n--------------------------------------------------\n本邮件及其附件包含机密信息，仅供指定收件人使用。严禁未授权拷贝、转发或披露。如误收本邮件，请立即删除并通知发件人。\nCONFIDENTIALITY NOTICE: This email and any attachments are confidential and intended solely for the recipient.\n\n----- Original Message -----\nFrom: 张工 [mailto:zhang@company.com]\nSent: 2018年3月14日 18:22\nTo: 李工; 王工\nSubject: Re: M2 走线腐蚀异常进展\n\n李工，\n我们检查了曝光机 Nikon Fx-67s 的照度，Dose 维持在 28mJ/cm2，CD 2.1μm 均在 POR 窗口内。不认为是光刻机台问题。\n\n----- Original Message -----\nFrom: 王工 [mailto:wang@company.com]\nSent: 2018年3月14日 16:10\nTo: 张工\nSubject: M2 走线腐蚀异常进展\n\n各位好，点亮测试报 Data 暗线，AOI 报 AZ99 缺陷超标。",
+      "expected_delta_content_contains": [
+        "刻蚀那边昨晚做了 slot 4-6 的条件拆件",
+        "复核一下 M2 PHT 的套刻 Overlay 是否超差",
+        "确认 HP04 热板温控是否正常"
+      ],
+      "expected_stripped_noise": [
+        "CONFIDENTIALITY NOTICE",
+        "本邮件及其附件包含机密信息",
+        "Tel: 0592-1234567",
+        "Mobile: 13800000000"
+      ],
+      "critical_technical_tokens_to_preserve": [
+        "slot 4-6",
+        "M2 PHT",
+        "Overlay",
+        "HP04"
+      ]
+    },
+    {
+      "id": "noise_002_pr_sensitivity_disclaimer",
+      "description": "Chemical supplier email with multi-lingual disclaimer and critical chemical blend numbers",
+      "raw_text": "Dear Team,\n\nRegarding the AZ SR-210 batch M18 photospeed shift, our QA team has confirmed that the PAC blend ratio was adjusted from 60.4:39.6 to 59.5:40.5. This resulted in an Eth shift from 23.5mJ to 25.0mJ.\nPlease adjust exposure dose by +1.2mJ on Track PHT02 to compensate.\n\nBest Regards,\nTechnical Service Specialist\nMerck Electronic Materials Ltd.\n\n*** DISCLAIMER ***\nThis email transmission may contain confidential or legally privileged information. If you are not the intended recipient, please immediately notify the sender and delete all copies.\nAny unauthorized dissemination is strictly prohibited.",
+      "expected_delta_content_contains": [
+        "AZ SR-210 batch M18 photospeed shift",
+        "PAC blend ratio was adjusted from 60.4:39.6 to 59.5:40.5",
+        "Eth shift from 23.5mJ to 25.0mJ",
+        "adjust exposure dose by +1.2mJ on Track PHT02"
+      ],
+      "expected_stripped_noise": [
+        "*** DISCLAIMER ***",
+        "This email transmission may contain confidential",
+        "Any unauthorized dissemination is strictly prohibited"
+      ],
+      "critical_technical_tokens_to_preserve": [
+        "AZ SR-210",
+        "60.4:39.6",
+        "59.5:40.5",
+        "23.5mJ",
+        "25.0mJ",
+        "+1.2mJ",
+        "Track PHT02"
+      ]
+    },
+    {
+      "id": "noise_003_alarm_and_dispute",
+      "description": "Equipment auto-forwarded alert followed by engineering dispute",
+      "raw_text": "[AUTO-ALERT] System Notification: Chamber 2 Pressure Warning Exceeded Limit 0.05Pa at 03:15:22.\n\n刘工：\n刻蚀 Chamber 2 的压力报警我们看了，只是抽气泵偶发抖动，但昨晚 5.99 寸产品的开裂断线率飙到了 12%，刻蚀侧壁 Cl2 残留高达 150ppm，必须立刻停机排查，不能只当成常规报警关闭。\n\n陈工 / DET Module\nOffice: B-302 / Phone: 6655\n--------------------------------\n本信息属于企业机密，未经许可不得向外界透露。",
+      "expected_delta_content_contains": [
+        "5.99 寸产品的开裂断线率飙到了 12%",
+        "刻蚀侧壁 Cl2 残留高达 150ppm",
+        "必须立刻停机排查"
+      ],
+      "expected_stripped_noise": [
+        "本信息属于企业机密",
+        "Phone: 6655",
+        "Office: B-302"
+      ],
+      "critical_technical_tokens_to_preserve": [
+        "5.99",
+        "12%",
+        "Cl2",
+        "150ppm"
+      ]
+    }
+  ]
+}

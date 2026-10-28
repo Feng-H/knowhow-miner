@@ -27,8 +27,14 @@ class EmailCleaner:
     LEGAL_DISCLAIMER_PATTERNS = [
         r"This e-mail message together with any attachments.*",
         r"本电子邮件及附件（如有）所载信息均为保密信息.*",
+        r"本邮件及其附件包含机密信息.*",
+        r"本信息属于企业机密.*",
         r"未经授权者收到此信息均无权阅读.*",
         r"Confidentiality Notice:.*",
+        r"CONFIDENTIALITY NOTICE:.*",
+        r"\*\*\* DISCLAIMER \*\*\*.*",
+        r"This email transmission may contain confidential.*",
+        r"Any unauthorized dissemination is strictly prohibited.*",
         r"此邮件为系统自动发出，请勿回复.*"
     ]
     
@@ -77,23 +83,50 @@ class EmailCleaner:
         # Clean extra whitespace
         return " ".join(norm.split())
 
+    PHONE_SIGNATURE_REGEX = re.compile(r"(?:Tel|Mobile|Phone|电话|手机|分机)\s*[:：]\s*[0-9-+\s]{5,20}", re.IGNORECASE)
+    OFFICE_REGEX = re.compile(r"(?:Office|工位|分机号)\s*[:：]\s*[A-Za-z0-9-]+", re.IGNORECASE)
+    THREAD_QUOTE_SPLITTERS = [
+        re.compile(r"^-+\s*(?:Original Message|原始邮件)\s*-+", re.IGNORECASE | re.MULTILINE),
+        re.compile(r"^_{20,}", re.MULTILINE),
+        re.compile(r"^On\s+.*?\s+wrote:\s*$", re.IGNORECASE | re.MULTILINE)
+    ]
+
     @classmethod
-    def clean_body(cls, text: str) -> str:
+    def extract_delta_body(cls, text: str) -> str:
+        """
+        Extracts only the latest message increment, cutting off historical reply chains.
+        """
         if not text:
             return ""
+        for splitter in cls.THREAD_QUOTE_SPLITTERS:
+            parts = splitter.split(text, maxsplit=1)
+            if len(parts) > 1:
+                text = parts[0]
+        return text
+
+    @classmethod
+    def clean_body(cls, text: str, extract_delta: bool = False) -> str:
+        if not text:
+            return ""
+        if extract_delta:
+            text = cls.extract_delta_body(text)
+
         # 1. Remove legal disclaimers
         for pat in cls.LEGAL_DISCLAIMER_PATTERNS:
             text = re.sub(pat, " ", text, flags=re.DOTALL | re.IGNORECASE)
             
-        # 2. Split lines and strip quote headers and trailing signature noise
+        # 2. Strip phone & office noise from signatures
+        text = cls.PHONE_SIGNATURE_REGEX.sub(" ", text)
+        text = cls.OFFICE_REGEX.sub(" ", text)
+
+        # 3. Split lines and strip quote headers
         lines = text.splitlines()
         clean_lines = []
         for line in lines:
             line_str = line.strip()
-            # Skip pure quote lines if wanted, or retain light indicators
             if line_str.startswith(">"):
                 continue
-            if line_str.startswith("-----原始邮件-----") or line_str.startswith("________________________________"):
+            if line_str.startswith("-----原始邮件-----") or line_str.startswith("----- Original Message -----") or line_str.startswith("________________________________"):
                 continue
             clean_lines.append(line_str)
             

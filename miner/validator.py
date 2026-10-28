@@ -40,23 +40,20 @@ class LogicValidator:
     ]
 
     INTERNAL_GROUND_TRUTH_PATTERNS = [
-        r"腐蚀.*铁",
+        r"腐蚀",
         r"材质缺陷",
-        r"氯残留",
-        r"驻波干涉",
-        r"原料配比.*变动",
-        r"感度突变",
-        r"公差链断裂",
-        r"DRC.*裕量不足",
-        r"未能完全覆盖",
-        r"Overlay.*偏移",
-        r"干刻暴露",
-        r"换桶",
-        r"批次切换",
-        r"感度",
-        r"Eth",
-        r"膜厚",
-        r"温控"
+        r"氯残留|Cl2|AlCl3|chlorine",
+        r"驻波干涉|standing wave|interference|OPD",
+        r"原料配比.*变动|PAC blend ratio",
+        r"感度突变|photospeed|Eth",
+        r"公差链断裂|tolerance stack",
+        r"DRC.*裕量不足|enclosure",
+        r"未能完全覆盖|fails to enclose",
+        r"Overlay.*偏移|overlay shift",
+        r"干刻暴露|dry etch",
+        r"换桶|批次切换",
+        r"膜厚|thickness",
+        r"温控|thermal drift"
     ]
 
     @classmethod
