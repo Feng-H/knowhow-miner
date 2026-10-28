@@ -55,28 +55,98 @@ python3 -m miner.eval_runner
 **This public repository contains ZERO proprietary corporate emails or confidential fab records.** 
 To test the pipeline out-of-the-box, an automated synthetic data generator is bundled.
 
-### Quick Start with Mock Data
-```bash
-# 1. Generate synthetic anonymized manufacturing records (mimics M2 corrosion & ITO CD drift)
-python3 -m miner.mock_generator
+### Quick Start & User Guide
 
-# 2. Run the extraction pipeline on mock data
-python3 -m miner.pipeline --db mock_emails.db --keyword "M2" --output mock_m2_incidents.json
+`knowhow-miner` is built with a zero-heavy-dependency design using the Python standard library. It can be utilized in four distinct operational modes depending on your role:
+
+#### Mode 1: Run Automated Evaluation Benchmark (Under 30 Seconds)
+Validate the end-to-end cleaning and physical extraction quality against the bundled sanitized benchmark fixtures:
+```bash
+# Clone and verify
+git clone https://github.com/Feng-H/knowhow-miner.git
+cd knowhow-miner
+
+# Execute 4-tier evaluation suite
+python3 -m miner.eval_runner
+```
+*Outputs quantitative scores for Disclaimer Stripping, Parameter Retention, Intent F1, and PR-vs-Physics Decoupling.*
+
+#### Mode 2: End-to-End Extraction on Synthetic FPD Incidents (Under 2 Minutes)
+Experience full-lifecycle incident mining without needing real fab communications:
+```bash
+# 1. Generate realistic synthetic fab database (simulates M2 Al corrosion & ITO2 drift incidents)
+python3 -m miner.mock_generator --count 200 --output mock_emails.db
+
+# 2. Extract structured causal quintets and DFM rules matching a keyword
+python3 -m miner.pipeline --db mock_emails.db --keyword "M2" --output output_m2.json
+
+# 3. Build an interactive dark-themed topological knowledge graph (Vis.js)
+python3 -m miner.graph_builder --incidents output_m2.json --output m2_graph.html
+
+# 4. Open m2_graph.html in your browser to inspect nodes, edges, and causal pathways
 ```
 
-### How to Connect Your Own Private Data (e.g., in InstaBox or Local Sandbox)
+#### Mode 3: Use as a Python Modular Library (Embedding in Custom Pipelines)
+Every module in `knowhow-miner` is decoupled and can be imported directly into your internal data tools:
+
+```python
+from miner.cleaner import EmailCleaner
+from miner.classifier import EmailClassifier
+from miner.validator import LogicValidator
+
+# 1. Deep cleaning & multi-layer nested quote stripping
+raw_email = """
+张工，M2 刻蚀后孔边出现严重铝腐蚀，HP04 热板温控正常，建议查版图裕量。
+BR, 李工 Tel: 0592-1234567
+----- Original Message -----
+From: 王工...
+CONFIDENTIALITY NOTICE: This email contains proprietary fab information...
+"""
+# Strips disclaimers and historical quote chains while preserving HP04 and technical parameters:
+clean_text = EmailCleaner.clean_body(raw_email, extract_delta=True)
+
+# 2. Operational intent classification
+# Identifies DISPUTE, DOE_EXPERIMENT, REPORT_8D, ALARM, or NOISE
+intent, confidence, is_noise = EmailClassifier.classify(cleaned_email_obj)
+
+# 3. Physical sanity and dual-reality decoupling
+# Flags PR excuses (e.g., "routine PM fluctuation") vs internal physical ground truth
+report = LogicValidator.validate_causal_triplet({
+    "incident_id": "INC_001",
+    "symptom": "AZ99 M2 line open",
+    "root_cause_internal": "Tolerance stack breakdown leading to Cl2 bombardment and AlCl3 hydrolysis",
+    "root_cause_customer": "Attributed to temporary machine PM fluctuation",
+    "pca_countermeasure": "Mask sizing out 1.5um; Q-Time < 4h"
+})
+print(f"Validation Score: {report.score}, Ground Truth Detected: {report.flags['has_ground_truth']}")
+```
+
+#### Mode 4: Deploying on Private Fab Enterprise Data (InstaBox / Air-Gapped On-Prem)
 If you are evaluating this engine on your own internal fab communications (such as in an ephemeral InstaBox or private on-prem server):
 1. **Prepare your local SQLite index**:
    Create a local SQLite database containing an `emails` table with standard schema:
-   `source_folder`, `seq_num`, `message_id`, `date_str`, `from_addr`, `to_addr`, `subject`, `body_preview`, `attachment_names`, `mbox_chunk`.
+   ```sql
+   CREATE TABLE emails (
+       source_folder TEXT,
+       seq_num INTEGER,
+       message_id TEXT PRIMARY KEY,
+       date_str TEXT,
+       from_addr TEXT,
+       to_addr TEXT,
+       subject TEXT,
+       body_preview TEXT,
+       attachment_names TEXT,
+       mbox_chunk TEXT
+   );
+   ```
 2. **Mount Cold Storage**:
    Mount your offline archive (MBOX/EML files) to a private path (e.g., `~/gdrive/archive/` or local SSD).
-3. **Run Pipeline**:
+3. **Execute Batch Mining**:
    ```bash
-   python3 -m miner.pipeline --db /path/to/private_index.db --keyword "ITO2" --limit 1000 --output private_incidents.json
+   python3 -m miner.pipeline --db /path/to/private_index.db --keyword "铝腐" --limit 1000 --output private_incidents.json
    ```
 4. **Data Isolation Guarantee**:
-   All intermediate files and outputs under `data/`, `*.db`, and `*.mbox` are strictly ignored by `.gitignore`. Nothing will be leaked to git.
+   All intermediate files and outputs under `data/`, `*.db`, and `*.mbox` are strictly ignored by `.gitignore`. Nothing leaves the local machine.
 
 ---
 
@@ -128,21 +198,89 @@ python3 -m miner.eval_runner
 **本开源代码库绝不包含任何工厂真实邮件、商业机密或未脱敏数据。** 
 `.gitignore` 已全局拉黑所有 `data/`、`*.db`、`*.mbox`、`*.ppt`、`*.eml` 等数据文件。
 
-### 快速开始（使用模拟数据）
-```bash
-# 1. 生成高仿真工艺异常模拟数据库（包含 M2 铝腐蚀与 ITO2 CD 漂移经典案例）
-python3 -m miner.mock_generator
+### 快速上手与使用指引（How to Use）
 
-# 2. 执行端到端事件时间轴提取
-python3 -m miner.pipeline --db mock_emails.db --keyword "M2" --output mock_m2_incidents.json
+`knowhow-miner` 基于 Python 3 标准库原生打造，零重型第三方包强依赖。根据您的使用场景，提供以下四种操作模式：
+
+#### 模式一：运行自动化评测套件（30 秒内复现指标）
+无需准备任何私有数据，直接对内置的脱敏黄金基准集进行端到端清洗与物理因果评测：
+```bash
+# 克隆代码
+git clone https://github.com/Feng-H/knowhow-miner.git
+cd knowhow-miner
+
+# 运行 4 级全量评测
+python3 -m miner.eval_runner
+```
+*自动输出免责声明剥离率、参数零误删率、意图分类 F1 以及 PR 免责话术解耦得分。*
+
+#### 模式二：端到端模拟仿真采掘与知识图谱生成（2 分钟内）
+体验完整的工业因果事件抽取、DFM 红线派生与交互式知识图谱可视化：
+```bash
+# 1. 生成 200 封高仿真工艺异常模拟数据库（覆盖 M2 铝腐蚀与 ITO2 CD 漂移事件）
+python3 -m miner.mock_generator --count 200 --output mock_emails.db
+
+# 2. 按关键词检索并抽取五元组因果结构
+python3 -m miner.pipeline --db mock_emails.db --keyword "M2" --output output_m2.json
+
+# 3. 渲染深色工业拓扑知识网络
+python3 -m miner.graph_builder --incidents output_m2.json --output m2_graph.html
+
+# 4. 在浏览器中直接打开 m2_graph.html 交互查看因果节点与调机参数
 ```
 
-### 如何在私有环境（如 InstaBox 容器或内网服务器）加载真实邮件
-如果你需要在独立隔离沙箱（如 InstaBox 用完即弃环境）或企业内网对真实数据进行 PoC 演示：
-1. **建立索引表**：将企业邮件元数据导入 SQLite（参考 `miner/mock_generator.py` 中的表结构）；
+#### 模式三：作为 Python 模块直接调用（嵌入自己的开发流）
+`knowhow-miner` 的所有核心组件高度解耦，支持直接 `import` 接入你现有的数据工具：
+
+```python
+from miner.cleaner import EmailCleaner
+from miner.classifier import EmailClassifier
+from miner.validator import LogicValidator
+
+# 1. 深度清洗与多层引用递归切除 (保留技术参数，剔除签名与法务免责)
+raw_text = """
+张工，M2 刻蚀后孔边出现严重铝腐蚀，HP04 热板温控正常，建议查版图裕量。
+BR, 李工 Tel: 0592-1234567
+----- Original Message -----
+From: 王工...
+CONFIDENTIALITY NOTICE: 本邮件包含机密信息...
+"""
+clean_body = EmailCleaner.clean_body(raw_text, extract_delta=True)
+
+# 2. 制造意图分类 (识别 DISPUTE / DOE_EXPERIMENT / REPORT_8D / ALARM / NOISE)
+intent, conf, is_noise = EmailClassifier.classify(cleaned_email_obj)
+
+# 3. 物理硬门禁校验与内外真假根因解耦
+report = LogicValidator.validate_causal_triplet({
+    "incident_id": "INC_001",
+    "symptom": "AZ99 M2 走线腐蚀断线",
+    "root_cause_internal": "最坏公差链断裂导致孔壁暴露被含氯气体轰击引发 AlCl3 水解自催化腐蚀",
+    "root_cause_customer": "归因为机台临近保养周期的偶发微粒",
+    "pca_countermeasure": "版图金属层强制单边包裹介质过孔 >= 1.5um；Q-Time < 4h"
+})
+print(f"校验得分: {report.score}, 是否识别出物理根因: {report.flags['has_ground_truth']}")
+```
+
+#### 模式四：在工厂内网私有环境或用完即弃沙箱（InstaBox）运行
+如果你需要在独立隔离沙箱（如 InstaBox 容器）或企业内网对厂内真实数据进行验证：
+1. **准备本地 SQLite 索引表**：将邮件元数据导入本地 SQLite（表结构如下）：
+   ```sql
+   CREATE TABLE emails (
+       source_folder TEXT,
+       seq_num INTEGER,
+       message_id TEXT PRIMARY KEY,
+       date_str TEXT,
+       from_addr TEXT,
+       to_addr TEXT,
+       subject TEXT,
+       body_preview TEXT,
+       attachment_names TEXT,
+       mbox_chunk TEXT
+   );
+   ```
 2. **挂载归档卷**：将包含大附件与原始邮件的存储卷挂载至本地（如 `~/archive/`）；
-3. **指向私有库运行**：
+3. **指向私有库运行批处理**：
    ```bash
    python3 -m miner.pipeline --db /path/to/my_private_index.db --keyword "铝腐" --output data/al_corrosion.json
    ```
-4. **安全隔离**：所有输入数据均在本地沙箱内存计算，不会向外部上传任何原始文本。
+4. **绝对安全隔离**：所有输入数据均在本地沙箱内存计算，不会向外部上传任何原始文本。
