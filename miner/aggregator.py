@@ -85,26 +85,42 @@ class ThreadAggregator:
                 continue
             dom_subj = subjects[0]
             # Strip spaces for fuzzy match
-            dom_key = re.sub(r"\s+", "", dom_subj.lower())
+            dom_key = re.sub(r"[\s\-_，。！!？?【】\[\]（）()]+", "", dom_subj.lower())
             subj_to_clusters.setdefault(dom_key, []).append(c_id)
 
-        for dom_key, c_ids in subj_to_clusters.items():
-            if len(c_ids) <= 1:
+        # Merge clusters that share high substring similarity or entity overlap within time window
+        all_keys = list(subj_to_clusters.keys())
+        for i in range(len(all_keys)):
+            k1 = all_keys[i]
+            c_ids1 = subj_to_clusters.get(k1, [])
+            if not c_ids1:
                 continue
-            # Merge clusters if their time gap is within max_thread_gap
-            main_cid = c_ids[0]
-            for next_cid in c_ids[1:]:
-                if next_cid not in clusters or main_cid not in clusters:
+            main_cid = c_ids1[0]
+            # Link other c_ids with identical or overlapping keys
+            for j in range(i, len(all_keys)):
+                k2 = all_keys[j]
+                c_ids2 = subj_to_clusters.get(k2, [])
+                if not c_ids2:
                     continue
-                t_end_main = max(e.timestamp for e in clusters[main_cid])
-                t_start_next = min(e.timestamp for e in clusters[next_cid])
-                t_end_next = max(e.timestamp for e in clusters[next_cid])
-                t_start_main = min(e.timestamp for e in clusters[main_cid])
 
-                # Check overlap or gap
-                time_gap = max(0.0, t_start_next - t_end_main, t_start_main - t_end_next)
-                if time_gap <= self.max_thread_gap_seconds:
-                    main_cid = merge_clusters(main_cid, next_cid)
+                # Check if k1 and k2 share strong similarity (e.g. one contains another, length >= 6)
+                is_match = (k1 == k2) or (len(k1) >= 6 and len(k2) >= 6 and (k1 in k2 or k2 in k1))
+                if not is_match:
+                    continue
+
+                for next_cid in c_ids2:
+                    if next_cid == main_cid:
+                        continue
+                    if next_cid not in clusters or main_cid not in clusters:
+                        continue
+                    t_end_main = max(e.timestamp for e in clusters[main_cid])
+                    t_start_next = min(e.timestamp for e in clusters[next_cid])
+                    t_end_next = max(e.timestamp for e in clusters[next_cid])
+                    t_start_main = min(e.timestamp for e in clusters[main_cid])
+
+                    time_gap = max(0.0, t_start_next - t_end_main, t_start_main - t_end_next)
+                    if time_gap <= self.max_thread_gap_seconds:
+                        main_cid = merge_clusters(main_cid, next_cid)
 
         # Convert clusters to IncidentTimelines
         timelines: List[IncidentTimeline] = []

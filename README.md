@@ -19,23 +19,38 @@ The system architecture is inspired by frontline engineering experiences as a **
 
 ### Core Architecture
 ```text
-[Raw Manufacturing Communications (MBOX / EML)]
+[Raw Manufacturing Communications (MBOX / EML / DB)]
        │
        ▼ [1. Cleaner & Anonymizer] (Strips disclaimers, masks PII, extracts Lot/Chamber/Defect entities)
        │
-       ▼ [2. DAG Thread & Timeline Aggregator] (RFC822 DAG + Blind-carbon BCC Loop recovery + Time-window clustering)
+       ▼ [2. Intent Classifier & Noise Filter] (Sorts into Alarm/Dispute/DOE/8D, purges administrative chatter)
        │
-       ▼ [3. Incident Lifecycle Container] (Life cycle stages: Initial -> Investigation -> Experiment -> Closed)
+       ▼ [3. Domain Annotator] (Tags Technology, Stations Photo/DET/WET/PVD, Layers M1/M2/ITO, Defect types)
        │
-       ▼ [4. Binary Office Deep Parser] (OLE/PPT/Excel Split Table parsing, extracts EDX and Slot conditions)
+       ▼ [4. DAG Thread & Timeline Aggregator] (RFC822 DAG + Blind-carbon BCC Loop recovery + Time-window clustering)
        │
-       ▼ [5. LLM Causal Extractor] (Extracts structured manufacturing causal triplets)
+       ▼ [5. Binary Office Deep Parser] (OLE/PPT/Excel Split Table parsing, extracts EDX and Slot conditions)
        │
-       ▼ [6. Engineering Logic Validator] (Enforces machine physical boundaries + Decouples 8D excuses from physics truth)
+       ▼ [6. Causal Quintet Extractor] (Extracts Symptom -> Disputes -> Probe -> Root Cause -> PCA -> DFM Rule)
        │
-       ▼
-[High-Purity Industrial Know-How Knowledge Base (JSONL / GraphDB / DFM Rules)]
+       ▼ [7. Engineering Logic Validator] (Enforces machine physical boundaries + Decouples 8D excuses from physics truth)
+       │
+       ▼ [8. Knowledge Graph & Interactive Visualizer] (Builds topological causal graph -> JSON & Standalone HTML)
 ```
+
+### Module Structure
+- `miner/cleaner.py`: Text sanitization, legal notice purging, PII redaction, entity extraction.
+- `miner/classifier.py`: Operational intent classification (`ALARM`, `DISPUTE`, `DOE_EXPERIMENT`, `REPORT_8D`, `SHIFT_HANDOVER`) and administrative noise filtration.
+- `miner/annotator.py`: Multi-dimensional domain tagging across Technology (LTPS/a-Si/LTPO), Stations (Photo/Track/DET/WET/PVD/CVD/PI), Layers (M1/M2/ITO1/ITO2/ILD/PV), and Defect categories.
+- `miner/aggregator.py`: DAG conversation tree recovery, BCC thread reconciliation, and incident lifecycle tracking.
+- `miner/parsers/`: Deep inspection for binary attachments:
+  - `ppt_parser.py`: Extracts slide texts, tables, and 5-Why comparisons from `.pptx` and legacy `.ppt` OLE streams.
+  - `excel_parser.py`: Parses DOE Split Tables, identifying POR baselines vs experimental trial conditions.
+- `miner/causal_extractor.py`: Distills structured causal quintets, recipe offsets, and DFM redline rules.
+- `miner/validator.py`: Physics boundary verification and dual-reality decoupling (8D public defense vs physical ground truth).
+- `miner/graph_builder.py`: Constructs the domain knowledge graph and exports interactive dark-themed HTML diagrams (Vis.js network).
+- `miner/mock_generator.py`: Generates realistic mock incident datasets.
+- `miner/pipeline.py`: End-to-end batch processing pipeline orchestrator.
 
 ### Privacy & Data Safety
 **This public repository contains ZERO proprietary corporate emails or confidential fab records.** 
@@ -76,10 +91,17 @@ If you are evaluating this engine on your own internal fab communications (such 
 
 > **开源许可证与商用限制**：本项目遵循 [PolyForm Noncommercial License 1.0.0](LICENSE)。**仅限学术交流、个人学习与非商业研究，严禁任何形式的商业转售、商用系统打包或企业收费服务。**
 
-### 模块结构
+### 完整模块结构与职责
 - `miner/cleaner.py`: 邮件正文清洗、法律免责声明剥离、个人隐私脱敏（PII Anonymization）与制造实体正则提取（Lot ID、Chamber 腔室、Defect Code、产品代号）。
-- `miner/aggregator.py`: 基于 DAG 的多轮工程会话树聚合器，解决密送 BCC 归集与时间窗口聚类，还原事件完整生命周期（报警 $\rightarrow$ 排查争端 $\rightarrow$ DOE探针 $\rightarrow$ 结案Release）。
+- `miner/classifier.py`: 邮件运维意图分类器，精准识别 `ALARM`（报警）、`DISPUTE`（跨部门争议）、`DOE_EXPERIMENT`（实验分件）、`REPORT_8D`（结案报告）、`SHIFT_HANDOVER`（交接班），并自动过滤行政水邮件（订餐、调休、会议催办）。
+- `miner/annotator.py`: 多维度制造特征标注器，自动打标技术路线（LTPS/a-Si/LTPO）、涉及工序（Photo/Track/DET/WET/PVD/CVD/PI）、工艺膜层（M1/M2/ITO1/ITO2/ILD/PV）及缺陷特征。
+- `miner/aggregator.py`: 基于 DAG 的多轮工程会话树聚合器，解决跨文件夹密送 BCC 归集与时间窗口聚类，还原事件完整生命周期（报警 $\rightarrow$ 争议 $\rightarrow$ DOE探针 $\rightarrow$ 结案Release）。
+- `miner/parsers/`: 二进制重型附件深度提取器：
+  - `ppt_parser.py`: 自动穿透解构 `.pptx` 与旧版 `.ppt` OLE 二进制流，打捞 5-Why 分析表、因果对比图文本。
+  - `excel_parser.py`: 自动识别并解析分件实验表（Split Table），结构化区分标准 POR 组与实验条件组。
+- `miner/causal_extractor.py`: 五元组因果事实抽取器，提纯不良表象、推诿争端、实证探针、物理真因、治本措施与派生的 DFM 设计红线规则。
 - `miner/validator.py`: 物理与工程逻辑守门员，内置曝光能量、焦深、温度等机台物理硬门禁，并实现**“对外客户防御免责话术（如偶发颗粒）”与“对内物理真实根因（如材质腐蚀、DRC公差断裂）”的双轨解耦**。
+- `miner/graph_builder.py`: 工业制造因果知识图谱引擎，自动构建拓扑网络并导出交互式深色主题 HTML 动态图表（Vis.js 驱动，支持缩放、拖拽与节点点击查看完整机理）。
 - `miner/mock_generator.py`: 合成数据生成器，供外部开发者快速体验管线逻辑。
 - `miner/pipeline.py`: 端到端批量提炼执行入口。
 

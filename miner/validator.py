@@ -47,7 +47,16 @@ class LogicValidator:
         r"原料配比.*变动",
         r"感度突变",
         r"公差链断裂",
-        r"DRC.*裕量不足"
+        r"DRC.*裕量不足",
+        r"未能完全覆盖",
+        r"Overlay.*偏移",
+        r"干刻暴露",
+        r"换桶",
+        r"批次切换",
+        r"感度",
+        r"Eth",
+        r"膜厚",
+        r"温控"
     ]
 
     @classmethod
@@ -63,15 +72,20 @@ class LogicValidator:
         }
 
         # 1. Check required fields
-        for field in ["incident_id", "symptom", "root_cause"]:
-            if not triplet.get(field):
-                errors.append(f"Missing required field: {field}")
-                score -= 30
-
+        root_cause = str(triplet.get("root_cause") or triplet.get("root_cause_internal") or "")
         symptom = str(triplet.get("symptom", ""))
-        root_cause = str(triplet.get("root_cause", ""))
-        pca = str(triplet.get("pca_permanent_action", ""))
+        pca = str(triplet.get("pca_countermeasure") or triplet.get("pca_permanent_action") or "")
         verification = str(triplet.get("verification_evidence", ""))
+
+        if not triplet.get("incident_id"):
+            errors.append("Missing required field: incident_id")
+            score -= 30
+        if not symptom:
+            errors.append("Missing required field: symptom")
+            score -= 30
+        if not root_cause:
+            errors.append("Missing required field: root_cause")
+            score -= 30
 
         # 2. Check Customer Defense vs Internal Reality
         for pat in cls.CUSTOMER_EXCUSE_PATTERNS:
@@ -87,7 +101,7 @@ class LogicValidator:
                 break
 
         # 3. Check Actionable Recipe / Design Redline
-        if triplet.get("recipe_offset") or triplet.get("design_redline"):
+        if triplet.get("recipe_offset") or triplet.get("design_redline") or triplet.get("design_redline_derived"):
             flags["has_actionable_offset"] = True
         else:
             warnings.append("No quantifiable recipe offset or design redline rule derived.")
