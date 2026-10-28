@@ -172,7 +172,7 @@ If you are evaluating this engine on your own internal fab communications (such 
 1. **第一阶段：语料脱水与特征打标（Ingestion & Tagging）**
    - **增量切除（Delta Stripping）**：利用正则引擎与 RFC822 头部切除邮件中 10+ 层递归嵌套的历史回帖引文，只留当前工程师的实际有效发言，防止计算膨胀与权重失真；
    - **法务免责与隐私脱敏**：剥离长篇大论的商业法律免责通告（Confidentiality Notice），中性化座机、手机与发件人姓名；
-   - **关键工艺参数零误删门禁（0 False Positives）**：严格保护机台编号（`HP04`、`Fx-67s`）、配方剂量（`Dose 28mJ`、`CD 2.1μm`）、化学原料编号（`AZ SR-210`）与实验槽位（`slot 4-6`）；
+   - **关键工艺参数零误删门禁（0 False Positives）**：严格保护机台编号（`HP04`、`Fx-67s`）、配方剂量（`Dose 28mJ`、`CD 2.1μm`）、化学原料编号（`AZ SR-210`）与卡匣基板片位（`slot 4-6`）；
    - **制造运维意图加权分类**：区分 `ALARM`（报警）、`DISPUTE`（推诿争论）、`DOE_EXPERIMENT`（分件验证）、`REPORT_8D`（结案报告）、`SHIFT_HANDOVER`（交接班流水），对跨工序争论与实验分件赋予优先高权重；
    - **多维工序多标签绑定**：自动识别绑定背板技术（LTPS/a-Si/LTPO）、工艺膜层（M1/M2/ITO/Poly/ILD）与工序角色（Photo/Track/DET/WET/PVD/CVD）。
 
