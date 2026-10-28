@@ -18,25 +18,10 @@ The system architecture is inspired by frontline engineering experiences as a **
 > **License Notice**: This project is licensed under the [PolyForm Noncommercial License 1.0.0](LICENSE). It is strictly free for academic research, education, and personal study. **Commercial use, unauthorized resale, or integration into proprietary enterprise offerings without a commercial license is strictly prohibited.**
 
 ### Core Architecture
-```text
-[Raw Manufacturing Communications (MBOX / EML / DB)]
-       │
-       ▼ [1. Cleaner & Anonymizer] (Strips disclaimers, masks PII, extracts Lot/Chamber/Defect entities)
-       │
-       ▼ [2. Intent Classifier & Noise Filter] (Sorts into Alarm/Dispute/DOE/8D, purges administrative chatter)
-       │
-       ▼ [3. Domain Annotator] (Tags Technology, Stations Photo/DET/WET/PVD, Layers M1/M2/ITO, Defect types)
-       │
-       ▼ [4. DAG Thread & Timeline Aggregator] (RFC822 DAG + Blind-carbon BCC Loop recovery + Time-window clustering)
-       │
-       ▼ [5. Binary Office Deep Parser] (OLE/PPT/Excel Split Table parsing, extracts EDX and Slot conditions)
-       │
-       ▼ [6. Causal Quintet Extractor] (Extracts Symptom -> Disputes -> Probe -> Root Cause -> PCA -> DFM Rule)
-       │
-       ▼ [7. Engineering Logic Validator] (Enforces machine physical boundaries + Decouples 8D excuses from physics truth)
-       │
-       ▼ [8. Knowledge Graph & Interactive Visualizer] (Builds topological causal graph -> JSON & Standalone HTML)
-```
+<p align="center">
+  <img src="assets/architecture.svg" alt="knowhow-miner Core Architecture" width="100%"/>
+</p>
+<p align="center"><em>Interactive standalone HTML version available at <a href="assets/architecture.html">assets/architecture.html</a>.</em></p>
 
 ### Module Structure
 - `miner/cleaner.py`: Text sanitization, legal notice purging, PII redaction, entity extraction.
@@ -90,6 +75,12 @@ If you are evaluating this engine on your own internal fab communications (such 
 该系统的架构灵感与底层规则源于作者在大型显示面板工厂（FPD Fab）担任**黄光光刻（Photolithography / Photo Track）工程师**的一线实战经验。旨在打破设计端（EDA/版图）与制造车间（Fab 现场）之间的“认知鸿沟”，将工厂一线数万封跨部门往来邮件、异常复盘报告（8D/PPT）及分件实验表（Split Table）提纯为可直接防呆的**设计图纸红线（DFM Rules）**与**工艺参数调优账本（Recipe Offsets）**。
 
 > **开源许可证与商用限制**：本项目遵循 [PolyForm Noncommercial License 1.0.0](LICENSE)。**仅限学术交流、个人学习与非商业研究，严禁任何形式的商业转售、商用系统打包或企业收费服务。**
+
+### 核心架构图解（Architecture Diagram）
+<p align="center">
+  <img src="assets/architecture.svg" alt="knowhow-miner 核心架构图" width="100%"/>
+</p>
+<p align="center"><em>可在浏览器中直接打开独立交互式版本：<a href="assets/architecture.html">assets/architecture.html</a></em></p>
 
 ### 完整模块结构与职责
 - `miner/cleaner.py`: 邮件正文清洗、法律免责声明剥离、个人隐私脱敏（PII Anonymization）与制造实体正则提取（Lot ID、Chamber 腔室、Defect Code、产品代号）。

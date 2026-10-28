@@ -1,0 +1,166 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1020 620" width="100%" height="100%">
+  <defs>
+    <!-- Background Grid Pattern -->
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="0.7"/>
+    </pattern>
+
+    <!-- Arrow Markers -->
+    <marker id="arrow-cyan" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#22d3ee" />
+    </marker>
+    <marker id="arrow-emerald" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#34d399" />
+    </marker>
+    <marker id="arrow-amber" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#fbbf24" />
+    </marker>
+    <marker id="arrow-rose" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#fb7185" />
+    </marker>
+    <marker id="arrow-violet" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#a78bfa" />
+    </marker>
+    <marker id="arrow-slate" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#94a3b8" />
+    </marker>
+  </defs>
+
+  <!-- Canvas Background -->
+  <rect width="100%" height="100%" fill="#020617"/>
+  <rect width="100%" height="100%" fill="url(#grid)"/>
+
+  <!-- ==================== REGION BOUNDARIES ==================== -->
+
+  <!-- Boundary 1: Ingestion & Preprocessing -->
+  <rect x="25" y="30" width="280" height="520" rx="10" fill="rgba(8, 51, 68, 0.15)" stroke="#22d3ee" stroke-width="1" stroke-dasharray="6,4"/>
+  <text x="40" y="55" fill="#22d3ee" font-family="'JetBrains Mono', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="0.05em">STAGE 1: INGESTION &amp; TAGGING</text>
+
+  <!-- Boundary 2: DAG Assembly & Deep Parsing -->
+  <rect x="335" y="30" width="350" height="520" rx="10" fill="rgba(6, 78, 59, 0.15)" stroke="#34d399" stroke-width="1" stroke-dasharray="6,4"/>
+  <text x="350" y="55" fill="#34d399" font-family="'JetBrains Mono', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="0.05em">STAGE 2: DAG TIMELINE &amp; DEEP EXTRACTION</text>
+
+  <!-- Boundary 3: Quality Gate & Knowledge Graph -->
+  <rect x="715" y="30" width="280" height="520" rx="10" fill="rgba(76, 29, 149, 0.15)" stroke="#a78bfa" stroke-width="1" stroke-dasharray="6,4"/>
+  <text x="730" y="55" fill="#a78bfa" font-family="'JetBrains Mono', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="0.05em">STAGE 3: VALIDATION &amp; GRAPH MESH</text>
+
+  <!-- ==================== STAGE 1 NODES ==================== -->
+
+  <!-- Raw Input Box -->
+  <rect x="45" y="80" width="240" height="70" rx="6" fill="#0f172a"/>
+  <rect x="45" y="80" width="240" height="70" rx="6" fill="rgba(30, 41, 59, 0.7)" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="165" y="105" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" text-anchor="middle">Raw Fab Communications</text>
+  <text x="165" y="123" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle">MBOX Archive • SQLite Index • EML</text>
+  <text x="165" y="137" fill="#64748b" font-family="'JetBrains Mono', monospace" font-size="8" text-anchor="middle">~22,000 Engineering Emails</text>
+
+  <!-- Cleaner Node -->
+  <rect x="45" y="195" width="240" height="70" rx="6" fill="#0f172a"/>
+  <rect x="45" y="195" width="240" height="70" rx="6" fill="rgba(8, 51, 68, 0.5)" stroke="#22d3ee" stroke-width="1.5"/>
+  <text x="165" y="218" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" text-anchor="middle">miner.cleaner</text>
+  <text x="165" y="235" fill="#22d3ee" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle">PII Redaction &amp; Disclaimer Purge</text>
+  <text x="165" y="250" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="8" text-anchor="middle">Regex: Lot ID • Chamber • Defect Code</text>
+
+  <!-- Classifier Node -->
+  <rect x="45" y="310" width="240" height="70" rx="6" fill="#0f172a"/>
+  <rect x="45" y="310" width="240" height="70" rx="6" fill="rgba(8, 51, 68, 0.5)" stroke="#22d3ee" stroke-width="1.5"/>
+  <text x="165" y="333" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" text-anchor="middle">miner.classifier</text>
+  <text x="165" y="350" fill="#22d3ee" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle">Operational Intent &amp; Noise Filter</text>
+  <text x="165" y="365" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="8" text-anchor="middle">ALARM | DISPUTE | DOE | 8D | PURGE</text>
+
+  <!-- Annotator Node -->
+  <rect x="45" y="425" width="240" height="70" rx="6" fill="#0f172a"/>
+  <rect x="45" y="425" width="240" height="70" rx="6" fill="rgba(8, 51, 68, 0.5)" stroke="#22d3ee" stroke-width="1.5"/>
+  <text x="165" y="448" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" text-anchor="middle">miner.annotator</text>
+  <text x="165" y="465" fill="#22d3ee" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle">Multi-Dimension Domain Tagger</text>
+  <text x="165" y="480" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="8" text-anchor="middle">Tech (LTPS) • Station (Photo/DET) • Layer</text>
+
+  <!-- Stage 1 Connections -->
+  <line x1="165" y1="150" x2="165" y2="193" stroke="#22d3ee" stroke-width="1.5" marker-end="url(#arrow-cyan)"/>
+  <line x1="165" y1="265" x2="165" y2="308" stroke="#22d3ee" stroke-width="1.5" marker-end="url(#arrow-cyan)"/>
+  <line x1="165" y1="380" x2="165" y2="423" stroke="#22d3ee" stroke-width="1.5" marker-end="url(#arrow-cyan)"/>
+
+  <!-- ==================== STAGE 2 NODES ==================== -->
+
+  <!-- Aggregator Node -->
+  <rect x="355" y="80" width="310" height="85" rx="6" fill="#0f172a"/>
+  <rect x="355" y="80" width="310" height="85" rx="6" fill="rgba(6, 78, 59, 0.5)" stroke="#34d399" stroke-width="1.5"/>
+  <text x="510" y="105" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" text-anchor="middle">miner.aggregator</text>
+  <text x="510" y="122" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle">DAG Thread &amp; Lifecycle Timeline Assembly</text>
+  <text x="510" y="138" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="8" text-anchor="middle">BCC Loop Recovery • Fuzzy Subject Match • 14D Sliding Window</text>
+  <text x="510" y="152" fill="#64748b" font-family="'JetBrains Mono', monospace" font-size="8" text-anchor="middle">Stages: Initial → Investigation → Experiment → Closed</text>
+
+  <!-- Binary Parser Node -->
+  <rect x="355" y="215" width="310" height="80" rx="6" fill="#0f172a"/>
+  <rect x="355" y="215" width="310" height="80" rx="6" fill="rgba(120, 53, 15, 0.4)" stroke="#fbbf24" stroke-width="1.5"/>
+  <text x="510" y="238" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" text-anchor="middle">miner.parsers (Binary Deep Mining)</text>
+  <text x="510" y="255" fill="#fbbf24" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle">PPT/PPTX OLE Streams &amp; Excel Split Tables</text>
+  <text x="510" y="271" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="8" text-anchor="middle">5-Why Text Atoms • EDX Spectrum • POR vs Split Slots</text>
+
+  <!-- Causal Extractor Node -->
+  <rect x="355" y="345" width="310" height="150" rx="6" fill="#0f172a"/>
+  <rect x="355" y="345" width="310" height="150" rx="6" fill="rgba(6, 78, 59, 0.6)" stroke="#34d399" stroke-width="1.5"/>
+  <text x="510" y="370" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" text-anchor="middle">miner.causal_extractor</text>
+  <text x="510" y="388" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle">Causal Quintet &amp; Engineering Truth Distiller</text>
+  
+  <text x="375" y="415" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="9">• [Symptom] Observed physical defect (CD/Al-Corrosion/Mura)</text>
+  <text x="375" y="433" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="9">• [Disputes] Cross-station finger-pointing &amp; defense</text>
+  <text x="375" y="451" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="9">• [Validation Probe] Low-cost probe (Coating black, Ashing trial)</text>
+  <text x="375" y="469" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="9">• [Root Cause] Physical ground truth vs 8D narrative</text>
+  <text x="375" y="487" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="600">• [PCA &amp; DFM] Quantifiable offset (1.5μm) &amp; DRC Redline</text>
+
+  <!-- Cross-stage connection from Stage 1 to Stage 2 -->
+  <path d="M 285 460 Q 320 460 320 280 T 353 125" fill="none" stroke="#34d399" stroke-width="1.5" marker-end="url(#arrow-emerald)"/>
+  <text x="325" y="270" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="8" text-anchor="middle" transform="rotate(-90 325 270)">Tagged Stream</text>
+
+  <!-- Aggregator to Parser & Extractor -->
+  <line x1="510" y1="165" x2="510" y2="213" stroke="#fbbf24" stroke-width="1.5" marker-end="url(#arrow-amber)"/>
+  <line x1="510" y1="295" x2="510" y2="343" stroke="#34d399" stroke-width="1.5" marker-end="url(#arrow-emerald)"/>
+
+  <!-- ==================== STAGE 3 NODES ==================== -->
+
+  <!-- Logic Validator Node -->
+  <rect x="735" y="80" width="240" height="95" rx="6" fill="#0f172a"/>
+  <rect x="735" y="80" width="240" height="95" rx="6" fill="rgba(136, 19, 55, 0.4)" stroke="#fb7185" stroke-width="1.5"/>
+  <text x="855" y="105" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" text-anchor="middle">miner.validator</text>
+  <text x="855" y="122" fill="#fb7185" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle">Engineering Logic &amp; Dual Reality Gate</text>
+  <text x="855" y="140" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="8" text-anchor="middle">Machine Bounds: Dose • Focus • Temp</text>
+  <text x="855" y="155" fill="#fb7185" font-family="'JetBrains Mono', monospace" font-size="8" text-anchor="middle">Decouples: 8D Public Defense vs Physics Truth</text>
+
+  <!-- Knowledge Graph Node -->
+  <rect x="735" y="225" width="240" height="110" rx="6" fill="#0f172a"/>
+  <rect x="735" y="225" width="240" height="110" rx="6" fill="rgba(76, 29, 149, 0.5)" stroke="#a78bfa" stroke-width="1.5"/>
+  <text x="855" y="250" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" text-anchor="middle">miner.graph_builder</text>
+  <text x="855" y="267" fill="#a78bfa" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle">Topological Causal Mesh</text>
+  <text x="855" y="285" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="8" text-anchor="middle">Nodes: Incident • Defect • Cause • PCA</text>
+  <text x="855" y="299" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="8" text-anchor="middle">Edges: ROOTED_IN • RESOLVED_BY • DERIVES</text>
+  <text x="855" y="318" fill="#a78bfa" font-family="'JetBrains Mono', monospace" font-size="8" font-weight="600" text-anchor="middle">Exports: JSON Graph &amp; Interactive HTML</text>
+
+  <!-- Deliverables Node -->
+  <rect x="735" y="380" width="240" height="115" rx="6" fill="#0f172a"/>
+  <rect x="735" y="380" width="240" height="115" rx="6" fill="rgba(30, 41, 59, 0.7)" stroke="#38bdf8" stroke-width="1.5"/>
+  <text x="855" y="405" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" text-anchor="middle">Deliverables &amp; Actionable ROI</text>
+  <text x="750" y="428" fill="#38bdf8" font-family="'JetBrains Mono', monospace" font-size="9">1. DFM CAD Redline Engine (Via Enclosure)</text>
+  <text x="750" y="446" fill="#38bdf8" font-family="'JetBrains Mono', monospace" font-size="9">2. Recipe Tuning Ledger (Offsets/POR)</text>
+  <text x="750" y="464" fill="#38bdf8" font-family="'JetBrains Mono', monospace" font-size="9">3. Visual Graph Workbench (knowledge_graph.html)</text>
+  <text x="750" y="482" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="8">Zero Leakage: Private data stays in ephemeral box</text>
+
+  <!-- Connections in Stage 3 -->
+  <line x1="665" y1="380" x2="733" y2="135" stroke="#fb7185" stroke-width="1.5" marker-end="url(#arrow-rose)"/>
+  <line x1="855" y1="175" x2="855" y2="223" stroke="#a78bfa" stroke-width="1.5" marker-end="url(#arrow-violet)"/>
+  <line x1="855" y1="335" x2="855" y2="378" stroke="#38bdf8" stroke-width="1.5" marker-end="url(#arrow-cyan)"/>
+
+  <!-- ==================== FOOTER / LEGEND ==================== -->
+  <text x="50" y="585" fill="#64748b" font-family="'JetBrains Mono', monospace" font-size="10">knowhow-miner Architecture • PolyForm Noncommercial 1.0.0 • Yellow Beam (Photo/Track) Domain Logic</text>
+  
+  <rect x="740" y="575" width="12" height="10" rx="2" fill="rgba(8, 51, 68, 0.6)" stroke="#22d3ee" stroke-width="1"/>
+  <text x="758" y="584" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="8">Ingestion</text>
+
+  <rect x="805" y="575" width="12" height="10" rx="2" fill="rgba(6, 78, 59, 0.6)" stroke="#34d399" stroke-width="1"/>
+  <text x="823" y="584" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="8">Extraction</text>
+
+  <rect x="880" y="575" width="12" height="10" rx="2" fill="rgba(136, 19, 55, 0.6)" stroke="#fb7185" stroke-width="1"/>
+  <text x="898" y="584" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="8">Validator</text>
+
+  <rect x="945" y="575" width="12" height="10" rx="2" fill="rgba(76, 29, 149, 0.6)" stroke="#a78bfa" stroke-width="1"/>
+  <text x="963" y="584" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="8">Graph</text>
+</svg>

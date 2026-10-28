@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>knowhow-miner: Industrial Manufacturing Know-how Mining & Causal Pipeline Architecture</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'JetBrains Mono', monospace;
+      background: #020617;
+      min-height: 100vh;
+      padding: 2rem;
+      color: white;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .header {
+      margin-bottom: 1.5rem;
+    }
+    .header-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .pulse-dot {
+      width: 12px;
+      height: 12px;
+      background: #22d3ee;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+    h1 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+    }
+    .subtitle {
+      color: #94a3b8;
+      font-size: 0.85rem;
+      margin-left: 1.75rem;
+    }
+    .diagram-container {
+      background: rgba(15, 23, 42, 0.6);
+      border-radius: 0.75rem;
+      border: 1px solid #1e293b;
+      padding: 1rem;
+      overflow-x: auto;
+    }
+    svg {
+      width: 100%;
+      min-width: 960px;
+      display: block;
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    .card {
+      background: rgba(15, 23, 42, 0.6);
+      border-radius: 0.75rem;
+      border: 1px solid #1e293b;
+      padding: 1.25rem;
+    }
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+    .card-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+    .card-dot.cyan { background: #22d3ee; }
+    .card-dot.emerald { background: #34d399; }
+    .card-dot.violet { background: #a78bfa; }
+    .card h3 {
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    .card ul {
+      list-style: none;
+      color: #94a3b8;
+      font-size: 0.75rem;
+      line-height: 1.6;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 1.5rem;
+      color: #475569;
+      font-size: 0.75rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="header-row">
+        <div class="pulse-dot"></div>
+        <h1>knowhow-miner Architecture</h1>
+      </div>
+      <p class="subtitle">Industrial FPD / Semiconductor Manufacturing Knowledge & Causal Graph Engine</p>
+    </div>
+
+    <div class="diagram-container">
+      <!-- Embed SVG directly -->
+      <object data="architecture.svg" type="image/svg+xml" width="100%"></object>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-dot cyan"></div>
+          <h3>Stage 1: Ingestion & Disambiguation</h3>
+        </div>
+        <ul>
+          <li>• Strict zero-leakage PII redaction and disclaimer elimination</li>
+          <li>• Intent categorization: Alarms, Disputes, DOE splits, 8D closures</li>
+          <li>• Operational noise filtering (purges administrative requests)</li>
+          <li>• Multi-dimensional tagging: Backplane, Stations, Film layers</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-dot emerald"></div>
+          <h3>Stage 2: DAG Reconstruction & Deep Extraction</h3>
+        </div>
+        <ul>
+          <li>• Blind-carbon BCC loop recovery across personal & enterprise folders</li>
+          <li>• Full lifecycle event staging: Initial → Investigation → DOE → Closed</li>
+          <li>• Deep parsing of binary attachments: PPT 5-Why & Excel split tables</li>
+          <li>• Five-tuple causal distillation: Symptom, Probe, True Root Cause, PCA</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-dot violet"></div>
+          <h3>Stage 3: Validation & Visual Knowledge Mesh</h3>
+        </div>
+        <ul>
+          <li>• Machine physical boundary sanity checks (Dose, Focus, Temps)</li>
+          <li>• Dual-reality decoupling: 8D customer defense vs internal physics</li>
+          <li>• Topological causal graph generation with Vis.js interactive canvas</li>
+          <li>• Derivation of actionable DFM CAD redlines (e.g. Via Enclosure Margin)</li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="footer">
+      knowhow-miner • PolyForm Noncommercial 1.0.0 • Yellow Beam Photolithography Engineering Knowledge
+    </p>
+  </div>
+</body>
+</html>
