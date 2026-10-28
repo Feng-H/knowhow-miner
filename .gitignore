@@ -1,0 +1,26 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.env
+venv/
+ENV/
+
+# Data and incident dumps (Strictly keep private emails and extracts out of repo)
+data/
+*.db
+*.sqlite
+*.mbox
+*.eml
+*.msg
+*.ppt
+*.pptx
+*.xls
+*.xlsx
+*.pdf
+*.jpg
+*.png
+temp/
+logs/
+.hermes/
