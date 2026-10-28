@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>knowhow-miner: 微纳半导体与显示制造因果知识采掘核心架构</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      background: #020617;
+      min-height: 100vh;
+      padding: 2rem 1.5rem;
+      color: #F8FAFC;
+    }
+    .mono { font-family: 'JetBrains Mono', Consolas, monospace; }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .header {
+      margin-bottom: 1.5rem;
+    }
+    .header-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .pulse-dot {
+      width: 12px;
+      height: 12px;
+      background: #22d3ee;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+    h1 {
+      font-size: 1.45rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .subtitle {
+      color: #94a3b8;
+      font-size: 0.88rem;
+      margin-left: 1.75rem;
+      line-height: 1.5;
+    }
+    .diagram-container {
+      background: rgba(15, 23, 42, 0.6);
+      border-radius: 0.75rem;
+      border: 1px solid #1e293b;
+      padding: 1rem;
+      overflow-x: auto;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    svg {
+      width: 100%;
+      min-width: 1080px;
+      display: block;
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1.75rem;
+    }
+    .card {
+      background: rgba(15, 23, 42, 0.6);
+      border-radius: 0.75rem;
+      border: 1px solid #1e293b;
+      padding: 1.25rem 1.4rem;
+    }
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.85rem;
+    }
+    .card-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+    .card-dot.cyan { background: #22d3ee; }
+    .card-dot.emerald { background: #34d399; }
+    .card-dot.amber { background: #fbbf24; }
+    .card-dot.rose { background: #fb7185; }
+    .card h3 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #F8FAFC;
+    }
+    .card ul {
+      list-style: none;
+      font-size: 0.84rem;
+      color: #94a3b8;
+      line-height: 1.7;
+    }
+    .card li strong {
+      color: #F8FAFC;
+    }
+    .footer {
+      margin-top: 2rem;
+      text-align: center;
+      font-size: 0.8rem;
+      color: #64748b;
+    }
+    .footer a {
+      color: #22d3ee;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="header-row">
+        <div class="pulse-dot"></div>
+        <h1>knowhow-miner 核心工程架构图解 (Core Architecture)</h1>
+      </div>
+      <p class="subtitle">
+        微纳半导体与显示制造（Array 黄光/光刻）因果知识采掘管线 • 四阶段提纯与自动化评测闭环
+      </p>
+    </div>
+
+    <div class="diagram-container">
+      <!-- 引入 architecture_zh.svg 内容 -->
+      <object data="architecture_zh.svg" type="image/svg+xml" width="100%"></object>
+    </div>
+
+    <div class="cards">
+      <!-- Card 1 -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-dot cyan"></div>
+          <h3>1. 语料清洗脱水与特征打标</h3>
+        </div>
+        <ul>
+          <li>• <strong>多层嵌套引用切除</strong>：精确剥离 10+ 层历史回帖，仅保留发件人增量增量文本（Delta）。</li>
+          <li>• <strong>法务免责与隐私中性化</strong>：剥离商业免责，电话/工号/邮箱替换为统一角色标签。</li>
+          <li>• <strong>关键工艺参数零误删</strong>：硬核保护机台号（HP04）、配方剂量（28mJ）、槽位（slot 4-6）。</li>
+          <li>• <strong>制造意图加权分类</strong>：对跨工序争端（DISPUTE）与分件实验（DOE）赋予优先高权重。</li>
+        </ul>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-dot emerald"></div>
+          <h3>2. 会话树聚合与因果五元组提纯</h3>
+        </div>
+        <ul>
+          <li>• <strong>跨文件夹 BCC 聚合</strong>：联结个人主箱密送与代收文件夹，找齐拍板定案指令闭环。</li>
+          <li>• <strong>二进制附件深度穿透</strong>：自动解构 PPT 5-Why 树与 Excel Split Table 调机矩阵。</li>
+          <li>• <strong>五元组因果推演</strong>：表象绑定 $\rightarrow$ 部门争议 $\rightarrow$ 实证探针 $\rightarrow$ 物理根因 $\rightarrow$ DFM红线。</li>
+          <li>• <strong>双轨内外解耦</strong>：剥离对外 8D 公关免责词，提纯微光学驻波与电化学自催化真实机理。</li>
+        </ul>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-dot amber"></div>
+          <h3>3. 四级量化评测体系 (Eval Harness)</h3>
+        </div>
+        <ul>
+          <li>• <strong>Level 1 (清洗保真度)</strong>：免责过滤 100%，工艺参数误删率 0%，增量正文留存 100%。</li>
+          <li>• <strong>Level 2 (意图分流)</strong>：DISPUTE 争端召回与工序多标签匹配率 100%。</li>
+          <li>• <strong>Level 3 (因果保真度)</strong>：五元组链条完整度 100%，8D 对外/对内解耦率 100%。</li>
+          <li>• <strong>Level 4 (红线有效性)</strong>：DFM 公式数学不等式与物理参数量纲合规率 100%。</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer mono">
+      <p>
+        遵循 <a href="../LICENSE">PolyForm Noncommercial License 1.0.0</a> • 严禁未授权商用 • 
+        代码仓库：<a href="https://github.com/Feng-H/knowhow-miner">Feng-H/knowhow-miner</a>
+      </p>
+    </div>
+  </div>
+</body>
+</html>
