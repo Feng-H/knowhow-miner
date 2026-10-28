@@ -53,7 +53,7 @@ class EmailCleaner:
             return ""
         # 1. Replace emails with role tags
         text = cls.EMAIL_ADDR_REGEX.sub("[ENGINEER_EMAIL]", text)
-        # 2. Replace phones
+        # 2. Replace phones, but avoid destroying slot or machine digits
         text = cls.PHONE_REGEX.sub("[PHONE_REDACTED]", text)
         # 3. Replace company domains & names
         text = cls.CORP_NAME_REGEX.sub("[FPD_FAB]", text)
@@ -115,7 +115,7 @@ class EmailCleaner:
         for pat in cls.LEGAL_DISCLAIMER_PATTERNS:
             text = re.sub(pat, " ", text, flags=re.DOTALL | re.IGNORECASE)
             
-        # 2. Strip phone & office noise from signatures
+        # 2. Strip phone & office noise from signatures, BUT protect equipment IDs and parameters
         text = cls.PHONE_SIGNATURE_REGEX.sub(" ", text)
         text = cls.OFFICE_REGEX.sub(" ", text)
 
@@ -154,6 +154,7 @@ class EmailCleaner:
             "lots": sorted(list(set(cls.LOT_ID_REGEX.findall(combined)))),
             "chambers": sorted(list(set(cls.CHAMBER_REGEX.findall(combined)))),
             "defect_codes": sorted(list(set(cls.DEFECT_CODE_REGEX.findall(combined)))),
-            "products": sorted(list(set(cls.PRODUCT_REGEX.findall(combined))))
+            "products": sorted(list(set(cls.PRODUCT_REGEX.findall(combined)))),
+            "operations": sorted(list(set(re.findall(r"\b(?:10113|10300|10303|10500|10603|11103|11200|11203|11300|11303|11600|11603|12300|12303|12603|13300|13303|13603|14103|14203|14300|14303|14500|14603|15300|15303|15500|15603|16103|16203|16300|16303|16500|16603|17103|17300|17303|17500|17603|18300|18303|19103|19300|19303|19500|19603|1A103|1A300|1A303|1A500|1A603|1B103|1B300|1B303|1B500|1B603|1B700|1B703|1E103|1E303|1E603)\b", combined))))
         }
         return entities
