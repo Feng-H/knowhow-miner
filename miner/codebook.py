@@ -2,7 +2,7 @@
 FPD Multi-Fab Codebook & Metadata Dictionary (Tianma, CSOT, Intellimicro)
 ========================================================================
 Author: Huang Feng & Hermes Agent
-License: PolyForm Noncommercial License 1.0.0
+License: CC BY-NC-SA 4.0
 
 This module serves as the primary factory dictionary for `knowhow-miner`.
 It incorporates knowledge derived from:

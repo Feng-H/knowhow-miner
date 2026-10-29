@@ -2,7 +2,7 @@
 SQLite FTS5 Full-Text Search Engine for Industrial Manufacturing Emails
 =======================================================================
 Author: Huang Feng & Hermes Agent
-License: PolyForm Noncommercial License 1.0.0
+License: CC BY-NC-SA 4.0
 
 Provides high-performance inverted index search over cleaned email bodies,
 subjects, machine IDs, defect codes, and attachment metadata.

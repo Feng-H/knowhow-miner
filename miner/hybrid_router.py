@@ -2,7 +2,7 @@
 Adaptive Hybrid Router (Two-Tier Cognitive Cache & Drill-down)
 ==============================================================
 Author: Huang Feng & Hermes Agent
-License: PolyForm Noncommercial License 1.0.0
+License: CC BY-NC-SA 4.0
 
 Implements the user-calibrated architecture:
   - Initial phase: full-text mining to distill know-how into L1 crystals.

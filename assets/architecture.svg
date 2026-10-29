@@ -150,7 +150,7 @@
   <line x1="855" y1="335" x2="855" y2="378" stroke="#38bdf8" stroke-width="1.5" marker-end="url(#arrow-cyan)"/>
 
   <!-- ==================== FOOTER / LEGEND ==================== -->
-  <text x="50" y="585" fill="#64748b" font-family="'JetBrains Mono', monospace" font-size="10">knowhow-miner Architecture • PolyForm Noncommercial 1.0.0 • Yellow Beam (Photo/Track) Domain Logic</text>
+  <text x="50" y="585" fill="#64748b" font-family="'JetBrains Mono', monospace" font-size="10">knowhow-miner Architecture • CC BY-NC-SA 4.0 • Yellow Beam (Photo/Track) Domain Logic</text>
   
   <rect x="740" y="575" width="12" height="10" rx="2" fill="rgba(8, 51, 68, 0.6)" stroke="#22d3ee" stroke-width="1"/>
   <text x="758" y="584" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="8">Ingestion</text>

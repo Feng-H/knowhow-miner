@@ -2,7 +2,7 @@
 Interactive Industrial Diagnostic Search CLI
 ============================================
 Author: Huang Feng & Hermes Agent
-License: PolyForm Noncommercial License 1.0.0
+License: CC BY-NC-SA 4.0
 
 Entry point for two-tier know-how retrieval:
 

@@ -2,7 +2,7 @@
 Deep Retriever: Thread-tree Assembly & Multi-Modal Evidence Unpacking
 =====================================================================
 Author: Huang Feng & Hermes Agent
-License: PolyForm Noncommercial License 1.0.0
+License: CC BY-NC-SA 4.0
 
 Given a set of seed message IDs from full-text search, this module:
   1. Reconstructs the full email conversation tree (Message-ID / In-Reply-To);

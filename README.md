@@ -2,7 +2,7 @@
 
 [English](#english) | [中文说明](#中文说明)
 
-[![License: PolyForm Noncommercial](https://img.shields.io/badge/License-PolyForm%20Noncommercial-blue.svg)](LICENSE)
+[![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-blue.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 
 ---
@@ -15,7 +15,7 @@
 
 The system architecture is inspired by frontline engineering experiences as a **Photolithography (Yellow Beam / Photo Track) Engineer** in high-volume FPD fabs. It bridges the critical "cognitive divide" between design centers (CAD/EDA layout) and the physical shop floor (wafer/glass fabrication), transforming thousands of multi-department engineering emails, shift handovers, and 8D reports into structured **Recipe Tuning Offsets** and **Design-for-Manufacturing (DFM) Redline Rules**.
 
-> **License Notice**: This project is licensed under the [PolyForm Noncommercial License 1.0.0](LICENSE). It is strictly free for academic research, education, and personal study. **Commercial use, unauthorized resale, or integration into proprietary enterprise offerings without a commercial license is strictly prohibited.**
+> **License Notice**: This project is licensed under the **[Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License (CC BY-NC-SA 4.0)](LICENSE)**. It is strictly free for academic research, education, and personal study. **Commercial use, unauthorized resale, proprietary integration, or commercial derivative redistribution without an explicit commercial license is strictly prohibited.** Commercial licensing contact: `huangfengjob@gmail.com`.
 
 ### Core Architecture
 <p align="center">
@@ -187,7 +187,10 @@ If you are evaluating this engine on your own internal fab communications (such 
 
 该系统的架构灵感与底层规则源于作者在大型显示面板工厂（FPD Fab）担任**黄光光刻（Photolithography / Photo Track）工程师**的一线实战经验。旨在打破设计端（EDA/版图）与制造车间（Fab 现场）之间的“认知鸿沟”，将工厂一线数万封跨部门往来邮件、异常复盘报告（8D/PPT）及分件实验表（Split Table）提纯为可直接防呆的**设计图纸红线（DFM Rules）**与**工艺参数调优账本（Recipe Offsets）**。
 
-> **开源许可证与商用限制**：本项目遵循 [PolyForm Noncommercial License 1.0.0](LICENSE)。**仅限学术交流、个人学习与非商业研究，严禁任何形式的商业转售、商用系统打包或企业收费服务。**
+> **开源许可证与商用/二次开发限制**：本项目遵循 **[Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)](LICENSE)** 国际许可协议。  
+> 1. **严禁商用**：仅限学术交流、个人学习与非商业研究，严禁任何形式的商业转售、商用系统打包或收费技术服务；  
+> 2. **严禁修改后商用（ShareAlike）**：任何对本项目的二次开发、代码修改或衍生版本，必须以相同的非商业开源协议公开发布，严禁闭源商用；  
+> 3. **商业授权**：如需在商业制造企业（如晶圆厂、面板厂）进行私有化落地部署或商业技术合作，请联系原作者 John Huang 获取正式书面授权（联系邮箱：`huangfengjob@gmail.com`）。
 
 ### 核心工程架构图解（Core Architecture）
 <p align="center">

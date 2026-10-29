@@ -1,7 +1,7 @@
 """
 Industrial Email Knowledge Mining - Evaluation & Benchmark Runner (Eval Harness)
 Author: Huang Feng & Hermes Agent
-License: PolyForm Noncommercial License 1.0.0
+License: CC BY-NC-SA 4.0
 """
 
 import os

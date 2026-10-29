@@ -2,7 +2,7 @@
 Industrial Authority & Decision Weighting Engine
 ================================================
 Author: Huang Feng & Hermes Agent
-License: PolyForm Noncommercial License 1.0.0
+License: CC BY-NC-SA 4.0
 
 This module maps engineering authority dynamically across time:
 1. Static Registry Baseline (from DOE/NPI rosters as initial seeds)

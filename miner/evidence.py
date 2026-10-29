@@ -2,7 +2,7 @@
 Industrial Evidence Hierarchy & Multi-Modal Arbitration Engine
 ==============================================================
 Author: Huang Feng & Hermes Agent
-License: PolyForm Noncommercial License 1.0.0
+License: CC BY-NC-SA 4.0
 
 Adapted from Forward Deployed Engineering (FDE) principles:
 1. Five-Level Evidence Hierarchy (A-E Grades)

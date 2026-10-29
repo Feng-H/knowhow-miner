@@ -2,7 +2,7 @@
 L1 Distilled Know-how Store (Cognitive Cache)
 =============================================
 Author: Huang Feng & Hermes Agent
-License: PolyForm Noncommercial License 1.0.0
+License: CC BY-NC-SA 4.0
 
 A lightweight, high-density persistence layer storing converged causal
 quintets, DFM rules, and their evidence anchors. Designed for millisecond

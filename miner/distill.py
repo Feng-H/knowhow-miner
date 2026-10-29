@@ -2,7 +2,7 @@
 Know-how Distillation: Gold Standard / Pipeline output -> L1 Crystals
 =====================================================================
 Author: Huang Feng & Hermes Agent
-License: PolyForm Noncommercial License 1.0.0
+License: CC BY-NC-SA 4.0
 
 Implements the "initial full-corpus mining" phase of the user-calibrated
 architecture: converged causal quintets (validated by Levels 3/4/5) are

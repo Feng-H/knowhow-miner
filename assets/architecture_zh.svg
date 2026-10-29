@@ -200,7 +200,7 @@
   <!-- ==================== 底部信息栏与图例 (FOOTER & LEGEND) ==================== -->
   <rect x="25" y="625" width="1090" height="50" rx="6" fill="#0f172a" stroke="#1e293b" stroke-width="1"/>
   <text x="45" y="655" fill="#94a3b8" font-family="'PingFang SC', 'Microsoft YaHei', monospace" font-size="11">
-    <strong>knowhow-miner 核心工程架构</strong> • 黄光制程一线工程师认知建模 • PolyForm Noncommercial License 1.0.0
+    <strong>knowhow-miner 核心工程架构</strong> • 黄光制程一线工程师认知建模 • CC BY-NC-SA 4.0
   </text>
 
   <rect x="740" y="645" width="12" height="10" rx="2" fill="rgba(8, 51, 68, 0.8)" stroke="#22d3ee" stroke-width="1"/>
