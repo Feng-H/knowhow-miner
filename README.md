@@ -31,7 +31,7 @@ The system architecture is inspired by frontline engineering experiences as a **
 - `miner/parsers/`: Deep inspection for binary attachments:
   - `ppt_parser.py`: Extracts slide texts, tables, and 5-Why comparisons from `.pptx` and legacy `.ppt` OLE streams.
   - `excel_parser.py`: Parses DOE Split Tables, identifying POR baselines vs experimental trial conditions.
-- `miner/causal_extractor.py`: Distills structured causal quintets, recipe offsets, and DFM redline rules.
+- `miner/causal_extractor.py`: Distills structured causal quintets, recipe offsets, and DFM redline rules with **temporal causality enforcement** (ensuring countermeasures strictly postdate incidents and preventing static legacy SOPs from falsely masking active disputes).
 - `miner/validator.py`: Physics boundary verification and dual-reality decoupling (8D public defense vs physical ground truth).
 - `miner/graph_builder.py`: Constructs the domain knowledge graph and exports interactive dark-themed HTML diagrams (Vis.js network).
 - `miner/eval_runner.py`: The automated evaluation benchmark runner testing cleaning precision, triage accuracy, and physical sanity.
@@ -292,7 +292,7 @@ If you are evaluating this engine on your own internal fab communications (such 
 - `miner/parsers/`: 二进制重型附件深度提取器：
   - `ppt_parser.py`: 自动穿透解构 `.pptx` 与旧版 `.ppt` OLE 二进制流，打捞 5-Why 分析表、因果对比图文本。
   - `excel_parser.py`: 自动识别并解析分件实验表（Split Table），结构化区分标准 POR 组与实验条件组。
-- `miner/causal_extractor.py`: 五元组因果事实抽取器，提纯不良表象、推诿争端、实证探针、物理真因、治本措施与派生的 DFM 设计红线规则。
+- `miner/causal_extractor.py`: 五元组因果事实抽取器，提纯不良表象、推诿争端、实证探针、物理真因、治本措施与派生的 DFM 设计红线规则，并内置**严格时序因果门禁（Temporal Causality）**，确保根因与对策必须发生在异常拉锯之后，严禁拿历史前置静态 SOP 冒充实时定案。
 - `miner/validator.py`: 物理与工程逻辑守门员，内置曝光能量、焦深、温度等机台物理硬门禁，并实现**“对外客户防御免责话术（如偶发颗粒）”与“对内物理真实根因（如材质腐蚀、DRC公差断裂）”的双轨解耦**。
 - `miner/graph_builder.py`: 工业制造因果知识图谱引擎，自动构建拓扑网络并导出交互式深色主题 HTML 动态图表（Vis.js 驱动，支持缩放、拖拽与节点点击查看完整机理）。
 - `miner/mock_generator.py`: 合成数据生成器，供外部开发者快速体验管线逻辑。

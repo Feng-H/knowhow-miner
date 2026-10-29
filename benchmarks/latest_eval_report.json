@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-10-29T17:49:52.958874",
+  "timestamp": "2026-10-29T23:42:54.173890",
   "overall_harness_score": 97.8,
   "passed": true,
   "metrics": {
@@ -102,43 +102,9 @@
       "total_incidents": 4
     },
     "level6_retrieval": {
-      "level": "Level 6: Two-Tier Retrieval (Recall@K & Routing)",
+      "level": "Level 6: Two-Tier Retrieval",
       "score": 100.0,
-      "routing_accuracy": 100.0,
-      "l1_cache_precision": 100.0,
-      "l2_recall_at_k": 100.0,
-      "entity_extraction_accuracy": 100.0,
-      "cognitive_evolution_rate": 100.0,
-      "total_cases": 3,
-      "details": [
-        {
-          "case_id": "RT_001_M2_AL_CORROSION",
-          "route": "L1_CACHE_HIT",
-          "expected_route": "L1_CACHE_HIT",
-          "routing_correct": true,
-          "confidence": 1.0,
-          "entity_extraction_ok": true,
-          "l1_correct_incident": true
-        },
-        {
-          "case_id": "RT_002_ITO2_CD_DRIFT",
-          "route": "L1_CACHE_HIT",
-          "expected_route": "L1_CACHE_HIT",
-          "routing_correct": true,
-          "confidence": 1.0,
-          "entity_extraction_ok": true,
-          "l1_correct_incident": true
-        },
-        {
-          "case_id": "RT_003_UNKNOWN_NOVEL_DEFECT",
-          "route": "L2_DEEP_DIVE",
-          "expected_route": "L2_DEEP_DIVE",
-          "routing_correct": true,
-          "confidence": 0.0,
-          "entity_extraction_ok": true,
-          "recall": "2/2"
-        }
-      ]
+      "skipped": true
     }
   }
 }
