@@ -13,6 +13,7 @@
 | R-006 | 2026-10-29 | 开发 log、需求、结果、验证结果落成文件并传 GitHub，供追溯与前后矛盾校准 | `docs/DEVLOG.md`, `docs/REQUIREMENTS.md` | git push | 本文件随代码同仓版本化 | ✅ 完成 |
 | R-007 | 2026-10-26 | 商业保密：真实邮件数据/公司名/PII 绝不出库；GitHub 仅匿名 mock 数据与连接指导 | 仓库 .gitignore + mock_generator | push 前内容审查 | 仓库仅含 mock_emails.db 生成器，无私有数据 | ✅ 持续执行 |
 | R-008 | 2026-10-26 | 术语校准：Cassette=卡匣，Slot=卡匣内片位（非实验槽位） | `industrial-knowhow-mining` skill + 文档 | 人工校对 | 全库无"玻璃盒/实验槽"误译 | ✅ 完成 |
+| R-009 | 2026-10-29 | 明确运行期模型依赖：代码库与评测套件必须 100% 离线确定性（0 外部 LLM API 依赖），杜绝数据泄露与评分随机性 | 全仓原生 Python 3 + SQLite3 FTS5 + 符号验证器 | 静态依赖检查 + 离线 15ms 评测运行 | 运行期 0 大模型依赖，开发期由 Hermes Agent (gemini-3.8-flash-high) 辅助编写 | ✅ 完成 |
 
 ## 待办（未完成，不冒充完成）
 

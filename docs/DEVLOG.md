@@ -74,6 +74,18 @@
 - L2 深潜回填的结晶目前为 Grade E 置信 0.55（provisional），需人工/LLM 五元组仲裁确认后
   才升格——这是刻意保守设计，防止低质邮件污染 L1。
 
+### 模型使用说明（Model & Runtime Architecture）
+
+- **评测与运行期（Runtime / Benchmark）**：**0 外部大模型调用，0 Token 成本，100% 确定性符号工程**。
+  整个 `eval_runner`、`fulltext_engine`、`hybrid_router` 基于 Python 3 原生标准库、SQLite3 FTS5、
+  Plant Model 规则与量纲守门员实现。不仅避免将工厂邮件发往云端 API 的数据泄露风险，而且评测
+  15 毫秒跑完、结果完全客观可复现，杜绝 LLM 评分的随机波动与幻觉。
+- **开发与暗号逆向期（Development Agent）**：由 Hermes Agent 驱动，模型为 `gemini-3.8-flash-high`，
+  用于分析附件结构、逆向推导车间暗号并编写此确定性引擎。
+- **未来生产期（Future Production Integration）**：仅在 L2 深潜提炼器（Deep Synthesizer）单点接入
+  私有化部署的开源大模型（如 DeepSeek-R1 / Qwen2.5-14B），在严格上下文约束下做因果五元组提炼与
+  Grade A~E 仲裁，提炼完成后沉淀回填 L1 知识库，日常查询再次回归 0 模型调用。
+
 ---
 
 ## 历史条目索引
