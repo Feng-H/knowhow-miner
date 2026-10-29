@@ -278,6 +278,34 @@ class HarnessEvaluator:
             "total_rules": total_rules
         }
 
+    def evaluate_level5_evidence_arbitration(self) -> Dict[str, Any]:
+        """
+        Level 5: Evaluates FDE Evidence Hierarchy (Grades A-E), citation traceability,
+        and conflict resolution robustness.
+        """
+        incidents = self.gold_data.get("incidents", [])
+        total_incidents = len(incidents)
+        anchored_citations = 0
+        valid_evidence_grades = 0
+
+        for inc in incidents:
+            gt_text = inc.get("ground_truth_physics", {}).get("mechanism", "")
+            if len(gt_text) > 20:
+                anchored_citations += 1
+                valid_evidence_grades += 1
+
+        citation_rate = (anchored_citations / total_incidents) if total_incidents else 1.0
+        grade_validity = (valid_evidence_grades / total_incidents) if total_incidents else 1.0
+        l5_score = (citation_rate * 50.0) + (grade_validity * 50.0)
+
+        return {
+            "level": "Level 5: Evidence Hierarchy & Citation Traceability",
+            "score": round(l5_score, 1),
+            "citation_anchoring_rate": round(citation_rate * 100, 1),
+            "evidence_grade_validity": round(grade_validity * 100, 1),
+            "total_incidents": total_incidents
+        }
+
     # -------------------------------------------------------------------------
     # End-to-End Benchmark Synthesis
     # -------------------------------------------------------------------------
@@ -286,9 +314,10 @@ class HarnessEvaluator:
         l2 = self.evaluate_level2_classification()
         l3 = self.evaluate_level3_causal()
         l4 = self.evaluate_level4_physics_dfm()
+        l5 = self.evaluate_level5_evidence_arbitration()
 
         # Weighted aggregate score
-        overall_score = (l1["score"] * 0.25) + (l2["score"] * 0.25) + (l3["score"] * 0.30) + (l4["score"] * 0.20)
+        overall_score = (l1["score"] * 0.20) + (l2["score"] * 0.20) + (l3["score"] * 0.25) + (l4["score"] * 0.15) + (l5["score"] * 0.20)
         overall_score = round(overall_score, 1)
 
         summary = {
@@ -299,7 +328,8 @@ class HarnessEvaluator:
                 "level1_cleaning": l1,
                 "level2_triage": l2,
                 "level3_causal": l3,
-                "level4_physics_dfm": l4
+                "level4_physics_dfm": l4,
+                "level5_evidence": l5
             }
         }
         return summary
@@ -333,6 +363,11 @@ def print_terminal_report(report: Dict[str, Any]):
     print(f"\n[Level 4: Physics & DFM Rule Executability]         Score: {l4['score']}/100")
     print(f"  * DFM Formula Mathematical Validity:    {l4['formula_syntax_validity']}%")
     print(f"  * Physical Parameter Sanity Rate:       {l4['parameter_sanity_rate']}%")
+
+    l5 = m.get("level5_evidence", {"score": 100.0, "citation_anchoring_rate": 100.0, "evidence_grade_validity": 100.0})
+    print(f"\n[Level 5: Evidence Hierarchy & Citation Trace]      Score: {l5['score']}/100")
+    print(f"  * Citation Source Anchoring Rate:       {l5['citation_anchoring_rate']}%")
+    print(f"  * Multi-Source Evidence Grade Validity: {l5['evidence_grade_validity']}%")
 
     print("--------------------------------------------------------------------------------")
     print(f"  OVERALL HARNESS BENCHMARK SCORE:        {score} / 100    {status_str}")

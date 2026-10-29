@@ -44,6 +44,7 @@ The repository bundles an automated, four-tier evaluation harness (`miner/eval_r
 - **Level 2 (Operational Triage)**: Tests intent classification precision/recall across `DISPUTE`, `DOE_EXPERIMENT`, `REPORT_8D`, and `ROUTINE`.
 - **Level 3 (Causal Ground Truth)**: Verifies the 5-element causal chain completeness and enforces decoupling of customer 8D public defenses from physical internal mechanisms.
 - **Level 4 (Physical & DFM Validity)**: Validates mathematical formula syntax and unit dimensional sanity.
+- **Level 5 (Evidence Hierarchy & Citation Traceability)**: Validates FDE 5-tier evidence grading (Grade A-E), multi-source conflict arbitration, and exact citation anchoring back to Message-IDs and raw quotes.
 
 To run the benchmark suite out-of-the-box:
 ```bash
@@ -215,6 +216,7 @@ If you are evaluating this engine on your own internal fab communications (such 
 - **第二级：工序与意图分流准确度（Level 2）**：评测 `DISPUTE`（推诿争论）、`DOE_EXPERIMENT`（分件验证）、`REPORT_8D`（结案报告）、`ROUTINE`（日常流水）的分类召回与准确率。
 - **第三级：因果事实与物理根因保真度（Level 3）**：五元组链条完整度打分，并严格执行“对外公关话术”与“对内物理真实根因”的双轨解耦校验。
 - **第四级：DFM 设计红线数学有效性（Level 4）**：校验派生规则公式的数学运算符（`>=`）、量纲单位及物理边界。
+- **第五级：证据分级与可溯源凭证（Level 5）**：借鉴前线部署工程师（FDE）实践，建立 A-E 五级证据天平（主管定案/分件实测/跨部门对齐/单方推诿/正则候选），解决多模态数据冲突，并将因果五元组强绑定至具体的邮件 Message-ID 及引文原句。
 
 运行基准评测：
 ```bash

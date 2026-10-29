@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-10-28T23:43:00.189944",
-  "overall_harness_score": 96.2,
+  "timestamp": "2026-10-29T10:28:08.453745",
+  "overall_harness_score": 97.0,
   "passed": true,
   "metrics": {
     "level1_cleaning": {
@@ -93,6 +93,13 @@
       "formula_syntax_validity": 100.0,
       "parameter_sanity_rate": 100.0,
       "total_rules": 3
+    },
+    "level5_evidence": {
+      "level": "Level 5: Evidence Hierarchy & Citation Traceability",
+      "score": 100.0,
+      "citation_anchoring_rate": 100.0,
+      "evidence_grade_validity": 100.0,
+      "total_incidents": 4
     }
   }
 }

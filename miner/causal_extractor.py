@@ -45,6 +45,9 @@ class CausalExtractor:
         # 7. Verification Evidence
         verification = cls._extract_verification(full_incident_text)
 
+        # 8. Evidence Anchors (FDE Grade A-E Citation Chain)
+        evidence_chain = cls._build_evidence_chain(timeline, internal_rc, pca, verification)
+
         return {
             "incident_id": timeline.incident_id,
             "title": timeline.title,
@@ -61,8 +64,42 @@ class CausalExtractor:
             "pca_countermeasure": pca,
             "recipe_offset": recipe_offset,
             "design_redline_derived": dfm_rule,
-            "verification_evidence": verification
+            "verification_evidence": verification,
+            "evidence_chain": evidence_chain
         }
+
+    @classmethod
+    def _build_evidence_chain(cls, timeline: IncidentTimeline, internal_rc: str, pca: str, verification: str) -> List[Dict[str, Any]]:
+        """
+        Builds cited evidence records with FDE grades (Grade A to E).
+        """
+        chain = []
+        for em in timeline.emails:
+            body = em.get("body_snippet", "")
+            subj = em.get("subject", "")
+            mid = em.get("msg_id", em.get("message_id", "EMAIL_REF"))
+            date = em.get("date", "")
+
+            # Check if this email contains the Ground Truth or PCA
+            if any(k in body for k in ["公差", "自催化", "干涉", "感度", "膜厚", "根本原因", "真因"]):
+                chain.append({
+                    "grade": "GRADE_A_AUTHORITY_DIRECTIVE" if any(sig in body for sig in ["同意", "按此执行", "条件如下", "定案"]) else "GRADE_C_MULTI_SOURCE_ALIGNMENT",
+                    "source_id": mid,
+                    "date": date,
+                    "type": "GROUND_TRUTH_CITATION",
+                    "quote": internal_rc[:160],
+                    "target_field": "root_cause_internal"
+                })
+            elif any(k in body for k in ["改版", "Sizing", "锁定", "优化", "对策"]):
+                chain.append({
+                    "grade": "GRADE_A_AUTHORITY_DIRECTIVE",
+                    "source_id": mid,
+                    "date": date,
+                    "type": "PCA_CITATION",
+                    "quote": pca[:160],
+                    "target_field": "pca_countermeasure"
+                })
+        return chain
 
     @classmethod
     def _extract_symptom(cls, text: str, title: str) -> str:
