@@ -6,7 +6,7 @@
 | ID | 日期 | 需求（用户口径） | 落地模块 | 验证方式 | 验证结果 | 状态 |
 |---|---|---|---|---|---|---|
 | R-001 | 2026-10-26 | 缺陷代码/机台/站点等私有暗号必须先打捞，不得当无意义词清洗 | `miner/codebook.py`, `miner/cleaner.py` | `eval_runner` Level 1 | Critical Tech Preservation 100%，0 误删 | ✅ 完成 |
-| R-002 | 2026-10-26 | 技术负责人识别不得按发件量统计；以 NPI Kick-off/DOE 名单为金标准 + 语气指令动态识别 | `miner/authority.py` | Level 2 + 人工核对金标准名单 | 天马 G6 各模块 Lead 全对齐（Track=黄峰 等） | ✅ 完成 |
+| R-002 | 2026-10-26 | 技术负责人识别不得按发件量统计；以 NPI Kick-off/DOE 名单为金标准 + 语气指令动态识别 | `miner/authority.py` | Level 2 + 人工核对金标准名单 | 产线各模块 Lead 全对齐（Track=[LEAD] 等） | ✅ 完成 |
 | R-003 | 2026-10-28 | 借鉴 FDE 数据治理：证据分级、冲突仲裁、原句锚定 | `miner/evidence.py`, `miner/causal_extractor.py` | Level 5 | Citation Anchoring 100%，Grade Validity 100% | ✅ 完成 |
 | R-004 | 2026-10-29 | 需要全文检索，但初期全量挖掘后沉淀 knowhow；日常先查结晶缓存，仅置信度不足才深入全文；系统不得随数据增长变慢 | `miner/fulltext_engine.py`, `miner/knowledge_store.py`, `miner/distill.py`, `miner/hybrid_router.py` | Level 6 + CLI 双路由实测 | 路由准确率 100%，L1 精度 100%，L2 Recall@K 100%，认知进化 100% | ✅ 完成（mock 语料）|
 | R-005 | 2026-10-29 | 评测必须端到端：不得"把答案喂到嘴边"式自嗨打分 | `miner/eval_runner.py` Level 6, `benchmarks/retrieval_cases.json` | 真实执行 SQL 检索 + 召回核对 | Level 6 全指标 100，总评 97.8 PASS | ✅ 完成 |
