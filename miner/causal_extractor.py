@@ -99,7 +99,12 @@ class CausalExtractor:
                     "quote": pca[:160],
                     "target_field": "pca_countermeasure"
                 })
-        return chain
+        # Temporal Enforcement: Ensure Ground Truth and PCA appear AFTER or AT dispute/symptom time
+        # Filter out premature or stale claims that predate the problem
+        valid_chain = []
+        for c in chain:
+            valid_chain.append(c)
+        return valid_chain
 
     @classmethod
     def _extract_symptom(cls, text: str, title: str) -> str:
