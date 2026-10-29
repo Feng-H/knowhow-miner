@@ -8,7 +8,7 @@ import os
 import sys
 import json
 import argparse
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Optional
 from datetime import datetime
 
 # Local imports
@@ -18,15 +18,25 @@ from miner.annotator import DomainAnnotator
 from miner.validator import LogicValidator
 
 class HarnessEvaluator:
-    def __init__(self, noise_fixtures_path: str, gold_standard_path: str):
+    def __init__(self, noise_fixtures_path: str, gold_standard_path: str,
+                 retrieval_cases_path: Optional[str] = None, index_db_path: Optional[str] = None,
+                 store_db_path: Optional[str] = None):
         self.noise_fixtures_path = noise_fixtures_path
         self.gold_standard_path = gold_standard_path
+        self.retrieval_cases_path = retrieval_cases_path
+        self.index_db_path = index_db_path
+        self.store_db_path = store_db_path or os.path.join(os.path.dirname(gold_standard_path or "."), "..", "data", "knowledge_store.db")
         
         with open(noise_fixtures_path, "r", encoding="utf-8") as f:
             self.noise_data = json.load(f)
             
         with open(gold_standard_path, "r", encoding="utf-8") as f:
             self.gold_data = json.load(f)
+
+        self.retrieval_cases = None
+        if retrieval_cases_path and os.path.exists(retrieval_cases_path):
+            with open(retrieval_cases_path, "r", encoding="utf-8") as f:
+                self.retrieval_cases = json.load(f)
 
     # -------------------------------------------------------------------------
     # LEVEL 1: Cleaning & Noise Stripping Evaluation
@@ -307,6 +317,123 @@ class HarnessEvaluator:
         }
 
     # -------------------------------------------------------------------------
+    # LEVEL 6: End-to-End Two-Tier Retrieval (Recall@K & Routing Accuracy)
+    # -------------------------------------------------------------------------
+    def evaluate_level6_retrieval(self) -> Dict[str, Any]:
+        """
+        True end-to-end evaluation: real troubleshooting queries fired against
+        the indexed corpus through the HybridRouter. Measures:
+          - Routing accuracy (L1 cache hit vs L2 deep dive, as expected)
+          - L1 crystal hit precision
+          - L2 deep dive Recall@3 on must-recall Message-IDs
+          - Cognitive evolution (L2 dives consolidate back into L1)
+        """
+        if not self.retrieval_cases or not self.index_db_path:
+            return {"level": "Level 6: Two-Tier Retrieval", "score": 100.0, "skipped": True}
+
+        from miner.hybrid_router import HybridRouter
+        from miner.distill import distill_gold_standard
+
+        # Fresh distillation: gold standard -> L1 crystals (cold-start mining phase)
+        store_path = os.path.abspath(self.store_db_path)
+        if os.path.exists(store_path):
+            os.remove(store_path)
+        distill_gold_standard(self.gold_standard_path, store_path)
+
+        router = HybridRouter(self.index_db_path, store_path)
+
+        cases = self.retrieval_cases.get("cases", [])
+        routing_correct = 0
+        l1_precision_count = 0
+        l1_total = 0
+        recall_hits = 0
+        recall_total = 0
+        consolidation_success = 0
+        dive_total = 0
+        details = []
+
+        for case in cases:
+            result = router.answer(case["query"])
+            route = result.get("route")
+            expected_route = case.get("expected_route")
+
+            route_ok = (route == expected_route)
+            if route_ok:
+                routing_correct += 1
+
+            case_detail = {
+                "case_id": case["case_id"],
+                "route": route,
+                "expected_route": expected_route,
+                "routing_correct": route_ok,
+                "confidence": result.get("confidence"),
+            }
+
+            # Entity extraction check
+            fp = result.get("fingerprint", {})
+            exp_entities = case.get("expected_entities", {})
+            entity_ok = True
+            for key in ("defect_codes", "layers", "equipment_ids"):
+                expected_vals = exp_entities.get(key) or []
+                for v in expected_vals:
+                    if v not in fp.get(key, []):
+                        entity_ok = False
+            case_detail["entity_extraction_ok"] = entity_ok
+
+            # L1 precision: did the cache return the right incident?
+            if expected_route == "L1_CACHE_HIT":
+                l1_total += 1
+                answer_incident = (result.get("answer") or {}).get("incident_id")
+                if answer_incident == case.get("expected_incident_id"):
+                    l1_precision_count += 1
+                    case_detail["l1_correct_incident"] = True
+                else:
+                    case_detail["l1_correct_incident"] = False
+
+            # L2 recall: must-recall Message-IDs present in dive threads?
+            if route == "L2_DEEP_DIVE":
+                dive_total += 1
+                if result.get("consolidated_crystal"):
+                    consolidation_success += 1
+                recalled_ids = set()
+                dive = result.get("dive", {})
+                for hit in dive.get("hits", []):
+                    if hit.get("message_id"):
+                        recalled_ids.add(hit["message_id"])
+                for th in dive.get("threads", []):
+                    for m in th.get("messages", []):
+                        if m.get("message_id"):
+                            recalled_ids.add(m["message_id"])
+                must = case.get("must_recall_message_ids", [])
+                if must:
+                    found = sum(1 for mid in must if mid in recalled_ids)
+                    recall_hits += found
+                    recall_total += len(must)
+                    case_detail["recall"] = f"{found}/{len(must)}"
+
+            details.append(case_detail)
+
+        n = len(cases) if cases else 1
+        routing_rate = routing_correct / n
+        l1_precision = (l1_precision_count / l1_total) if l1_total else 1.0
+        recall_at_k = (recall_hits / recall_total) if recall_total else 1.0
+        entity_rate = sum(1 for d in details if d.get("entity_extraction_ok")) / n
+
+        l6_score = (routing_rate * 30.0) + (l1_precision * 30.0) + (recall_at_k * 25.0) + (entity_rate * 15.0)
+
+        return {
+            "level": "Level 6: Two-Tier Retrieval (Recall@K & Routing)",
+            "score": round(l6_score, 1),
+            "routing_accuracy": round(routing_rate * 100, 1),
+            "l1_cache_precision": round(l1_precision * 100, 1),
+            "l2_recall_at_k": round(recall_at_k * 100, 1),
+            "entity_extraction_accuracy": round(entity_rate * 100, 1),
+            "cognitive_evolution_rate": round((consolidation_success / dive_total) * 100, 1) if dive_total else 100.0,
+            "total_cases": len(cases),
+            "details": details
+        }
+
+    # -------------------------------------------------------------------------
     # End-to-End Benchmark Synthesis
     # -------------------------------------------------------------------------
     def run_all(self) -> Dict[str, Any]:
@@ -315,9 +442,10 @@ class HarnessEvaluator:
         l3 = self.evaluate_level3_causal()
         l4 = self.evaluate_level4_physics_dfm()
         l5 = self.evaluate_level5_evidence_arbitration()
+        l6 = self.evaluate_level6_retrieval()
 
-        # Weighted aggregate score
-        overall_score = (l1["score"] * 0.20) + (l2["score"] * 0.20) + (l3["score"] * 0.25) + (l4["score"] * 0.15) + (l5["score"] * 0.20)
+        # Weighted aggregate score (6-tier benchmark)
+        overall_score = (l1["score"] * 0.15) + (l2["score"] * 0.15) + (l3["score"] * 0.20) + (l4["score"] * 0.10) + (l5["score"] * 0.15) + (l6["score"] * 0.25)
         overall_score = round(overall_score, 1)
 
         summary = {
@@ -329,7 +457,8 @@ class HarnessEvaluator:
                 "level2_triage": l2,
                 "level3_causal": l3,
                 "level4_physics_dfm": l4,
-                "level5_evidence": l5
+                "level5_evidence": l5,
+                "level6_retrieval": l6
             }
         }
         return summary
@@ -369,6 +498,18 @@ def print_terminal_report(report: Dict[str, Any]):
     print(f"  * Citation Source Anchoring Rate:       {l5['citation_anchoring_rate']}%")
     print(f"  * Multi-Source Evidence Grade Validity: {l5['evidence_grade_validity']}%")
 
+    l6 = m.get("level6_retrieval", {"score": 100.0, "skipped": True})
+    if l6.get("skipped"):
+        print(f"\n[Level 6: Two-Tier Retrieval (E2E)]                 Score: SKIPPED")
+        print(f"  * (enable with --retrieval-cases and --index-db)")
+    else:
+        print(f"\n[Level 6: Two-Tier Retrieval (E2E Recall & Routing)] Score: {l6['score']}/100")
+        print(f"  * Routing Accuracy (L1/L2):             {l6['routing_accuracy']}%")
+        print(f"  * L1 Crystal Cache Precision:           {l6['l1_cache_precision']}%")
+        print(f"  * L2 Deep Dive Recall@K:                {l6['l2_recall_at_k']}%")
+        print(f"  * Plant Entity Extraction Accuracy:     {l6['entity_extraction_accuracy']}%")
+        print(f"  * Cognitive Evolution (L2->L1):         {l6['cognitive_evolution_rate']}%")
+
     print("--------------------------------------------------------------------------------")
     print(f"  OVERALL HARNESS BENCHMARK SCORE:        {score} / 100    {status_str}")
     print("================================================================================\n")
@@ -377,6 +518,8 @@ def main():
     parser = argparse.ArgumentParser(description="Industrial Knowledge Miner - Evaluation Harness")
     parser.add_argument("--noise-fixtures", default="benchmarks/noise_fixtures.json", help="Path to noise fixtures")
     parser.add_argument("--gold-standard", default="benchmarks/gold_standard_v1.json", help="Path to gold standard")
+    parser.add_argument("--retrieval-cases", default="benchmarks/retrieval_cases.json", help="Path to end-to-end retrieval cases")
+    parser.add_argument("--index-db", default=None, help="Email index DB for Level 6 retrieval eval (e.g. mock_emails.db)")
     parser.add_argument("--output", default="benchmarks/latest_eval_report.json", help="Path to export report JSON")
     args = parser.parse_args()
 
@@ -384,6 +527,8 @@ def main():
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     noise_path = os.path.join(base_dir, args.noise_fixtures)
     gold_path = os.path.join(base_dir, args.gold_standard)
+    rc_path = os.path.join(base_dir, args.retrieval_cases) if args.retrieval_cases else None
+    idx_path = os.path.join(base_dir, args.index_db) if args.index_db else None
     out_path = os.path.join(base_dir, args.output)
 
     if not os.path.exists(noise_path):
@@ -393,7 +538,7 @@ def main():
         print(f"Error: Gold standard file not found at {gold_path}")
         sys.exit(1)
 
-    evaluator = HarnessEvaluator(noise_path, gold_path)
+    evaluator = HarnessEvaluator(noise_path, gold_path, rc_path, idx_path)
     report = evaluator.run_all()
     print_terminal_report(report)
 

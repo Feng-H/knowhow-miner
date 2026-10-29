@@ -1,0 +1,38 @@
+{
+  "version": "1.0.0",
+  "description": "End-to-end retrieval benchmark: real troubleshooting queries answered against the mock email corpus. Each case declares the expected ground-truth incident and the Message-IDs that MUST be recalled (Recall@K), plus the expected routing tier.",
+  "cases": [
+    {
+      "case_id": "RT_001_M2_AL_CORROSION",
+      "query": "5.99寸 M2 过孔边缘出现大面积铝腐蚀 AZ99 报警怎么处理？",
+      "expected_incident_id": "GT_001_M2_AL_CORROSION",
+      "expected_route": "L1_CACHE_HIT",
+      "expected_entities": {
+        "defect_codes": ["AZ99"],
+        "layers": ["M2"]
+      },
+      "must_recall_message_ids": ["<m2_01@mock>", "<m2_02@mock>", "<m2_03@mock>"]
+    },
+    {
+      "case_id": "RT_002_ITO2_CD_DRIFT",
+      "query": "ITO2 线宽均值从 2.62 突跳到 2.69 偏大是什么原因？",
+      "expected_incident_id": "GT_002_ITO2_CD_PHOTOSPEED_JUMP",
+      "expected_route": "L1_CACHE_HIT",
+      "expected_entities": {
+        "layers": ["ITO2"]
+      },
+      "must_recall_message_ids": ["<ito2_01@mock>", "<ito2_02@mock>", "<ito2_03@mock>"]
+    },
+    {
+      "case_id": "RT_003_UNKNOWN_NOVEL_DEFECT",
+      "query": "17300 显影后出现 PHT03 光阻残留批量异常，怎么排查？",
+      "expected_incident_id": null,
+      "expected_route": "L2_DEEP_DIVE",
+      "expected_entities": {
+        "defect_codes": ["PHT03"],
+        "stations": ["17300"]
+      },
+      "must_recall_message_ids": ["<pht03_01@mock>", "<pht03_02@mock>"]
+    }
+  ]
+}

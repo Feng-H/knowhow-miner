@@ -99,7 +99,32 @@ def create_mock_db(db_path: str = "mock_emails.db"):
         )
     ]
 
-    for item in m2_emails + ito2_emails:
+    # 3. Track PR Residue Incident (2 rounds) - NOT in gold standard, used for
+    #    Level 6 cognitive-evolution testing (novel query -> L2 dive -> L1 consolidation)
+    pht03_emails = [
+        (
+            "inbox", 7, "<pht03_01@mock>",
+            (base_time + timedelta(days=30)).strftime("%a, %d %b %Y %H:%M:%S +0800"),
+            "Track_Engineer <engineer_trk@fab.mock>",
+            "Array_Photo <photo_team@fab.mock>",
+            "【G6】17300 显影后 PHT03 光阻残留批量异常",
+            0, "[]",
+            "ADI Inspection 发现 17300 站显影出板后 PHT03 光阻残留成批出现，集中在 Cassette 第 10-20 Slot，请 Track 尽快排查药液与制程！",
+            "mock_chunk_0.mbox", "2017-11-09"
+        ),
+        (
+            "inbox", 8, "<pht03_02@mock>",
+            (base_time + timedelta(days=30, hours=5)).strftime("%a, %d %b %Y %H:%M:%S +0800"),
+            "Track_Lead <track_lead@fab.mock>",
+            "Array_Photo <photo_team@fab.mock>",
+            "答复: 【G6】17300 显影后 PHT03 光阻残留批量异常",
+            1, json.dumps(["显影液浓度趋势.xlsx"]),
+            "排查确认 Dev 药液浓度跌破下限：混药柜 Hosan 补液管路单向阀老化，补液未按比例执行。已更换阀件并恢复正牌混药柜供应，残留消除结案。",
+            "mock_chunk_0.mbox", "2017-11-09"
+        )
+    ]
+
+    for item in m2_emails + ito2_emails + pht03_emails:
         c.execute("""
             INSERT INTO emails (
                 source_folder, seq_num, message_id, date_str, from_addr, to_addr, 
@@ -109,7 +134,7 @@ def create_mock_db(db_path: str = "mock_emails.db"):
 
     conn.commit()
     conn.close()
-    print(f"Mock database created successfully at: {db_path} (6 emails, 2 verified incident clusters)")
+    print(f"Mock database created successfully at: {db_path} (8 emails, 3 incident clusters)")
 
 if __name__ == "__main__":
     create_mock_db()

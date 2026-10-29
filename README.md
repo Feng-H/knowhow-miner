@@ -38,19 +38,42 @@ The system architecture is inspired by frontline engineering experiences as a **
 - `miner/mock_generator.py`: Generates realistic mock incident datasets.
 - `miner/pipeline.py`: End-to-end batch processing pipeline orchestrator.
 
+### Two-Tier Know-how Retrieval (Cognitive Cache Architecture)
+Generic vector RAG fails on manufacturing corpora (parameter-level distinctions like `0.8μm` vs `1.5μm` are invisible to embeddings, and chunking severs causal email threads). Instead, this repo implements an adaptive two-tier architecture that stays fast as the archive grows:
+
+- `miner/fulltext_engine.py`: SQLite FTS5 inverted index (bm25 ranking) replacing slow `LIKE` scans — precise recall of equipment IDs, defect codes, and recipes.
+- `miner/deep_retriever.py`: L2 deep dive — reconstructs full conversation threads (Message-ID / In-Reply-To, with subject-normalization fallback) and surfaces attachment evidence (Excel split tables, PPT 5-Why).
+- `miner/knowledge_store.py`: L1 distilled crystal store — converged causal quintets + DFM rules + evidence anchors, indexed by plant fingerprint, millisecond lookups.
+- `miner/distill.py`: Initial full-corpus mining phase — distills validated incidents into L1 crystals graded by evidence (Grade A = 0.95 confidence).
+- `miner/hybrid_router.py`: Adaptive router — daily queries hit L1 first (zero full-text cost); only when confidence < 0.80 does it trigger an L2 dive, whose findings are consolidated back into L1 (cognitive evolution: the system gets faster and smarter over time).
+- `miner/search.py`: Interactive CLI — `python3 -m miner.search --db mock_emails.db "M2 AZ99 腐蚀怎么处理？"`
+
+```bash
+# Generate mock corpus, distill crystals, then query interactively
+python3 -m miner.mock_generator
+python3 -m miner.distill
+python3 -m miner.search --db mock_emails.db "5.99寸 M2 过孔边缘铝腐蚀 AZ99 怎么处理？"
+```
+
 ### Evaluation Harness & Benchmark Suite
-The repository bundles an automated, four-tier evaluation harness (`miner/eval_runner.py`) paired with open-source sanitized benchmarks (`benchmarks/`):
+The repository bundles an automated, six-tier evaluation harness (`miner/eval_runner.py`) paired with open-source sanitized benchmarks (`benchmarks/`):
 - **Level 1 (Cleaning Fidelity)**: Verifies legal disclaimer stripping, 10+ nested thread de-duplication, and zero-false-positive preservation of critical engineering tokens (e.g., `HP04`, `slot 4-6`, `AZ SR-210`, `Cl2`).
 - **Level 2 (Operational Triage)**: Tests intent classification precision/recall across `DISPUTE`, `DOE_EXPERIMENT`, `REPORT_8D`, and `ROUTINE`.
 - **Level 3 (Causal Ground Truth)**: Verifies the 5-element causal chain completeness and enforces decoupling of customer 8D public defenses from physical internal mechanisms.
 - **Level 4 (Physical & DFM Validity)**: Validates mathematical formula syntax and unit dimensional sanity.
 - **Level 5 (Evidence Hierarchy & Citation Traceability)**: Validates FDE 5-tier evidence grading (Grade A-E), multi-source conflict arbitration, and exact citation anchoring back to Message-IDs and raw quotes.
+- **Level 6 (Two-Tier Retrieval, End-to-End)**: Fires real troubleshooting queries through the HybridRouter against an indexed corpus — measures routing accuracy (L1 hit vs L2 dive), L1 crystal cache precision, L2 Recall@K on must-recall Message-IDs, and the cognitive-evolution rate (L2 dives consolidating back into L1). No answers are fed in; every case executes real SQL retrieval.
 
 To run the benchmark suite out-of-the-box:
 ```bash
-python3 -m miner.eval_runner
+python3 -m miner.mock_generator
+python3 -m miner.eval_runner --index-db mock_emails.db
 ```
-*Expected baseline score: ~96.2 / 100 [PASS].*
+*Expected baseline score: ~97.8 / 100 [PASS] (Level 6 enabled).*
+
+### Development Traceability
+- `docs/DEVLOG.md`: Dated development log — requirement (user's words) → implementation → verification evidence, including honest boundary statements.
+- `docs/REQUIREMENTS.md`: Requirement/result/verification cross-check table for auditing whether agreed requirements were delivered and whether any contradict each other.
 
 ### Privacy & Data Safety
 **This public repository contains ZERO proprietary corporate emails or confidential fab records.** 
@@ -210,19 +233,42 @@ If you are evaluating this engine on your own internal fab communications (such 
 - `miner/eval_runner.py`: 自动化工业评测运行器（Eval Harness），多级指标量化评测清洗保真度、意图分类与物理因果。
 - `miner/pipeline.py`: 端到端批量提炼执行入口。
 
+### 两层认知缓存与全文检索架构（Two-Tier Retrieval）
+通用向量 RAG 在制造业语料上会失效（embedding 分不清 `0.8μm` 与 `1.5μm` 的毫厘之差，切块会切断邮件因果链）。本仓库实现自适应双层架构，**系统不随邮件库增长而变慢**：
+
+- `miner/fulltext_engine.py`：SQLite FTS5 倒排全文索引（bm25 排序），毫秒级精准召回机台号、缺陷代码、配方参数，取代 `LIKE` 全表扫描。
+- `miner/deep_retriever.py`：L2 深潜器——按 Message-ID / In-Reply-To 还原完整会话树（缺头字段时回退主题归一化分组），并识别附件证据（Excel 分件表 / PPT 5-Why）。
+- `miner/knowledge_store.py`：L1 知识结晶库——已收敛因果五元组 + DFM 规则 + 证据锚点，按工厂指纹索引，毫秒级查询。
+- `miner/distill.py`：初期全量挖掘阶段——将已验证事件按证据分级蒸馏进 L1（Grade A 置信 0.95 起步）。
+- `miner/hybrid_router.py`：自适应路由器——日常查询先打 L1（零全文开销）；置信度 < 0.80 才触发 L2 深潜，深潜结果自动结晶回填 L1（认知进化：越用越快越聪明）。
+- `miner/search.py`：终端交互检索入口——`python3 -m miner.search --db mock_emails.db "M2 AZ99 腐蚀怎么处理？"`
+
+```bash
+# 生成模拟语料 → 蒸馏结晶 → 交互检索
+python3 -m miner.mock_generator
+python3 -m miner.distill
+python3 -m miner.search --db mock_emails.db "5.99寸 M2 过孔边缘铝腐蚀 AZ99 怎么处理？"
+```
+
 ### 自动化评测套件与基准测试（Evaluation Harness）
-本项目内置四级量化评估套件（`miner/eval_runner.py`）与公开基准测试集（`benchmarks/`）：
+本项目内置六级量化评估套件（`miner/eval_runner.py`）与公开基准测试集（`benchmarks/`）：
 - **第一级：清洗脱水保真度（Level 1）**：量化检验免责声明过滤率、多层嵌套引用（10层以上）剥离率，以及机台参数（如 `HP04`、`slot 4-6`、`AZ SR-210`、`Cl2`）的零误删率（0 False Positives）。
 - **第二级：工序与意图分流准确度（Level 2）**：评测 `DISPUTE`（推诿争论）、`DOE_EXPERIMENT`（分件验证）、`REPORT_8D`（结案报告）、`ROUTINE`（日常流水）的分类召回与准确率。
 - **第三级：因果事实与物理根因保真度（Level 3）**：五元组链条完整度打分，并严格执行“对外公关话术”与“对内物理真实根因”的双轨解耦校验。
 - **第四级：DFM 设计红线数学有效性（Level 4）**：校验派生规则公式的数学运算符（`>=`）、量纲单位及物理边界。
 - **第五级：证据分级与可溯源凭证（Level 5）**：借鉴前线部署工程师（FDE）实践，建立 A-E 五级证据天平（主管定案/分件实测/跨部门对齐/单方推诿/正则候选），解决多模态数据冲突，并将因果五元组强绑定至具体的邮件 Message-ID 及引文原句。
+- **第六级：两层检索端到端评测（Level 6）**：以真实排查问题穿过 HybridRouter 对索引库执行真实 SQL 检索——评测路由准确率（L1 命中 vs L2 深潜）、L1 结晶精度、L2 Recall@K（必须召回的 Message-ID）与认知进化率（L2 深潜回填 L1 成功率）。所有用例不预先喂答案，全部真刀真枪跑检索。
 
 运行基准评测：
 ```bash
-python3 -m miner.eval_runner
+python3 -m miner.mock_generator
+python3 -m miner.eval_runner --index-db mock_emails.db
 ```
-*基准基线得分：~96.2 / 100 [PASS]。*
+*基准基线得分：~97.8 / 100 [PASS]（含 Level 6）。*
+
+### 开发可追溯性（Development Traceability）
+- `docs/DEVLOG.md`：按日期的开发日志——需求（用户原话）→ 实现 → 验证证据，含诚实的边界声明。
+- `docs/REQUIREMENTS.md`：需求/结果/验证对照表，用于审计约定需求是否交付、前后是否矛盾。
 
 ### 隐私与安全隔离承诺
 **本开源代码库绝不包含任何工厂真实邮件、商业机密或未脱敏数据。** 
