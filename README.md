@@ -86,6 +86,28 @@ For agents requiring standard input/output (stdio) command execution:
 }
 ```
 
+#### 3. Run Self-Hosted Local MCP Server
+To run a completely self-hosted, offline MCP server on your local machine or internal fab network:
+
+```bash
+# Launch local MCP server (starts SSE on :8800/sse and JSON-RPC on :8800/mcp)
+python3 -m miner.mcp_server --port 8800
+```
+
+#### 4. Commercial Token & Concurrency Administration
+For enterprise administrators managing API tokens, concurrency limits, and anti-scraping quotas:
+
+```bash
+# Issue a commercial license token (365 days, 5 concurrent seats, 60 requests/min)
+python3 -m miner.token_admin create --client "Semiconductor Client A" --tier commercial --days 365 --concurrency 5 --rate-limit 60
+
+# List active tokens and usage metrics
+python3 -m miner.token_admin list
+
+# Revoke a token immediately
+python3 -m miner.token_admin revoke <TOKEN_OR_ID>
+```
+
 #### Available MCP Tools:
 - `fpd_diagnose_defect`: Query frontline defect root causes, cross-department disputes, split table probes, PCA permanent actions, and derived DFM redlines.
 - `fpd_get_preset_cases`: List curated golden manufacturing defect scenarios (Al corrosion, CD jump, Taper slope, PR residue).
@@ -323,6 +345,28 @@ KnowhowCraft 工业知识大脑原生支持标准 Model Context Protocol（MCP�
     }
   }
 }
+```
+
+#### 3. 运行本地开源离线 MCP 服务器
+若需在本地或工厂内网独立拉起完全离线的 MCP 服务：
+
+```bash
+# 启动本地 MCP 服务（提供 :8800/sse 与 :8800/mcp 端点）
+python3 -m miner.mcp_server --port 8800
+```
+
+#### 4. 商业授权 Token、并发限制与防爬风控管理
+若对外部团队或客户开放服务，可使用内置的授权与风控发卡工具：
+
+```bash
+# 发行商业授权 Token（例如：365天有效期、5席位并发、60次/分钟）
+python3 -m miner.token_admin create --client "某微电子客户" --tier commercial --days 365 --concurrency 5 --rate-limit 60
+
+# 查看所有授权 Token 与调用指标
+python3 -m miner.token_admin list
+
+# 客户停缴或异常时一键吊销
+python3 -m miner.token_admin revoke <Token或ID>
 ```
 
 #### 暴露的 MCP 工具清单：
