@@ -86,6 +86,37 @@
   私有化部署的开源大模型（如 DeepSeek-R1 / Qwen2.5-14B），在严格上下文约束下做因果五元组提炼与
   Grade A~E 仲裁，提炼完成后沉淀回填 L1 知识库，日常查询再次回归 0 模型调用。
 
+## [2026-10-29] 公网门户 fpd.knowhowcraft.com 重构与 Docker 物理安全隔离
+
+### 需求背景（用户原话校准）
+> "那我们这个主页 fpd.knowhowcraft.com 是否要重构，还是要提供一些别人可以查询的内容，但是查出来的结果要过滤敏感信息(工厂、人名、手机等信息)，只允许 查询先打 L1 ，不允许查原邮件。"
+> "我再提一句 fpd.knowhowcraft.com 部署是否通过docker会更加安全?"
+
+### 落地实现与物理安全隔离措施
+1. **纯净 L1 接口与原邮件物理绝缘**（`fpd-server/server.py`）：
+   - 服务端代码**彻底剔除任何原邮件、mbox、index.db 或 L2 深潜模块的引用与导入**；
+   - 仅单向挂载只读的 `data/knowledge_store.db:ro`；
+   - 遭遇未知/低置信工况时，严格执行空气断路（Air-gap Fallback Interception），绝不下潜抓取数据，而是返回安全告知并顺势引导私有化合作表单。
+2. **深度敏感信息脱敏过滤器**（`fpd-server/sanitizer.py`）：
+   - 产线厂区实体（天马、华星、CSOT 等）全量替换为 `[国内某头部G6 LTPS产线]` 等中立代称；
+   - 真实工程师人名、工号、电话、邮箱一律置换为工程职能角色（如 `[光刻主管工程师]`）；
+   - 坚决保留核心物理量纲、公差公式、化学方程式与 DFM 红线。
+3. **Docker 容器化沙箱部署**（`Dockerfile`, `docker-compose.yml`）：
+   - 停止并废除宿主机裸跑的 `fpd-knowhowcraft.service`；
+   - 采用 `python:3.11-slim` 容器，以普通非特权用户 `1000:1000` 运行；
+   - 容器内部在物理文件系统层级根本不包含任何宿主机的原始邮件文件；
+   - 端口映射至宿主机 `8800`，由前端 NPM + Cloudflare 反向代理无缝接管。
+4. **前端交互式诊断探针**（`templates/index.html`）：
+   - 在首页提供「现场工艺因果交互诊断探针」，内置真实工况快捷标签与自由输入研判；
+   - 毫秒级展示五元组因果卡片（表象、争议、物理真因、PCA 对策、DFM 规则与证据等级）。
+
+### 验证结果
+- 容器启动健康检查通过：`docker ps` 状态 Healthy，常驻内存仅 ~32MB；
+- 真实公网 HTTPS 验证：
+  - `curl -s https://fpd.knowhowcraft.com/health` → `200 OK`
+  - `curl -s -X POST https://fpd.knowhowcraft.com/api/diagnose -d '{"query":"M2铝腐蚀"}'` → 返回完整脱敏因果五元组 + DFM 公式
+  - `curl -s -X POST https://fpd.knowhowcraft.com/api/diagnose -d '{"query":"未知工况"}'` → 安全触发拦截告知与转化引导，未发生任何下潜泄密。
+
 ---
 
 ## 历史条目索引
