@@ -55,6 +55,42 @@ python3 -m miner.distill
 python3 -m miner.search --db mock_emails.db "5.99寸 M2 过孔边缘铝腐蚀 AZ99 怎么处理？"
 ```
 
+### MCP (Model Context Protocol) Integration: WorkBuddy, Cursor & Claude
+
+The KnowhowCraft industrial knowledge brain exposes native Model Context Protocol (MCP) endpoints via both Server-Sent Events (SSE) and direct JSON-RPC, allowing AI agents such as **WorkBuddy**, **Cursor**, and **Claude Desktop** to perform real-time root-cause diagnostic lookups directly within agent workflows.
+
+#### 1. Remote SSE Configuration (Recommended)
+Add the following to your agent's `mcp.json` (e.g., in WorkBuddy or Cursor settings):
+
+```json
+{
+  "mcpServers": {
+    "fpd-knowhowcraft": {
+      "url": "https://fpd.knowhowcraft.com/sse"
+    }
+  }
+}
+```
+
+#### 2. Local Stdio Bridge Mode
+For agents requiring standard input/output (stdio) command execution:
+
+```json
+{
+  "mcpServers": {
+    "fpd-knowhowcraft": {
+      "command": "python3",
+      "args": ["miner/mcp_bridge.py"]
+    }
+  }
+}
+```
+
+#### Available MCP Tools:
+- `fpd_diagnose_defect`: Query frontline defect root causes, cross-department disputes, split table probes, PCA permanent actions, and derived DFM redlines.
+- `fpd_get_preset_cases`: List curated golden manufacturing defect scenarios (Al corrosion, CD jump, Taper slope, PR residue).
+- `fpd_query_dfm_rules`: Query Tape-out DFM physical rules and formulas.
+
 ### Evaluation Harness & Benchmark Suite
 The repository bundles an automated, six-tier evaluation harness (`miner/eval_runner.py`) paired with open-source sanitized benchmarks (`benchmarks/`):
 - **Level 1 (Cleaning Fidelity)**: Verifies legal disclaimer stripping, 10+ nested thread de-duplication, and zero-false-positive preservation of critical engineering tokens (e.g., `HP04`, `slot 4-6`, `AZ SR-210`, `Cl2`).
@@ -257,6 +293,42 @@ python3 -m miner.mock_generator
 python3 -m miner.distill
 python3 -m miner.search --db mock_emails.db "5.99寸 M2 过孔边缘铝腐蚀 AZ99 怎么处理？"
 ```
+
+### MCP（模型上下文协议）集成：对接 WorkBuddy、Cursor、Claude 与外部 Agent
+
+KnowhowCraft 工业知识大脑原生支持标准 Model Context Protocol（MCP），同时提供 Server-Sent Events（SSE）长连接与无状态 JSON-RPC 端点，可将半导体显示一线工艺研判大脑作为子 Agent / 工具直接挂载至 **腾讯 WorkBuddy**、**Cursor**、**Claude Desktop** 等智能体工作流中。
+
+#### 1. 远程 SSE 方式接入（推荐）
+在 WorkBuddy（`~/.workbuddy/mcp.json` 或设置界面）或 Cursor 中直接配置远程 SSE 链接：
+
+```json
+{
+  "mcpServers": {
+    "fpd-knowhowcraft": {
+      "url": "https://fpd.knowhowcraft.com/sse"
+    }
+  }
+}
+```
+
+#### 2. 命令行 Stdio 桥接接入
+若宿主客户端仅支持本地进程命令行（stdio）交互，可使用内置轻量桥接脚本：
+
+```json
+{
+  "mcpServers": {
+    "fpd-knowhowcraft": {
+      "command": "python3",
+      "args": ["miner/mcp_bridge.py"]
+    }
+  }
+}
+```
+
+#### 暴露的 MCP 工具清单：
+- `fpd_diagnose_defect`：工艺异常与缺陷因果研判（输入缺陷现象或代码，返回脱敏物理根因、推诿争议、分件验证探针、PCA 治本对策与 DFM 设计红线）。
+- `fpd_get_preset_cases`：获取已收录的金标准实战案例清单（M2铝腐蚀、ITO2 CD漂移、M1坡度RC延迟、17300显影残留等）。
+- `fpd_query_dfm_rules`：检索流片前 DFM 设计红线及工程物理公式。
 
 ### 自动化评测套件与基准测试（Evaluation Harness）
 本项目内置六级量化评估套件（`miner/eval_runner.py`）与公开基准测试集（`benchmarks/`）：
