@@ -15,7 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - **Pre-mining Human Alignment (Step 0: Mentor Mapping)**:
   - Formulated the *Org Triage & Mentor Anchor* methodology (`miner/annotator.py`), scanning meeting attendance and department trees to map senior mentors (Grade A authority) and suppress novice/apprentice transactional noise.
 - **Bilingual Cadre Alias Resolution**:
-  - Implemented entity disambiguation mapping Chinese names and English aliases (e.g. `Joe Chou` <-> `周清文`) into unified decision nodes, preventing cross-language context fragmentation common in early cross-strait fab management.
+  - Implemented entity disambiguation mapping Chinese names and English aliases (e.g. `David Chen` <-> `陈大卫`) into unified decision nodes, preventing cross-language context fragmentation common in early cross-strait fab management.
 - **Envelope Unwrapping for Auto-Forwarded Corporate Mailboxes**:
   - Implemented `original_sender_unwrapping` in `miner/cleaner.py` and `miner/causal_extractor.py` to pierce auto-forwarding envelope headers (`From: [USER]`) and recover internal true authors (e.g. Lead Process Engineers).
 - **Process Topology Context Validation**:
