@@ -67,8 +67,7 @@
 
 ### 已知边界（诚实声明）
 
-- Level 6 当前在 mock 语料（8 封）上验证；真实 22k 封语料上的 Recall@K 待 CSOT/天马
-  数据接入后复测。
+- Level 6 当前在 mock 语料（8 封）上验证；真实海量历史语料上的 Recall@K 待全量数据接入后复测。
 - `unicode61` 分词器对中文按整段切词，长中文短语召回依赖字面匹配；真实库上若召回不足，
   下一步引入 jieba 预分词或 trigram tokenizer（已列入待办）。
 - L2 深潜回填的结晶目前为 Grade E 置信 0.55（provisional），需人工/LLM 五元组仲裁确认后
@@ -98,7 +97,7 @@
    - 仅单向挂载只读的 `data/knowledge_store.db:ro`；
    - 遭遇未知/低置信工况时，严格执行空气断路（Air-gap Fallback Interception），绝不下潜抓取数据，而是返回安全告知并顺势引导私有化合作表单。
 2. **深度敏感信息脱敏过滤器**（`fpd-server/sanitizer.py`）：
-   - 产线厂区实体（天马、华星、CSOT 等）全量替换为 `[国内某头部G6 LTPS产线]` 等中立代称；
+   - 产线厂区实体全量替换为 `[国内某头部G6 LTPS产线]` 等中立代称；
    - 真实工程师人名、工号、电话、邮箱一律置换为工程职能角色（如 `[光刻主管工程师]`）；
    - 坚决保留核心物理量纲、公差公式、化学方程式与 DFM 红线。
 3. **Docker 容器化沙箱部署**（`Dockerfile`, `docker-compose.yml`）：

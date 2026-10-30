@@ -17,11 +17,11 @@
   - **Pre-Commit Check**: Always run `git diff` and search against sensitive name catalogs before creating a commit.
 
 ### 1.2 Enterprise & Fab Abstraction
-- **Rule**: Never reference real-world company names or proprietary commercial project codes in the public repository.
-- **Replacements**:
-  - `华星光电 / CSOT` ➔ `Fab-G8.5` / `某高世代 a-Si 制造基地`
-  - `天马 / Tianma` ➔ `Fab-G6` / `某头部 G6 LTPS/AMOLED 产线`
-  - `微智医疗 / Intellimicro` ➔ `MedTech-MEMS` / `某微纳植入医疗器械基地`
+- **Rule**: Never reference real-world company names, corporate entities, or proprietary commercial project codes in the public repository.
+- **Protocol**: Always use generic, capability-based domain labels:
+  - Display Fab Line A: `Fab-G8.5` / `高世代 a-Si 制造产线`
+  - Display Fab Line B: `Fab-G6` / `头部 G6 LTPS/AMOLED 产线`
+  - Medical Device Base: `MedTech-MEMS` / `微纳植入医疗器械基地`
 
 ### 1.3 Strict Data Isolation (Air-Gap)
 - The public repo contains **ZERO real emails, ZERO SQLite production indices, ZERO mbox chunks, and ZERO raw Office attachments**.

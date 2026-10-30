@@ -8,7 +8,7 @@ This module maps engineering authority dynamically across time:
 1. Static Registry Baseline (from DOE/NPI rosters as initial seeds)
 2. Dynamic Linguistic & Semantic Role Detection (Detecting true Tech Leads via tone,
    directive structuring, experimental split parameters, and convergence closure)
-3. Fluid Adaptation across Personnel Turnover & Fab Transitions (CSOT -> Tianma -> Intellimicro).
+3. Fluid Adaptation across Personnel Turnover & Fab Transitions (Cross-Generation Fab Migrations).
 """
 
 import re

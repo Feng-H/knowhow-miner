@@ -1,7 +1,7 @@
 """
-FPD Multi-Fab Codebook & Metadata Dictionary (Tianma, CSOT, Intellimicro)
+FPD Multi-Fab Codebook & Metadata Dictionary (Multi-Generation FPD Lines)
 ========================================================================
-Author: Huang Feng & Hermes Agent
+Author: John Huang & Hermes Agent
 License: CC BY-NC-SA 4.0
 
 This module serves as the primary factory dictionary for `knowhow-miner`.
@@ -51,12 +51,12 @@ class FPDCodebook:
 
     # 1. Factory / Organization Codes
     FAB_CODES = {
-        "A1": "厦门天马 G5.5/G6 Array 阵列厂",
-        "F1": "厦门天马 CF 彩膜厂",
-        "C1": "厦门天马 Cell 成盒制程厂",
-        "M1": "厦门天马 Module 模组厂",
-        "CSOT_T1": "华星光电 G8.5 T1 阵列厂",
-        "CSOT_T2": "华星光电 G8.5 T2 阵列厂",
+        "A1": "某头部 G6 Array 阵列厂",
+        "F1": "某头部 G6 CF 彩膜厂",
+        "C1": "某头部 G6 Cell 成盒制程厂",
+        "M1": "某头部 G6 Module 模组厂",
+        "FAB_T1": "某头部 G8.5 T1 阵列厂",
+        "FAB_T2": "某头部 G8.5 T2 阵列厂",
     }
 
     # 2. Department & Team Codes
