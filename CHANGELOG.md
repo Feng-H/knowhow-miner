@@ -13,8 +13,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Added
 - **Centralized Frontline Industrial Engineering Rules (`docs/ENGINEERING_RULES.md`)**:
-  - Published comprehensive codebook formalizing 20 frontline physical heuristics and causality principles (Rules 41 to 61).
-  - Codified key physical mechanisms: Mentor Anchor tracking (Rule 41), bilingual cadre entity disambiguation (Rule 43), OEM physical safety boundary probing (Rule 45), fluid anisotropy & DFM layout routing alignment (Rule 46), lift pin thermal sink & dark cluster mitigation (Rule 47), IS/IS-NOT hardware state machine audits (Rule 50), latent micro-crack damage & multi-pass exposure models (Rule 54/55), thermal manifestation & post-anneal visual inspection gating (Rule 56/57), Occam's razor singular physical attribution (Rule 58), and developer air knife turbulent/evaporative stripe mura mechanisms (Rule 59).
+  - Published comprehensive codebook formalizing 20 frontline physical heuristics and causality principles, structured by domain-prefixed taxonomy:
+    - `RULE-ORG-*` (Organizational & Expert Tacit Grounding: mentor anchor, bilingual alias, onboarding baseline, expert mental models)
+    - `RULE-FLU-*` (Fluid Dynamics & Aerodynamics: OEM boundary probing, fluid anisotropy & DFM, air knife aerodynamics & TMAH micro-etch, nozzle standby)
+    - `RULE-THM-*` (Thermodynamics & Metrology: lift pin thermal sink, thermal anneal phase contrast visibility shifts, organic film spec rationalization)
+    - `RULE-MEC-*` (Mechanical Shock & Spatiotemporal Stress: latent micro-crack damage, multi-pass exposure models, wet double roller stiction)
+    - `RULE-PAR-*` (Parsimony & State Machine: Occam's razor singular physical trigger, anti-over-retrieval, IS/IS-NOT 30-day state machine audit, defense vs offense gating)
+    - `RULE-ONT-*` (Ontology Engineering & Air-Gap: two-stage relational grounding for Auto-Ontology, open methodology vs private data air-gap)
 - **Parsimony Engine & Anti-Conflation (Rule 52)**:
   - Implemented Occam's razor validation in `miner/validator.py` to counter LLM reporting bias. Distinguishes genuine shopfloor single physical triggers (e.g. Air Knife velocity boundary, mechanical roller bearing stiction, isolated recipe inheritance failure) from verbose composite 4M1E excuses (Man, Machine, Material, Method) commonly packaged in corporate 8D presentations.
 - **Process Visibility Shift Modeling (Rule 53)**:

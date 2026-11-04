@@ -1,245 +1,184 @@
 # Frontline Industrial Engineering Rules & Causality Codebook
 ## 一线实战工业认知工程原则与因果准则表
 
-> **Scope**: Standard methodology rules for industrial tacit knowledge extraction, causal disambiguation, and DFM rule derivation in `knowhow-miner`.  
-> **Governance**: Enforces synthetic personas (`David Chen` / `陈大卫`, `Alex Wang` / `王亚历`, `[MENTOR]`) and capability-based domain designations (`Fab-G6`, `Fab-G8.5`, `MedTech-MEMS`). Completely isolated from proprietary fab records.
+> **Architecture Philosophy (架构哲学)**:  
+> 工业智能算法与制造现场的规则绝不能使用扁平无序的数字流水号（如 1-N），否则数据管道工程、系统基建与现场物理机理一旦新增规则就会全盘冲突混乱。  
+> 本代码本采用**领域前缀标识分类体系（Domain-Prefixed Rule Taxonomy）**：
+> - **`RULE-ORG-*`**：组织阵眼、专家隐性心智与实体消歧（Organizational & Expert Tacit Grounding）
+> - **`RULE-FLU-*`**：流体力学、狭缝涂布流变与气动风刀（Fluid Dynamics & Aerodynamics）
+> - **`RULE-THM-*`**：热力学温场、退火相变与光学显相（Thermodynamics, Shrinkage & Optical Metrology）
+> - **`RULE-MEC-*`**：机械撞击接触、潜伏暗伤与时空解耦（Mechanical Shock & Spatiotemporal Stress）
+> - **`RULE-PAR-*`**：因果归因极简律、奥卡姆剃刀与状态机（Causal Attribution, Parsimony & State Machine）
+> - **`RULE-ONT-*`**：工业本体工程与方法论隔离防御（Ontology Engineering & Methodology Air-Gap）
 
 ---
 
-### Table of Contents (目录)
+### Category Index (规则分类总览)
 
-1. [Rule 41: Mentor Anchor vs Apprentice Noise Suppression (组织阵眼与新人噪声对冲法则)](#rule-41)
-2. [Rule 43: Bilingual Cadre Alias Resolution & Entity Disambiguation (中英文干部别名实体消歧法则)](#rule-43)
-3. [Rule 44: Seniority & Baseline Onboarding Anchor (入职基准时钟与成熟度推断双重定锚法则)](#rule-44)
-4. [Rule 45: Equipment Physical Boundary Probing & Boundary Tuning (倒逼设备物理极限与原厂安全边界探针法则)](#rule-45)
-5. [Rule 46: Fluid Anisotropy vs DFM Topological Alignment (流体各向异性与 DFM 走线拓扑反推法则)](#rule-46)
-6. [Rule 47: Thermal Sink, Local CD Shrinkage & Dark Cluster Mitigation (顶针局域热沉微温差诱发关键尺寸收缩与宏观暗团闭环法则)](#rule-47)
-7. [Rule 48: Expert Alignment & The 20/80 Rule of Tacit Know-How (专家对齐与隐性心智模型激活法则)](#rule-48)
-8. [Rule 50: IS/IS-NOT Differential & Tool State Machine Auditing (控制变量对比法与设备硬件状态机穿透归因法则)](#rule-50)
-9. [Rule 51: Organic Film Spec Rationalization & Thinning Pitfalls (高分子有机膜极限减薄与量化规格解耦准则)](#rule-51)
-10. [Rule 52: Anti-Over-Retrieval & Attribution Parsimony (严防过度检索与强行拼装的因果污染法则)](#rule-52)
-11. [Rule 53: The Primacy of Human Tacit Knowledge in Know-How Mining (专家心智价值第一性法则)](#rule-53)
-12. [Rule 54: Latent Damage Mechanics & Multi-Pass Exposure Model (暗伤潜伏与多重循环累积暴露因果模型)](#rule-54)
-13. [Rule 55: Substrate Breakage & Double Roller Impact Chipping (微观暗伤与对辊机械接触应力溯源法则)](#rule-55)
-14. [Rule 56: Thermal Manifestation & Post-Anneal Inspection Realignment (高分子薄膜退火显像与宏观目检防线后移法则)](#rule-56)
-15. [Rule 57: Inspection Gating vs Physical Root Cause Elimination (防守截流 vs 进攻根治：条纹缺陷前后端解耦法则)](#rule-57)
-16. [Rule 58: Occam's Razor & Singular Physical Trigger vs 4M Management Narratives (奥卡姆剃刀与极简归因法则)](#rule-58)
-17. [Rule 59: Longitudinal Stripe Mura: Slit Coater Falsehood vs Develop Air Dry Knife Physical Truth (显影风刀机理与条纹真因甄别准则)](#rule-59)
-18. [Rule 60: Two-Stage Relational Grounding for Enterprise Auto-Ontology (NVIDIA Auto-Ontology 语义图谱与确定性推理范式)](#rule-60)
-19. [Rule 61: Methodology Engine vs Domain Knowledge Store (方法论母机与领域私有知识库解耦隔离准则)](#rule-61)
+| 类别前缀 | 涵盖领域 | 核心目标 | 包含规则 |
+| :--- | :--- | :--- | :--- |
+| **`RULE-ORG`** | 组织与人员实体 | 抑制表面发信噪音，锁定真正技术决策阵眼，激活专家隐性心智 | ORG-01 至 ORG-05 |
+| **`RULE-FLU`** | 流体力学与涂布 | 突破原厂保守间隙，解耦走线微观拦水坝，消除风刀气压与微腐蚀白条 | FLU-01 至 FLU-04 |
+| **`RULE-THM`** | 热力学与光学相位 | 治理顶针局域微温差漏热，解耦退火体积收缩显影与目检防线后移 | THM-01 至 THM-03 |
+| **`RULE-MEC`** | 机械暗伤与时空解耦 | 解耦常温机械受创与高温真空引爆粉碎，多重过机加权锁定真凶 | MEC-01 至 MEC-02 |
+| **`RULE-PAR`** | 极简归因与奥卡姆剃刀 | 剥离管理汇报 4M 复合借口，四维反问倒查硬件状态机，单点物理破局 | PAR-01 至 PAR-04 |
+| **`RULE-ONT`** | 本体落地与方法论隔离 | 关系表 3NF 范式化与 Auto-Ontology 语义对齐，开源母机与数据物理隔离 | ONT-01 至 ONT-02 |
 
 ---
 
-<a id="rule-41"></a>
-### Rule 41: Mentor Anchor vs Apprentice Noise Suppression (组织阵眼与新人噪声对冲法则)
+### 1. 组织决策与专家心智 (RULE-ORG: Organizational & Expert Tacit Grounding)
 
-- **Problem / 陷阱**: In early factory communication archives, junior engineers handle daily routine shifts, logging, and transactional handovers. Surface email metrics show apprentices having 5x to 10x higher volume than senior experts. Blind algorithmic count-based attribution erroneously assigns technical authority to junior loggers.
+#### `RULE-ORG-01`: Mentor Anchor vs Apprentice Noise Suppression (组织阵眼与新人噪声对冲法则)
+- **Problem / 陷阱**: 新人工程师承担现场交接班、巡检与机械记录，表面发信量往往是资深老法师的 5~10 倍。通用统计算法若按“发信量（Count）”加权，会极其荒谬地把新人当成技术主导者，被大量事务性噪音淹没。
 - **Methodology / 方法**:
-  1. *Apprentice Noise Suppression*: Downweight repetitive shift handovers and transactional logs containing low technical parameter density.
-  2. *Mentor Anchor Tracking*: Anchor technical ground truth to senior master engineers (`[MENTOR]` / `David Chen`). While their message frequency is low, their directives contain high-density parameters, recipe locks, and signed approval attachments.
-  3. *Observer Archive Labeling*: Classify archives where the engineer was merely observing/learning as secondary contextual evidence rather than primary causal ground truth.
+  1. *新人事务性抑制（Apprentice Noise Suppression）*：对排班通知、日常值班日志等低技术参数密度的邮件执行权重抑制。
+  2. *技术阵眼定锚（Mentor Anchor Tracking）*：技术 Ground Truth 必须坚决锚定在发信量少但字字千钧的资深主管与师傅（`David Chen` / `[MENTOR]`），其指令具有高密度物理参数（Slot、Recipe、Dose）与定案拍板特征。
+  3. *见习期客观定位（Observer Archive）*：工程师在学徒期间仅作为抄送/记录者的历史语料，界定为“第三方见闻卷宗”，严禁过度脑补因果。
+
+#### `RULE-ORG-02`: Bilingual Cadre Alias Resolution & Entity Disambiguation (中英文干部别名实体消歧法则)
+- **Problem / 陷阱**: 半导体与高世代产线中，资深台籍/外籍干部常在正式会议纪要写中文名（如 `周清文`），在口头交代与邮件沟通中使用英文昵称（如 `Joe Chou`、`LMW`）。算法若缺乏别名映射，会撕裂为两个人，割断同一事件的因果链。
+- **Methodology / 方法**:
+  1. *署名与抄送映射矩阵*：穿透邮件签名档、抄送括号配对（`Name (English Alias)`）与内部通讯录，建立双向映射表。
+  2. *底层统一 UUID*：在实体抽取前将中英文别名归一化至唯一的 `Engineer_UUID`，确保跨语言决策树完全闭环。
+
+#### `RULE-ORG-03`: Seniority Baseline & Onboarding Anchor (入职基准时钟与成熟度推断双重定锚法则)
+- **Problem / 陷阱**: 依靠代收邮件的最早时间判断入职会导致数月至数年的“代收配置延迟时钟误差”；且企业 HTML 签名模板内嵌的 `cid:...@DDMMYYYY-...` 仅代表企业 IT 统一更新模板时间，非个人入职时钟。
+- **Methodology / 方法**:
+  1. *业务成熟度反推*：第一天邮件即在下发光阻评估、拒绝高危膜厚者，必为成熟骨干而非新人。
+  2. *工号序列批次交叉核验*：利用工号的年份编码规律（如 `F` + 年份代码 + 流水号）与全厂人员库对齐。
+  3. *首封内部测试信定锚*：穿透检索发件人与收件人均为本人的第一封内部 `test` / `测试消息` 原始时间戳，物理锁定到岗第一天。
+
+#### `RULE-ORG-04`: Expert Alignment & The 20/80 Rule of Tacit Know-How (专家对齐与隐性心智模型激活法则)
+- **Problem / 陷阱**: 工厂历史记录（工单、邮件、PPT）中显性记录的仅占 20%（改了什么参数、换了什么零件）；真正高价值的 80%（为何这样改、机台机械干涉与系统权衡）沉睡在专家隐性心智模型（Mental Model）中。
+- **Methodology / 方法**:
+  1. *事实骨架拼装（Skeleton Extraction）*：算法从海量数据中理清时间线、机台号与参数变动。
+  2. *交互式矛盾追问（Dialogue Probing）*：主动向专家抛出逻辑冲突点（如“为何只有特定点位加温？”、“为何特定机型才暴雷？”）。
+  3. *隐性因果激活*：由专家一句话揭示深层物理约束，完成从参数记录到 DFM 设计红线的升华。
+
+#### `RULE-ORG-05`: The Primacy of Human Tacit Knowledge in Know-How Mining (专家心智价值第一性法则)
+- **Problem / 陷阱**: 迷信纯算法无监督挖掘能自动从海量文字中“领悟”高阶制造机理。
+- **Methodology / 方法**:
+  1. *切片 vs 合成器*：文字永远只是现场动作的碎片；串联前道形貌、本道流变与后道量测的因果网络来自于人类专家的心智结构。
+  2. *人机协同边界*：算法是高精度过滤探针，人类专家是物理因果的终极裁决者与知识结晶的源泉。
 
 ---
 
-<a id="rule-43"></a>
-### Rule 43: Bilingual Cadre Alias Resolution & Entity Disambiguation (中英文干部别名实体消歧法则)
+### 2. 流体力学与涂布风刀 (RULE-FLU: Fluid Dynamics & Aerodynamics)
 
-- **Problem / 陷阱**: In semiconductor and advanced display fabs, senior expatriate and regional technical directors frequently alternate between English aliases (e.g. `Joe Chou`, `LMW`) and full Chinese names in official minutes. Naive extraction treats them as separate entities, tearing apart causal discussion threads.
+#### `RULE-FLU-01`: Equipment Physical Boundary Probing & Boundary Tuning (倒逼设备物理极限与原厂安全边界探针法则)
+- **Problem / 陷阱**: 设备原厂（TEL、DNS、Nikon 等）出于质保免责给出的常规工艺窗口极其保守（如涂布 Gap 160~180μm、速度 50~80mm/s）。在高粘度特种厚有机膜工艺中，照搬原厂窗口会遭遇整面破膜与严重不良。
 - **Methodology / 方法**:
-  1. *Cross-Language Signature Mapping*: Parse email sign-offs, CC bracket pairs (`Name (English Alias)`), and mobile directories to construct a deterministic alias mapping table.
-  2. *Unified Identity UUID*: Resolve all mentions to a canonical `Engineer_UUID` across both languages before constructing thread DAGs and decision trees.
+  1. *倒逼原厂绝对机械底线*：抛开均匀性考量，直接逼问原厂硬件不发生物理撞刀的极限间隙（如 60μm）。
+  2. *建立现场安全试验带*：在绝对底线上方设定极低参数带（如 Gap 130~140μm、速度 20~35mm/s）。
+  3. *毛细弯月面稳定机理*：极端压低狭缝间隙极大增强液桥毛细吸附力，彻底消灭拉丝气泡与破膜。
+
+#### `RULE-FLU-02`: Fluid Anisotropy vs DFM Topological Alignment (流体各向异性与 DFM 走线拓扑反推法则)
+- **Problem / 陷阱**: 相同 Panel 版图在不同排版方向上涂布特种平坦化有机膜（PLN）时，良率出现灾难性分化。
+- **Methodology / 方法**:
+  1. *微观拦水坝效应*：涂布前进方向垂直于微观密集金属走线（Data/Gate）时，万道台阶引发接触线钉扎与背向空化脱气，形成鱼鳞状破膜（Poor Coating）。
+  2. *毛细导流槽效应*：涂布前进方向与密集走线平行时，走线间隙变成微观毛细导流槽，流平平整顺滑。
+  3. *DFM 规则固化*：底层台阶 > 0.8μm 且要求 PLN ≤ 2.3μm 时，强制要求主密集走线必须与涂布方向平行，禁止大板拼版 90° 旋转混排。
+
+#### `RULE-FLU-03`: Longitudinal Stripe Mura: Slit Coater Falsehood vs Develop Air Dry Knife Truth (显影风刀气动湍流与微腐蚀白条机理)
+- **Problem / 陷阱**: 面板出现纵向条纹斑纹（Suji Mura / 白条）时，传统直觉习惯性怀疑涂布机刀头（Nozzle）堵塞或抖动，陷入漫长 4M 排查。
+- **Methodology / 方法**:
+  1. *风刀近距离湍流压差机理*：显影后段水洗风刀（RAK）距基板过近（如 10mm），高速气流直吹形成剧烈局部湍流压差，吹出条纹。对策：高度提升至 15mm 消除剧烈湍流，风量由 780 降至 380 L/min 并加装均压管。
+  2. *TMAH 烘烤浓缩微腐蚀机理*：显影后段 CDA 风刀流量不足，残留微液滴中含微量 TMAH 碱液；在后烘烤急剧脱水浓缩，微溶有机光阻表面形成白条 Mura。对策：风刀流量由 1200 提升至 1650 L/min 彻底切断水膜。
+
+#### `RULE-FLU-04`: Coating Standby Drying & Hardware Root Cause Protocol (狭缝涂布停机防干槽与树脂刮刀根治规范)
+- **Problem / 陷阱**: 狭缝涂布条纹反复爆发，现场频繁做临时后烘补偿与简单擦拭，治标不治本。
+- **Methodology / 方法**:
+  1. *防干槽液位死锁*：重新标定待机溶剂浸润液位与刀唇悬置距离，严防洁净室微风导致局部干胶结皮。
+  2. *树脂刮片资质化*：严禁用金属/硬质刮刀损伤刀唇，全面替换为特种树脂刮刀并由资深技术员标准手法擦拭。
+  3. *供胶管路老化淘汰*：氟树脂输胶软管受溶剂长期浸泡内壁脱皮（Peeling）会产生批量内源颗粒，设立硬性寿命淘汰制。
 
 ---
 
-<a id="rule-44"></a>
-### Rule 44: Seniority & Baseline Onboarding Anchor (入职基准时钟与成熟度推断双重定锚法则)
+### 3. 热力学、相变与光学显像 (RULE-THM: Thermodynamics, Shrinkage & Metrology)
 
-- **Problem / 陷阱**: Relying naively on the earliest date of a forwarded email archive creates artificial onboarding lag (mail sync was often configured months after actual factory deployment). Furthermore, HTML signature template creation timestamps (`cid:...@DDMMYYYY-...`) reflect IT department template releases, not individual start dates.
+#### `RULE-THM-01`: Lift Pin Thermal Sink, Local CD Shrinkage & Dark Cluster Mitigation (顶针局域微温差诱发 CD 收缩与宏观暗团闭环法则)
+- **Problem / 陷阱**: 440+ PPI 超高密度面板点亮时在固定几何点位出现发暗黑团（Dark Cluster Mura），但宏观膜厚量测正常。
 - **Methodology / 方法**:
-  1. *Functional Maturity Heuristics*: Check early activity: an engineer challenging NPI recipe margins on day one was already a seasoned practitioner.
-  2. *Badge Serialization (Cohort Analysis)*: Cross-verify corporate badge patterns (e.g., `F` + year prefix + batch number) against company-wide hiring announcements.
-  3. *Self-Sent Test Email Mining*: Locate the initial inner RFC822 `test` message sent by the engineer to themselves immediately upon IT mailbox setup for deterministic day-zero physical anchoring.
+  1. *顶针局域热沉*：预烘热板（Hot Plate）合金顶针在接触基板时形成局部导热漏热。
+  2. *微观 CD 收缩*：微温差导致溶剂挥发差与感光度微漂，接触孔/电极 CD 偏小 0.2μm。
+  3. *光学显示放大*：高 PPI 下微米级收缩导致低灰阶驱动电场严重不足，液晶偏转不够宏观呈现黑团。
+  4. *三位一体对策*：更换陶瓷低导热顶针 + 热板对应温区（Zone 11）微升温 1~2°C 补偿 + 跨机台 Recipe 强制同步。
+
+#### `RULE-THM-02`: Thermal Manifestation & Post-Anneal Inspection Realignment (高分子薄膜退火显像与宏观目检防线后移法则)
+- **Problem / 陷阱**: 在光刻显影后（PHT）进行宏观目检（MAC）显示全良，但在后道却爆发大面积严重 Suji Mura。
+- **Methodology / 方法**:
+  1. *溶剂掩盖假象*：未退火湿膜含 15%~25% 溶剂，微观厚度差的光学相位差极微弱，肉眼不可见。
+  2. *退火体积收缩显像*：230°C 退火坚膜（ANN）使树脂剧烈交联收缩 20%~30%，微观厚度差被几何放大数十倍，条纹剧烈显现。
+  3. *关卡后移与阶梯放行*：严禁在未相变的中间态设卡，将 MAC 目检强制后移至退火（ANN）后；复机执行 Slot 1/15/30 抽检阶梯放行。
+
+#### `RULE-THM-03`: Organic Planarization Film Spec Rationalization (高分子有机平坦化层规格解耦与极限减薄准则)
+- **Problem / 陷阱**: 拿无机薄膜的均一性指标（`U% ≤ 5%`）苛求 2~3μm 厚有机膜（PLN），引发产线常态化假报警。
+- **Methodology / 方法**:
+  1. *规格物理合理化*：受流变学挥发制约，量产基准合理界定为 `7%~8%`。
+  2. *三维工程治理*：
+     - 前道：通过 DFM 哑元线填充削减微观台阶段差；
+     - 本道：优化升温阶梯防止表面结皮（Skin Effect）引发火山口；
+     - 量测：坐标与 CAD 叠图避开微观台阶边缘，采用退火态真实动态折射率拟合。
 
 ---
 
-<a id="rule-45"></a>
-### Rule 45: Equipment Physical Boundary Probing & Boundary Tuning (倒逼设备物理极限与原厂安全边界探针法则)
+### 4. 机械应力与时空解耦 (RULE-MEC: Mechanical Shock & Spatiotemporal Stress)
 
-- **Problem / 陷阱**: Equipment vendors (TEL, DNS, Nikon) specify conservative operational envelopes (e.g., Slit Coater Gap 160–180μm, speed 50–80mm/s). For specialized high-viscosity thick organic films, conventional parameters fail completely, producing severe poor coating and striations.
+#### `RULE-MEC-01`: Latent Damage Mechanics & Multi-Pass Exposure Model (暗伤潜伏与多重循环累积暴露因果模型)
+- **Problem / 陷阱**: 基板在后道高温真空腔室（如 CVD 300°C+）粉碎性炸裂，MES 路径分析将所有后道机台列为嫌疑犯，排查瘫痪。
 - **Methodology / 方法**:
-  1. *OEM Safety Boundary Inquiry*: Directly probe vendor design engineers for the absolute mechanical interference limit (e.g., minimum mechanical clearance 60μm without nozzle collision).
-  2. *Safety Band DOE*: Establish an aggressive yet safe production band just above the hardware floor (e.g., 130–140μm gap, 20–35mm/s speed).
-  3. *Fluid Meniscus Stabilization*: Lowering gap dramatically enhances capillary meniscus suction stability, eliminating air entrainment and coating breakage.
+  1. *时空解耦*：前道常温湿法机构（对辊、顶针、机械手）撞击在倒角植入微裂纹（Micro-crack），常温下漏检潜伏；后道急热真空将热应力集中在裂纹尖端引发粉碎。
+  2. *多重循环累积加权*：逆向统计破片在全生命周期经历各前道设备的累积次数（Total Pass Count），通过过机风险比（Multi-pass Risk Ratio）锁定真正始发暗伤机台。
+
+#### `RULE-MEC-02`: Substrate Breakage & Double Roller Impact Chipping (微观暗伤与湿法对辊机械接触应力溯源法则)
+- **Problem / 陷阱**: 全线突发固定坐标倒角微缺损（如 4mm x 26mm bevel chipping）。
+- **Methodology / 方法**:
+  1. *四道关卡截流*：在成膜与刻蚀前后设置高倍显微镜/白光抽检，区间收敛始发工序。
+  2. *对辊卡滞定位*：剥膜清洗机上下驱动对辊（Double Roller）受药液结晶浸润导致上辊导轨阻尼卡滞失去浮动柔性，在玻璃切入时产生硬撞击。清除结晶并调校边缘轴肩间隙。
 
 ---
 
-<a id="rule-46"></a>
-### Rule 46: Fluid Anisotropy vs DFM Topological Alignment (流体各向异性与 DFM 走线拓扑反推法则)
+### 5. 极简归因与奥卡姆剃刀 (RULE-PAR: Causal Attribution, Parsimony & State Machine)
 
-- **Problem / 陷阱**: Identical panel schematics laid out in different panel orientations exhibit drastically different coating yields on thick organic planarization (PLN) layers.
+#### `RULE-PAR-01`: Occam's Razor & Singular Physical Trigger vs 4M Management Narratives (奥卡姆剃刀与极简归因法则)
+- **Problem / 陷阱**: 沉迷于管理汇报 PPT 中的“人机料法环（4M1E）复合借口”，掩盖真实物理机制。
 - **Methodology / 方法**:
-  1. *Microscopic Dam Effect*: When slit nozzle scan direction is perpendicular to dense metal traces (Data/Gate lines), the microscopic step heights act as fluid barriers, causing contact line pinning, cavitation, and fish-scale dewetting.
-  2. *Capillary Channeling*: When scan direction is parallel to metal traces, trace spaces serve as micro-fluidic guide channels, ensuring smooth fluid leveling.
-  3. *DFM Redline Formulation*: When underlying topography step height > 0.8μm and target PLN thickness ≤ 2.3μm, mandatory DFM CAD rule enforces principal dense metal routing parallel to coater scan direction. 90-degree rotated panel nesting is strictly forbidden.
+  1. *现场物理的一元性*：成熟机台突然暴雷必是单一的局部物理突变（Single Physical Trigger），绝非十几个微弱因素同时共振。
+  2. *二元排查支路*：
+     - *支路一（观测条件位移）*：瑕疵一直存在，因目检关卡后移到相变区而被突然放大显形；
+     - *支路二（单点边界击穿）*：单一硬件或材料边界被破坏（如刀唇局部干胶、密封圈磨损）。
+
+#### `RULE-PAR-02`: Anti-Over-Retrieval & Mismatched Station Conflation (严防跨工序强行拼装的因果污染法则)
+- **Problem / 陷阱**: 大模型和通用检索为了宏大叙事，把同时期发生的减压干燥（DP）开度实验强行拼凑进厚有机膜（PLN）退火烘箱问题中。
+- **Methodology / 方法**:
+  1. *严守物理站点与工序边界*：无机光阻减压干燥与有机膜退火温场物理不相干，严禁跨工序串联。
+  2. *克制归因（Attribution Parsimony）*：锁定直接因果闭环，剔除并发无关工作。
+
+#### `RULE-PAR-03`: IS/IS-NOT Differential & Tool State Machine Auditing (控制变量对比法与设备硬件状态机穿透归因法则)
+- **Problem / 陷阱**: 出现 1.0μm 级尺寸断崖时盲目微调下游温度或曝光量，引发次生报废。
+- **Methodology / 方法**:
+  1. *倒查 30 天状态机*：断崖突变必是硬件变动，强查前置 30 天是否有 Nozzle 更换、传动轴拆装或机械零点漂移。
+  2. *四维对比（IS / IS-NOT）*：空间（Zone 11 vs 其它）、机型（超高 PPI vs 老品）、机台（100# vs 600#）、衬底（刚性玻璃 vs 柔性 PI）。
+  3. *孤岛配方审查*：硬件大修后主量产品复机正常，独立私有配方仍停留在旧零点引发首跑暴雷。
+
+#### `RULE-PAR-04`: Inspection Gating vs Physical Root Cause Elimination (防守截流 vs 进攻根治：条纹缺陷前后端解耦法则)
+- **Problem / 陷阱**: 把“目检站点后移并拦截不良”当成了质量事故的终局解决方案。
+- **Methodology / 方法**:
+  1. *前后端解耦*：后道设卡是防守止血（缩短检出时间），前端涂布/显影才是进攻根治。
+  2. *分类建库*：防守动作用于 SPC 监控与出货阻断，根治动作用于 Recipe 固化与设备改良。
 
 ---
 
-<a id="rule-47"></a>
-### Rule 47: Thermal Sink, Local CD Shrinkage & Dark Cluster Mitigation (顶针局域热沉微温差诱发关键尺寸收缩与宏观暗团闭环法则)
+### 6. 本体工程与方法论隔离 (RULE-ONT: Ontology Engineering & Methodology Air-Gap)
 
-- **Problem / 陷阱**: Ultra-high PPI mobile panels (440+ PPI) display localized dark clusters (Dark Cluster Mura) at specific coordinates during optical test, while macro film thickness measurements show normal uniformity.
+#### `RULE-ONT-01`: Two-Stage Relational Grounding for Enterprise Auto-Ontology (NVIDIA Auto-Ontology 两阶段范式化落地准则)
+- **Problem / 陷阱**: 扁平向量 RAG 无法区分 0.8μm 与 1.5μm，且无法回答确切参数改变量。
 - **Methodology / 方法**:
-  1. *Thermal Sinking Mechanism*: Hot plate lift pins made of conductive alloy create localized cold spots on the glass back during proximity pre-baking.
-  2. *Photolithography CD Shrinkage*: Local temperature deficit reduces photoresist solvent evaporation and alters photospeed, causing sub-micron electrode shrinkage (e.g., contact hole CD narrows by 0.2μm).
-  3. *Electro-Optical Transfer Deficit*: Under 64/128 grey levels, weakened drive electric fields fail to tilt liquid crystals sufficiently, manifesting as localized optical dark clusters.
-  4. *Countermeasure Triad*:
-     - Hardware: Low-thermal-conductivity ceramic pins with minimized contact area.
-     - Multi-Zone Thermal Tuning: Fine-tune local hot plate heating zones (+1–2°C) matching lift pin coordinates.
-     - Recipe Synchronization: Propagate verified recipes across all compatible inline tracks.
+  1. *第一阶段（关系范式化）*：自动提纯为 3NF 关系表（`dim_equipment`、`dim_process_layer`、`dim_defect_type`、`fact_defect_incident`、`fact_root_cause_action`），明确参数量纲与前后数值。
+  2. *第二阶段（Auto-Ontology 语义对齐）*：注册认证 Term 与同义词阵列（`Air Knife`、`Suji Mura`），由 Auto-Ontology 编译执行确定性 Text-to-SQL。
 
----
-
-<a id="rule-48"></a>
-### Rule 48: Expert Alignment & The 20/80 Rule of Tacit Know-How (专家对齐与隐性心智模型激活法则)
-
-- **Problem / 陷阱**: Text logs, shift handovers, and tickets capture only ~20% of engineering reality (what was adjusted). The remaining 80% (why it was adjusted, underlying mechanical couplings, systemic constraints) resides in the unwritten mental models of frontline experts.
+#### `RULE-ONT-02`: Methodology Engine vs Domain Knowledge Store Air-Gap (方法论母机与私有知识库解耦隔离准则)
+- **Problem / 陷阱**: 因担心商业机密泄露，把通用算法框架与测试工具也锁在本地不敢更新。
 - **Methodology / 方法**:
-  1. *Skeleton Extraction*: Pipeline assembles the structural timeline, machine IDs, and parameter deltas.
-  2. *Interactive Dialogue Probing*: The miner actively formulates targeted technical contradictions to human experts (e.g., *"Why was Zone 11 specifically compensated while other pins were untouched?"*).
-  3. *Tacit Knowledge Elicitation*: Expert response uncovers hidden physical boundary conditions, completing the jump from simple parameter logging to executable DFM rules.
-
----
-
-<a id="rule-50"></a>
-### Rule 50: IS/IS-NOT Differential & Tool State Machine Auditing (控制变量对比法与设备硬件状态机穿透归因法则)
-
-- **Problem / 陷阱**: Faced with a catastrophic 1.0μm CD drop on a critical layer, engineers intuitively attempt downstream thermal or exposure compensation, triggering secondary yield fallout.
-- **Methodology / 方法**:
-  1. *Hardware State Machine Auditing*: A 1.0μm deviation cannot stem from minor thermal drift; it indicates a step-function hardware change. Mandate an audit of the preceding 30-day maintenance log (nozzle replacement, pump seal rebuild, mechanical zero shift).
-  2. *IS/IS-NOT Matrix*:
-     - *Location*: Zone 11 vs other zones (shutter leak thermal profile).
-     - *Product*: 440+ PPI product vs legacy low-density panels (non-linear sensitivity threshold).
-     - *Machine*: Line 100 vs Line 600 (recipe drift).
-     - *Substrate*: Rigid glass vs flexible PI (carrier bow metrology artifact).
-  3. *Island Recipe Auditing*: Verify whether new or low-volume recipes inherited baseline changes following major equipment overhauls.
-
----
-
-<a id="rule-51"></a>
-### Rule 51: Organic Film Spec Rationalization & Thinning Pitfalls (高分子有机膜极限减薄与量化规格解耦准则)
-
-- **Problem / 陷阱**: Enforcing inorganic thin-film uniformity specifications (`U% ≤ 5%`) on thick organic planarization (PLN 2–3μm) layers causes persistent false alarms and needless line shutdowns.
-- **Methodology / 方法**:
-  1. *Spec Rationalization*: Fluid rheology of high-viscosity organic resin sets a physical limit of `U% ~ 7–8%` in high-volume manufacturing.
-  2. *Three-Pronged Root Cause Framework*:
-     - *Dimension 1 (Underlayer Topography)*: Smooth underlying metal density differences via dummy metal fills to eliminate resin sagging.
-     - *Dimension 2 (Autonomous Leveling)*: Optimize pre-bake thermal ramp rates to prevent surface skinning before solvent evaporation.
-     - *Dimension 3 (Metrology Baseline)*: Realign measurement beam coordinates to avoid macro-topography steps and calibrate optical n/k constants against fully cured films.
-
----
-
-<a id="rule-52"></a>
-### Rule 52: Anti-Over-Retrieval & Attribution Parsimony (严防过度检索与强行拼装的因果污染法则)
-
-- **Problem / 陷阱**: Generic LLMs and vector RAG concatenate unrelated concurrent engineering events (e.g. connecting an unrelated vacuum dry test to an organic film baking issue) to craft elaborate synthetic 4M1E narratives.
-- **Methodology / 方法**:
-  1. *Strict Station & Layer Separation*: Causal links must not traverse mismatched physical stations (e.g. Track DP vacuum drying vs Anneal Oven baking) without direct evidence.
-  2. *Attribution Parsimony (Occam's Razor)*: If a singular physical parameter change accounts for yield recovery, prune multi-factor composite hypotheses.
-
----
-
-<a id="rule-53"></a>
-### Rule 53: The Primacy of Human Tacit Knowledge in Know-How Mining (专家心智价值第一性法则)
-
-- **Problem / 陷阱**: Believing that raw text corpora alone can automatically generate high-level physical models without expert intervention.
-- **Methodology / 方法**:
-  1. *Text Slices vs Mental Synthesizer*: Factory emails provide fragmented action slices. The overarching causal architecture is supplied by the human expert's internalized physical intuition.
-  2. *Human-in-the-Loop Arbitration*: Algorithms act as clean data sifting probes; the domain expert remains the ultimate arbitrator of physical causality.
-
----
-
-<a id="rule-54"></a>
-### Rule 54: Latent Damage Mechanics & Multi-Pass Exposure Model (暗伤潜伏与多重循环累积暴露因果模型)
-
-- **Problem / 陷阱**: When glass substrates break inside high-temperature vacuum chambers (e.g. CVD 300°C+), standard MES path analysis flags the chamber as the culprit, while inspection of the chamber reveals no mechanical anomalies.
-- **Methodology / 方法**:
-  1. *Spatiotemporal Decoupling*: Mechanical contact in upstream wet stations (double rollers, lifter pins, robot chucks) induces sub-surface micro-cracks invisible to standard optical break sensors.
-  2. *Thermal Detonation*: Entering high-temperature vacuum concentrates thermal stress at crack tips, causing delayed catastrophic fracture.
-  3. *Multi-Pass Weighted Analysis*: Correlate breakage rates against cumulative pass counts through upstream wet processing units rather than the terminal fracture station.
-
----
-
-<a id="rule-55"></a>
-### Rule 55: Substrate Breakage & Double Roller Impact Chipping (微观暗伤与对辊机械接触应力溯源法则)
-
-- **Problem / 陷阱**: Mysterious corner chipping (e.g. 4mm x 26mm bevel damage) recurring across diverse downstream lots.
-- **Methodology / 方法**:
-  1. *Sequential Interception Protocol*: Establish microscopic inspection gates before and after key wet processing transitions.
-  2. *Physical Source Pinpointing*: Inspect double rollers in wet strip/clean modules for chemical salt crystallization on upper-roller guide rails, causing roller dampening lockup and axial edge impact.
-
----
-
-<a id="rule-56"></a>
-### Rule 56: Thermal Manifestation & Post-Anneal Inspection Realignment (高分子薄膜退火显像与宏观目检防线后移法则)
-
-- **Problem / 陷阱**: Conducting macro visual inspection (MAC) directly after photolithography development (PHT) gives a clean bill of health, yet severe suji mura (stripe mura) emerges downstream.
-- **Methodology / 方法**:
-  1. *Solvent Masking Effect*: Unbaked photoresist retains 15–25% solvent, dampening refractive index contrast across nanometer-scale thickness variations.
-  2. *Thermal Anneal Shrinkage*: 230°C annealing induces 20–30% resin volume shrinkage, geometrically amplifying optical interference phase differences into visible stripes.
-  3. *Gate Realignment*: Move macro inspection to post-annealing (ANN) gate. Implement dynamic staging (Slot 1 / Slot 15 / Slot 30 sampling) following maintenance overhauls.
-
----
-
-<a id="rule-57"></a>
-### Rule 57: Inspection Gating vs Physical Root Cause Elimination (防守截流 vs 进攻根治：条纹缺陷前后端解耦法则)
-
-- **Problem / 陷阱**: Treating inspection relocation (MAC moved to post-ANN) as the permanent corrective action (PCA) for suji mura.
-- **Methodology / 方法**:
-  1. *Defense vs Offense Decoupling*: Inspection gating stops defect escape (Mean Time to Detect); true root cause elimination resides in upstream coating/drying fluid mechanics.
-  2. *Four-Pillar Coating Root Cause Protocol*:
-     - Solvent bath distance & vapor concentration calibration during idle standby.
-     - Replacement of metal/hard scrapers with special resin wipers for nozzle lips.
-     - Restricting nozzle shim assembly to certified senior technicians.
-     - Scheduled retirement of fluororesin dispense tubing to prevent inner-wall delamination particles.
-
----
-
-<a id="rule-58"></a>
-### Rule 58: Occam's Razor & Singular Physical Trigger vs 4M Management Narratives (奥卡姆剃刀与极简归因法则)
-
-- **Problem / 陷阱**: Confusing corporate 8D presentations (which synthesize 4M1E matrices to pacify management) with frontline shopfloor truth.
-- **Methodology / 方法**:
-  1. *Single Physical Trigger*: Stable manufacturing lines suddenly fail due to singular, discrete physical changes (e.g., localized resin crust on nozzle lip, worn vacuum seal, station re-indexing), never broad multi-variable resonance.
-  2. *Binary Resolution*: Disentangle whether a sudden defect spike stems from:
-     - *Branch 1*: Observability shift (defect was latent, now visible due to inspection gate or recipe shift).
-     - *Branch 2*: Singular hardware/fluid boundary collapse.
-
----
-
-<a id="rule-59"></a>
-### Rule 59: Longitudinal Stripe Mura: Slit Coater Falsehood vs Develop Air Dry Knife Physical Truth (显影风刀机理与条纹真因甄别准则)
-
-- **Problem / 陷阱**: Longitudinal white stripes across panels are routinely assumed to be slit coater nozzle clogs.
-- **Methodology / 方法**:
-  1. *Turbulent Air Impingement Mechanism*: Developer Rinse Air Knife (RAK) placed too close to glass (10mm) creates localized turbulence and pressure differentials. Raising height to 15mm, cutting airflow (780 -> 380 L/min), and installing pressure-equalization buffers eliminates turbulence stripes.
-  2. *TMAH Evaporative Micro-Etch Mechanism*: Insufficient CDA knife airflow fails to clear rinse water micro-droplets containing trace TMAH developer. Downstream hard-bake rapidly evaporates water, concentrating alkaline TMAH and micro-etching organic films into distinct white stripes. Raising air flow (e.g., 1200 -> 1650 L/min) cures the defect.
-
----
-
-<a id="rule-60"></a>
-### Rule 60: Two-Stage Relational Grounding for Enterprise Auto-Ontology (NVIDIA Auto-Ontology 语义图谱与确定性推理范式)
-
-- **Problem / 陷阱**: Unstructured vector RAG over technical manufacturing communication produces hallucinations and cannot handle exact parameter offsets.
-- **Methodology / 方法**:
-  1. *Stage 1 (Relational Normalization)*: Mine raw communication into 3NF relational PostgreSQL tables (`dim_equipment`, `dim_process_layer`, `dim_defect_type`, `fact_defect_incident`, `fact_root_cause_action`) with explicit parameter boundaries and units.
-  2. *Stage 2 (Auto-Ontology Compilation)*: Map domain terms and synonyms (`Air Knife`, `Suji Mura`, `Organic Layer`) to relational columns in NVIDIA Auto-Ontology for deterministic Text-to-SQL query generation.
-
----
-
-<a id="rule-61"></a>
-### Rule 61: Methodology Engine vs Domain Knowledge Store (方法论母机与领域私有知识库解耦隔离准则)
-
-- **Problem / 陷阱**: Conflating open-source methodology tools with proprietary manufacturing secrets, leading to fear of pushing updates to public repositories.
-- **Methodology / 方法**:
-  1. *Open-Source Methodology Engine (`knowhow-miner`)*: Houses general parsers, validators, evaluation harnesses, and synthetic benchmark suites. Regularly versioned and pushed.
-  2. *Proprietary Knowledge Store*: Production databases, real factory emails, internal equipment tags, and confidential recipe parameters remain air-gapped on local servers.
+  1. *开源仓（`knowhow-miner`）*：纯粹沉淀通用提取管线、奥卡姆剃刀校验算法、通用 DDL 与合成基准用例，定期敏捷演进。
+  2. *私有知识库*：真实工厂邮件、具体设备代号与量产配方通过 `.gitignore` 严密锁在本地隔离存储，零机密上云。

@@ -122,14 +122,14 @@ class LogicValidator:
                 flags["has_ground_truth"] = True
                 break
 
-        # Rule 52: Parsimony check (anti-conflation of composite 4M narratives)
+        # RULE-PAR-01: Parsimony check (anti-conflation of composite 4M narratives)
         for pat in cls.PARSIMONY_PHYSICAL_PATTERNS:
             if re.search(pat, root_cause, re.I) or re.search(pat, pca, re.I):
                 flags["is_parsimonious_physical"] = True
                 flags["has_ground_truth"] = True
                 break
 
-        # Rule 53: Process visibility shift detection (station relocation / phase contrast)
+        # RULE-THM-02: Process visibility shift detection (station relocation / phase contrast)
         for pat in cls.VISIBILITY_SHIFT_PATTERNS:
             if re.search(pat, root_cause, re.I) or re.search(pat, symptom, re.I):
                 flags["is_visibility_shift"] = True
