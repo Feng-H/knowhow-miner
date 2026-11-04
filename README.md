@@ -57,16 +57,16 @@ Unstructured vector RAG over technical manufacturing communication inevitably pr
 ### Frontline Physical Rules & Causality Codebook
 The repository codifies frontline manufacturing physical heuristics and causality disambiguation rules into `miner/validator.py` and the centralized engineering codebook [`docs/ENGINEERING_RULES.md`](docs/ENGINEERING_RULES.md), categorized by domain prefixes:
 
-- **`RULE-ORG-01` (Mentor Anchor vs Apprentice Noise)**: Downweights high-frequency shift logs and anchors ground truth to senior master engineers (`[MENTOR]` / `David Chen`).
-- **`RULE-ORG-02` (Bilingual Alias Resolution)**: Unifies bilingual English aliases and Chinese names to resolve split discussion trees.
-- **`RULE-FLU-01` (Equipment Physical Boundary Probing)**: Solves high-viscosity thick organic film failures by pushing past conservative OEM guidelines to actual hardware interference limits.
-- **`RULE-FLU-02` (Fluid Anisotropy & DFM Alignment)**: Models micro-step fluid barrier pinning to enforce DFM layout rules aligning dense metal routing with coater scan directions.
-- **`RULE-FLU-03` (Longitudinal Stripe Mura & Air Knife Micro-Etch)**: Disproves false slit coater assumptions by demonstrating that stripe mura is driven by developer air knife turbulence (height too low) or trace TMAH micro-droplets evaporating and etching organic films during post-bake.
-- **`RULE-THM-01` (Thermal Sink & Dark Cluster Mitigation)**: Resolves 440+ PPI local CD shrinkage and optical dark clusters caused by hot plate lift pin thermal sinks via ceramic pins and multi-zone thermal tuning.
-- **`RULE-THM-02` (Process Visibility Shift Modeling)**: Disentangles inline physical degradation from inspection gate shifts. For example, moving macro inspection (MAC) from wet photoresist (PHT) to post-annealing (ANN) does not mean the coater suddenly failed; rather, 230°C thermal annealing induces 20-30% resin volume shrinkage, geometrically amplifying nanometer thickness variations into visible optical interference stripes.
-- **`RULE-MEC-01` & `RULE-MEC-02` (Latent Micro-Cracks & Double Roller Chipping)**: Formulates multi-pass exposure models where upstream wet strip double-roller mechanical impacts cause latent bevel micro-cracks that catastrophically shatter in downstream high-temperature vacuum chambers.
-- **`RULE-PAR-01` (Parsimony & Anti-Conflation)**: LLMs naturally mimic corporate 8D presentations by fabricating verbose multi-factor composite hypotheses (4M: Man, Machine, Material, Method). The Parsimony Engine enforces Occam's razor: when a singular empirical parameter delta (e.g. Air Knife flow rate from 1200 to 1650 L/min, roller bearing stiction clearance) accounts for yield recovery, speculative composite excuses are pruned.
-- **`RULE-PAR-03` (IS/IS-NOT Differential & Tool State Machine)**: Mandates 30-day pre-incident hardware maintenance audits and island recipe checks to prevent secondary fallout.
+- **`RULE-ORG-01` (Inverse Frequency Authority Law)**: Downweights high-frequency shift logs and anchors ground truth to senior master engineers (`[MENTOR]` / `David Chen`).
+- **`RULE-ORG-02` (Cross-Lingual Entity Resolution)**: Unifies bilingual English aliases and Chinese names to resolve split discussion trees.
+- **`RULE-FLU-01` (Equipment Hardware Boundary Probing)**: Solves high-viscosity thick organic film failures by pushing past conservative OEM guidelines to actual hardware interference limits.
+- **`RULE-FLU-02` (Rheological Anisotropy & Layout Topological Alignment)**: Models micro-step fluid barrier pinning to enforce DFM layout rules aligning dense metal routing with coater scan directions.
+- **`RULE-FLU-03` (Kinetic Aerodynamics vs Secondary Solute Etch)**: Decouples air turbulence from chemical evaporation micro-etching (e.g. trace TMAH developer concentration during post-bake).
+- **`RULE-THM-01` (Geometric Heat Sink & Multi-Scale Amplification)**: Models how 1~2°C local thermal sinks cause sub-micron CD shrinkage, amplified non-linearly into macro optical defects (e.g., dark clusters in high-PPI displays).
+- **`RULE-THM-02` (Phase Transition Shrinkage & Observability Shift)**: Distinguishes physical degradation from inspection gate shifts (e.g., 20-30% thermal shrinkage amplifying optical phase interference post-anneal).
+- **`RULE-MEC-01` & `RULE-MEC-02` (Latent Trauma & Multi-Pass Exposure Models)**: Decouples upstream mechanical micro-cracks (e.g., wet strip roller stiction) from downstream thermal shock detonation (e.g., CVD high-temp vacuum fracture).
+- **`RULE-PAR-01` (Occam's Razor & Singular Physical Trigger)**: Enforces parsimonious attribution to single physical change points over composite 4M1E management excuses.
+- **`RULE-PAR-03` (Hardware State Machine Precedence & IS/IS-NOT Matrix)**: Mandates 30-day pre-incident hardware maintenance audits and island recipe checks to prevent secondary fallout.
 
 *For the full specification across all six domain categories (`RULE-ORG`, `RULE-FLU`, `RULE-THM`, `RULE-MEC`, `RULE-PAR`, `RULE-ONT`), see [`docs/ENGINEERING_RULES.md`](docs/ENGINEERING_RULES.md).*
 

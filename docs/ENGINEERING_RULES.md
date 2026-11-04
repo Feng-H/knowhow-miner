@@ -1,184 +1,170 @@
 # Frontline Industrial Engineering Rules & Causality Codebook
-## 一线实战工业认知工程原则与因果准则表
+## 一线实战工业认知工程方法论与因果准则代码本
 
-> **Architecture Philosophy (架构哲学)**:  
-> 工业智能算法与制造现场的规则绝不能使用扁平无序的数字流水号（如 1-N），否则数据管道工程、系统基建与现场物理机理一旦新增规则就会全盘冲突混乱。  
-> 本代码本采用**领域前缀标识分类体系（Domain-Prefixed Rule Taxonomy）**：
-> - **`RULE-ORG-*`**：组织阵眼、专家隐性心智与实体消歧（Organizational & Expert Tacit Grounding）
-> - **`RULE-FLU-*`**：流体力学、狭缝涂布流变与气动风刀（Fluid Dynamics & Aerodynamics）
-> - **`RULE-THM-*`**：热力学温场、退火相变与光学显相（Thermodynamics, Shrinkage & Optical Metrology）
-> - **`RULE-MEC-*`**：机械撞击接触、潜伏暗伤与时空解耦（Mechanical Shock & Spatiotemporal Stress）
-> - **`RULE-PAR-*`**：因果归因极简律、奥卡姆剃刀与状态机（Causal Attribution, Parsimony & State Machine）
-> - **`RULE-ONT-*`**：工业本体工程与方法论隔离防御（Ontology Engineering & Methodology Air-Gap）
+> **Methodological Philosophy (方法论哲学)**:  
+> 工业智能算法与知识采掘系统绝不能把具体的“机台故障维修案例（如换顶针、调风刀、修滚轮）”直接当成规则。车间故障只是**物理案例实证（Fab Case Studies）**，而真正的**工程准则（Engineering Rules）**必须抽象提升到**认知建模、因果解耦、时空拓扑与数据治理的方法论高度（Methodological Dimension）**。  
+> 
+> 本代码本采用**领域前缀标识分类体系（Domain-Prefixed Rule Taxonomy）**，将一线现场血泪经验提炼为通用的工业智能认知方法论：
+> - **`RULE-ORG-*`**：组织阵眼、专家隐性心智与权威拓扑对齐 (Organizational & Expert Tacit Grounding)
+> - **`RULE-FLU-*`**：微观流体力学、几何流变与物理操作边界 (Fluid Dynamics & Operational Envelope)
+> - **`RULE-THM-*`**：跨尺度热力学、相变体积收缩与观测位移 (Thermodynamics & Observability Shifts)
+> - **`RULE-MEC-*`**：时空解耦暗伤力学与多重循环累积暴露 (Spatiotemporal Stress & Damage Mechanics)
+> - **`RULE-PAR-*`**：因果归因极简律、奥卡姆剃刀与状态机审计 (Causal Attribution & Parsimony Engine)
+> - **`RULE-ONT-*`**：确定性工业本体工程与方法论隔离防御 (Ontology Grounding & Methodology Air-Gap)
 
 ---
 
-### Category Index (规则分类总览)
+### Category Index (方法论分类总览)
 
-| 类别前缀 | 涵盖领域 | 核心目标 | 包含规则 |
+| 类别前缀 | 方法论领域 | 认知与算法核心使命 | 包含规则 |
 | :--- | :--- | :--- | :--- |
-| **`RULE-ORG`** | 组织与人员实体 | 抑制表面发信噪音，锁定真正技术决策阵眼，激活专家隐性心智 | ORG-01 至 ORG-05 |
-| **`RULE-FLU`** | 流体力学与涂布 | 突破原厂保守间隙，解耦走线微观拦水坝，消除风刀气压与微腐蚀白条 | FLU-01 至 FLU-04 |
-| **`RULE-THM`** | 热力学与光学相位 | 治理顶针局域微温差漏热，解耦退火体积收缩显影与目检防线后移 | THM-01 至 THM-03 |
-| **`RULE-MEC`** | 机械暗伤与时空解耦 | 解耦常温机械受创与高温真空引爆粉碎，多重过机加权锁定真凶 | MEC-01 至 MEC-02 |
-| **`RULE-PAR`** | 极简归因与奥卡姆剃刀 | 剥离管理汇报 4M 复合借口，四维反问倒查硬件状态机，单点物理破局 | PAR-01 至 PAR-04 |
-| **`RULE-ONT`** | 本体落地与方法论隔离 | 关系表 3NF 范式化与 Auto-Ontology 语义对齐，开源母机与数据物理隔离 | ONT-01 至 ONT-02 |
+| **`RULE-ORG`** | 组织权威与专家心智 | 逆向频次加权、抑制表面事务噪音、中英文别名消歧、激发专家隐性心智 | ORG-01 至 ORG-05 |
+| **`RULE-FLU`** | 流体力学与工艺边界 | 突破原厂保守安全底线、微观拦水坝流变、动能剪切 vs 溶质二次富集解耦 | FLU-01 至 FLU-04 |
+| **`RULE-THM`** | 热力学与观测位移 | 跨尺度非线性放大模型、相变脱溶剂体积收缩建模、动静态量测基准解耦 | THM-01 至 THM-03 |
+| **`RULE-MEC`** | 时空解耦与暗伤力学 | 常温机械受创与高温真空引爆时空解耦、多重过机累积暴露加权归因 | MEC-01 至 MEC-02 |
+| **`RULE-PAR`** | 极简归因与奥卡姆剃刀 | 剥离管理汇报 4M 复合编造、锁定单点物理突变、前置 30 天状态机倒查 | PAR-01 至 PAR-04 |
+| **`RULE-ONT`** | 确定性本体与隔离防御 | 3NF 关系范式化与 Auto-Ontology 语义图谱编译、开源母机与数据物理绝缘 | ONT-01 至 ONT-02 |
 
 ---
 
-### 1. 组织决策与专家心智 (RULE-ORG: Organizational & Expert Tacit Grounding)
+### 1. 组织决策与专家心智 (RULE-ORG: Organizational Grounding Methodology)
 
-#### `RULE-ORG-01`: Mentor Anchor vs Apprentice Noise Suppression (组织阵眼与新人噪声对冲法则)
-- **Problem / 陷阱**: 新人工程师承担现场交接班、巡检与机械记录，表面发信量往往是资深老法师的 5~10 倍。通用统计算法若按“发信量（Count）”加权，会极其荒谬地把新人当成技术主导者，被大量事务性噪音淹没。
-- **Methodology / 方法**:
-  1. *新人事务性抑制（Apprentice Noise Suppression）*：对排班通知、日常值班日志等低技术参数密度的邮件执行权重抑制。
-  2. *技术阵眼定锚（Mentor Anchor Tracking）*：技术 Ground Truth 必须坚决锚定在发信量少但字字千钧的资深主管与师傅（`David Chen` / `[MENTOR]`），其指令具有高密度物理参数（Slot、Recipe、Dose）与定案拍板特征。
-  3. *见习期客观定位（Observer Archive）*：工程师在学徒期间仅作为抄送/记录者的历史语料，界定为“第三方见闻卷宗”，严禁过度脑补因果。
+#### `RULE-ORG-01`: Inverse Frequency Authority Law (组织阵眼权威反比定律)
+- **Methodology (方法论准则)**:  
+  在工业制造跨部门通信网络中，**发信频次（Message Frequency）与技术决策权威度（Decision Authority）往往呈反比**。事务性角色（轮岗新人、交接班记录员、行政调度）承担日常现象传递，呈现高频、低技术熵的表面特征；核心技术裁决者（Master / Lead）发信频次极低，但其文本具有高密度物理参数（Slot、Recipe、Dose）与强指令定案语气。算法若采用朴素的频次统计加权，会极其荒谬地把新人当成技术主导者。采掘引擎必须前置引入“组织阵眼映射（Org Triage）”，执行逆向频次抑制，将物理 Ground Truth 严格定锚于资深技术权威节点。
+- **Fab Case Study (实战案例实证)**:  
+  某 G8.5 产线爬坡期，新员工日常值班与机械交接班邮件多达数百封，讨论充斥初级怀疑；而真正的 Mura 消除与技术定案，沉淀于带队师傅陈工（`David Chen`）发出的极简批复与签核技术报告中。
 
-#### `RULE-ORG-02`: Bilingual Cadre Alias Resolution & Entity Disambiguation (中英文干部别名实体消歧法则)
-- **Problem / 陷阱**: 半导体与高世代产线中，资深台籍/外籍干部常在正式会议纪要写中文名（如 `周清文`），在口头交代与邮件沟通中使用英文昵称（如 `Joe Chou`、`LMW`）。算法若缺乏别名映射，会撕裂为两个人，割断同一事件的因果链。
-- **Methodology / 方法**:
-  1. *署名与抄送映射矩阵*：穿透邮件签名档、抄送括号配对（`Name (English Alias)`）与内部通讯录，建立双向映射表。
-  2. *底层统一 UUID*：在实体抽取前将中英文别名归一化至唯一的 `Engineer_UUID`，确保跨语言决策树完全闭环。
+#### `RULE-ORG-02`: Cross-Lingual Entity Resolution & Alias Disambiguation (跨语种多源实体消歧准则)
+- **Methodology (方法论准则)**:  
+  高科技精密工厂中，资深台籍/外籍专家与核心主管在日常工程沟通中普遍存在“正式文件署中文名、口头交代与邮件沟通使用英文别名或拼音缩写”的同人异名断裂现象。若知识抽取管道缺乏前置的跨语种实体映射，算法会极其幼稚地将同一人物撕裂为互不相干的独立节点，导致事件决策树与因果链条被生生割断。算法必须穿透签名档、抄送括号对（`Name (English Alias)`）与内部通讯录，在实体层归一化为单一唯一的 `Engineer_UUID`。
+- **Fab Case Study (实战案例实证)**:  
+  核心工艺主管在正式会议纪要写作“陈大卫”，在现场调机指示中被称为“David Chen”，在工艺交接中缩写为“David”；消歧管道将其统一映射至单一技术决策节点（`[LEAD]` / `David Chen`），确保跨语言决策树完全闭环。
 
-#### `RULE-ORG-03`: Seniority Baseline & Onboarding Anchor (入职基准时钟与成熟度推断双重定锚法则)
-- **Problem / 陷阱**: 依靠代收邮件的最早时间判断入职会导致数月至数年的“代收配置延迟时钟误差”；且企业 HTML 签名模板内嵌的 `cid:...@DDMMYYYY-...` 仅代表企业 IT 统一更新模板时间，非个人入职时钟。
-- **Methodology / 方法**:
-  1. *业务成熟度反推*：第一天邮件即在下发光阻评估、拒绝高危膜厚者，必为成熟骨干而非新人。
-  2. *工号序列批次交叉核验*：利用工号的年份编码规律（如 `F` + 年份代码 + 流水号）与全厂人员库对齐。
-  3. *首封内部测试信定锚*：穿透检索发件人与收件人均为本人的第一封内部 `test` / `测试消息` 原始时间戳，物理锁定到岗第一天。
+#### `RULE-ORG-03`: Temporal Baseline & Seniority Heuristic (时钟基准与业务成熟度双重定锚法则)
+- **Methodology (方法论准则)**:  
+  利用非结构化通信构建工程师能力画像与知识图谱时，存在两大伪时钟陷阱：① **代收配置延迟时钟误差**（个人邮箱挂载代收往往在入职数月甚至数年后才配置，起始邮件时间不等于到岗时间）；② **公共模板时间戳陷阱**（企业 HTML 签名档内嵌的 `cid:...@DDMMYYYY-...` 仅代表 IT 部门统一下发模板的发布日）。方法论要求：算法必须通过初发邮件的“业务介入深度”反推成熟度（第一天即在否定 NPI 高危参数者必为成熟老手）；并通过穿透检索发件人与收件人均为本人的第一封内部 `test` 邮件原始时间戳，物理锁定到岗第一天。
+- **Fab Case Study (实战案例实证)**:  
+  代收文件夹起始日期显示为 2016 年 3 月，但首日邮件即在敲定高精度机台 Layout 并指出 1.8μm 膜厚指标不可行；通过工号编码规律（`F13...`）与首封自发测试信，精准锁定其真实业务成熟度基准。
 
-#### `RULE-ORG-04`: Expert Alignment & The 20/80 Rule of Tacit Know-How (专家对齐与隐性心智模型激活法则)
-- **Problem / 陷阱**: 工厂历史记录（工单、邮件、PPT）中显性记录的仅占 20%（改了什么参数、换了什么零件）；真正高价值的 80%（为何这样改、机台机械干涉与系统权衡）沉睡在专家隐性心智模型（Mental Model）中。
-- **Methodology / 方法**:
-  1. *事实骨架拼装（Skeleton Extraction）*：算法从海量数据中理清时间线、机台号与参数变动。
-  2. *交互式矛盾追问（Dialogue Probing）*：主动向专家抛出逻辑冲突点（如“为何只有特定点位加温？”、“为何特定机型才暴雷？”）。
-  3. *隐性因果激活*：由专家一句话揭示深层物理约束，完成从参数记录到 DFM 设计红线的升华。
+#### `RULE-ORG-04`: Interactive Elicitation Loop for Tacit Know-How (专家隐性心智人机对齐循环)
+- **Methodology (方法论准则)**:  
+  工业制造文本具有极其残酷的“二八定律”：**显性文字（邮件、工单、报告）永远只记载了 20% 的事实（改了什么参数、换了什么备件）；而最值钱的 80%（为何这样改、背后的系统耦合制约与机械死穴）永远沉睡在人类专家的隐性心智模型（Mental Model）中**。算法绝不能止步于被动提取，必须定位为“矛盾探针（Contradiction Probing）”——自动拼装时间线与机台骨架，并主动向专家抛出逻辑冲突点，激发专家一句话补全高维物理机理与系统权衡。
+- **Fab Case Study (实战案例实证)**:  
+  算法从参数表发现 Zone 11 永远比其他温区多加温 2°C，表面看似温漂，经向专家抛出矛盾追问，激活了“该处正对设备取放片门（Shutter），门体开关冷风倒灌系机械固有缺陷，只能靠配方软件代偿”的深层工程真相。
 
-#### `RULE-ORG-05`: The Primacy of Human Tacit Knowledge in Know-How Mining (专家心智价值第一性法则)
-- **Problem / 陷阱**: 迷信纯算法无监督挖掘能自动从海量文字中“领悟”高阶制造机理。
-- **Methodology / 方法**:
-  1. *切片 vs 合成器*：文字永远只是现场动作的碎片；串联前道形貌、本道流变与后道量测的因果网络来自于人类专家的心智结构。
-  2. *人机协同边界*：算法是高精度过滤探针，人类专家是物理因果的终极裁决者与知识结晶的源泉。
+#### `RULE-ORG-05`: Primacy of Human Tacit Knowledge (人类工程直觉第一性原理)
+- **Methodology (方法论准则)**:  
+  文字永远只是现场行动的离散切片。脱离人类专家心智结构的纯无监督算法，要么滑入“过度检索与强行拼装”（将不相干的并发实验混为一谈），要么滑入“死板工单陈列”（只抓出零散参数编号）。知识采掘系统的认识论上限取决于专家心智的输入；算法的价值不是替代人去“发明”机理，而是充当高灵敏度探针，将历史碎片呈现给人类专家，人永远是物理因果的终极裁决者。
+- **Fab Case Study (实战案例实证)**:  
+  三封简短的现场调度邮件（查量测坐标、排查柔性基板、测试参数压至极限），由资深工程师在对话中瞬间结构化为“前道形貌传导 ➔ 本道流变升温 ➔ 量测基准校准”的三维完整闭环。
 
 ---
 
-### 2. 流体力学与涂布风刀 (RULE-FLU: Fluid Dynamics & Aerodynamics)
+### 2. 微观流体与工艺边界 (RULE-FLU: Fluid Dynamics & Operational Envelope)
 
-#### `RULE-FLU-01`: Equipment Physical Boundary Probing & Boundary Tuning (倒逼设备物理极限与原厂安全边界探针法则)
-- **Problem / 陷阱**: 设备原厂（TEL、DNS、Nikon 等）出于质保免责给出的常规工艺窗口极其保守（如涂布 Gap 160~180μm、速度 50~80mm/s）。在高粘度特种厚有机膜工艺中，照搬原厂窗口会遭遇整面破膜与严重不良。
-- **Methodology / 方法**:
-  1. *倒逼原厂绝对机械底线*：抛开均匀性考量，直接逼问原厂硬件不发生物理撞刀的极限间隙（如 60μm）。
-  2. *建立现场安全试验带*：在绝对底线上方设定极低参数带（如 Gap 130~140μm、速度 20~35mm/s）。
-  3. *毛细弯月面稳定机理*：极端压低狭缝间隙极大增强液桥毛细吸附力，彻底消灭拉丝气泡与破膜。
+#### `RULE-FLU-01`: Equipment Hardware Boundary Probing (设备硬件安全底线探针法则)
+- **Methodology (方法论准则)**:  
+  设备原厂（OEM）给出的官方推荐操作窗口出于质保免责考量极其保守。当面临前沿新材料（如特种高粘度厚有机膜）时，常规窗口往往走入死胡同，产生整面流体破膜。方法论要求：**剥离表层参数，直接向原厂施压索取绝对机械干涉底线（Hardware Safety Floor）**；在完全排除机械撞机的前提下，在硬件底线上方建立微裕量现场试验带，利用极限物理参数重构毛细界面稳定性。
+- **Fab Case Study (实战案例实证)**:  
+  特种有机膜整面 Poor Coating 破膜，原厂常规涂布间隙 160~180μm 彻底失效；工程师逼出原厂 60μm 撞刀底线后，建立 130~140μm 极限低间隙与 20~35mm/s 低速试验带，极大增强狭缝弯月面吸附力，彻底消除破膜。
 
-#### `RULE-FLU-02`: Fluid Anisotropy vs DFM Topological Alignment (流体各向异性与 DFM 走线拓扑反推法则)
-- **Problem / 陷阱**: 相同 Panel 版图在不同排版方向上涂布特种平坦化有机膜（PLN）时，良率出现灾难性分化。
-- **Methodology / 方法**:
-  1. *微观拦水坝效应*：涂布前进方向垂直于微观密集金属走线（Data/Gate）时，万道台阶引发接触线钉扎与背向空化脱气，形成鱼鳞状破膜（Poor Coating）。
-  2. *毛细导流槽效应*：涂布前进方向与密集走线平行时，走线间隙变成微观毛细导流槽，流平平整顺滑。
-  3. *DFM 规则固化*：底层台阶 > 0.8μm 且要求 PLN ≤ 2.3μm 时，强制要求主密集走线必须与涂布方向平行，禁止大板拼版 90° 旋转混排。
+#### `RULE-FLU-02`: Rheological Anisotropy & Layout Topological Alignment (流变各向异性与 DFM 走线拓扑反推法则)
+- **Methodology (方法论准则)**:  
+  流体在微观各向异性界面上的铺展遵循微流动动力学。当制造现场为了被动代偿流体不良，不得不采用极端降速、损失机台节拍（Takt Time）的代价在车间“擦屁股”时，知识挖掘系统必须识别这种工程代偿代价，将其升华为**流片前 DFM 设计红线**——在 CAD 端将底层密集图形拓扑与宏观流体前进方向实施几何平行化强制对齐，从源头消灭微观空化效应。
+- **Fab Case Study (实战案例实证)**:  
+  涂布前进方向垂直于微观密集走线（Data/Gate）时，万道台阶如同拦水坝诱发接触线钉扎与背向空化脱气鱼鳞斑；反推 DFM 规则：底层台阶 > 0.8μm 且 PLN ≤ 2.3μm 时，强制主走线与涂布方向平行，禁止大板拼版 90° 旋转混排。
 
-#### `RULE-FLU-03`: Longitudinal Stripe Mura: Slit Coater Falsehood vs Develop Air Dry Knife Truth (显影风刀气动湍流与微腐蚀白条机理)
-- **Problem / 陷阱**: 面板出现纵向条纹斑纹（Suji Mura / 白条）时，传统直觉习惯性怀疑涂布机刀头（Nozzle）堵塞或抖动，陷入漫长 4M 排查。
-- **Methodology / 方法**:
-  1. *风刀近距离湍流压差机理*：显影后段水洗风刀（RAK）距基板过近（如 10mm），高速气流直吹形成剧烈局部湍流压差，吹出条纹。对策：高度提升至 15mm 消除剧烈湍流，风量由 780 降至 380 L/min 并加装均压管。
-  2. *TMAH 烘烤浓缩微腐蚀机理*：显影后段 CDA 风刀流量不足，残留微液滴中含微量 TMAH 碱液；在后烘烤急剧脱水浓缩，微溶有机光阻表面形成白条 Mura。对策：风刀流量由 1200 提升至 1650 L/min 彻底切断水膜。
+#### `RULE-FLU-03`: Kinetic Aerodynamics vs Secondary Solute Etch Decoupling (动能剪切 vs 溶质二次富集解耦法则)
+- **Methodology (方法论准则)**:  
+  面对沿流向贯穿的宏观条纹缺陷，传统直觉习惯性归咎于前端成膜设备（Coater），陷入漫长 4M 排查。流体分析方法论必须考察下游干燥阶段的**“动能剪切 vs 溶质二次微腐蚀”二叉解耦机制**：近距离高速气流会引发剧烈局部微观湍流压差；而气流不足则无法剥离液膜，导致残余微液滴中的微量化学溶质在后续热相变脱水时急剧浓缩，腐蚀薄膜表面形成色差白条。
+- **Fab Case Study (实战案例实证)**:  
+  显影风刀（RAK）高度过低（10mm）引发局部气流湍流吹出条纹，升高至 15mm 匀风消除；显影后段 CDA 风刀流量不足导致残水含微量 TMAH 碱液，在高温烤箱中急剧浓缩微溶有机膜形成白条，AK 风量由 1200 增至 1650 L/min 彻底切断水膜根治。
 
-#### `RULE-FLU-04`: Coating Standby Drying & Hardware Root Cause Protocol (狭缝涂布停机防干槽与树脂刮刀根治规范)
-- **Problem / 陷阱**: 狭缝涂布条纹反复爆发，现场频繁做临时后烘补偿与简单擦拭，治标不治本。
-- **Methodology / 方法**:
-  1. *防干槽液位死锁*：重新标定待机溶剂浸润液位与刀唇悬置距离，严防洁净室微风导致局部干胶结皮。
-  2. *树脂刮片资质化*：严禁用金属/硬质刮刀损伤刀唇，全面替换为特种树脂刮刀并由资深技术员标准手法擦拭。
-  3. *供胶管路老化淘汰*：氟树脂输胶软管受溶剂长期浸泡内壁脱皮（Peeling）会产生批量内源颗粒，设立硬性寿命淘汰制。
+#### `RULE-FLU-04`: Meniscus Micro-Sealing & Endogenous Particle Defense (微观流态断层与内源异物阻断准则)
+- **Methodology (方法论准则)**:  
+  精密流体狭缝喷涂出现微观流态断层（局部拉丝、微小条纹）时，严禁仅做后道热学补偿。方法论要求建立前端三道物理源头阻断：① **气相平衡死锁**（重新标定待机溶剂液位与微间距，防止洁净室微风造成气相不饱和引发局部干胶结皮）；② **刀唇接触材质资质化**（严禁用硬质/金属刮刀损伤微观刀唇，全面替换为特种树脂刮刀）；③ **流体输送管路寿命淘汰制**（输胶软管受溶剂长期浸泡内壁溶胀脱皮形成批量内源异物，强制设立报废周期）。
+- **Fab Case Study (实战案例实证)**:  
+  狭缝涂布 Suji Mura 战役中，全面死锁防干槽溶剂液位，限定资深技术员标准树脂刮刀擦拭，并将 Trap Tank 到刀头的输胶管路纳入定期报废淘汰，彻底终结反复复发。
 
 ---
 
-### 3. 热力学、相变与光学显像 (RULE-THM: Thermodynamics, Shrinkage & Metrology)
+### 3. 跨尺度热力学与观测位移 (RULE-THM: Thermodynamics & Observability Shifts)
 
-#### `RULE-THM-01`: Lift Pin Thermal Sink, Local CD Shrinkage & Dark Cluster Mitigation (顶针局域微温差诱发 CD 收缩与宏观暗团闭环法则)
-- **Problem / 陷阱**: 440+ PPI 超高密度面板点亮时在固定几何点位出现发暗黑团（Dark Cluster Mura），但宏观膜厚量测正常。
-- **Methodology / 方法**:
-  1. *顶针局域热沉*：预烘热板（Hot Plate）合金顶针在接触基板时形成局部导热漏热。
-  2. *微观 CD 收缩*：微温差导致溶剂挥发差与感光度微漂，接触孔/电极 CD 偏小 0.2μm。
-  3. *光学显示放大*：高 PPI 下微米级收缩导致低灰阶驱动电场严重不足，液晶偏转不够宏观呈现黑团。
-  4. *三位一体对策*：更换陶瓷低导热顶针 + 热板对应温区（Zone 11）微升温 1~2°C 补偿 + 跨机台 Recipe 强制同步。
+#### `RULE-THM-01`: Geometric Heat Sink & Multi-Scale Amplification (几何热沉微温差与跨尺度非线性放大模型)
+- **Methodology (方法论准则)**:  
+  局域微小的热学边界扰动（如导热构件接触漏热 1~2°C）在宏观膜厚上往往完全无法被常规膜厚仪检出；但在微观光刻反应中，微温差会导致光刻胶残留溶剂挥发速率漂移，引发亚微米级关键尺寸（CD）微偏；在超高器件密度（如高 PPI）下，尺寸微偏在非线性电场驱动区被指数级放大为宏观可见的严重电学或光学缺陷。算法必须建立**“局域微温差 ➔ 亚微米尺寸收缩 ➔ 跨尺度非线性放大”**的系统级因果链。
+- **Fab Case Study (实战案例实证)**:  
+  预烘热板合金顶针微导热造成局域微温差，导致微米级电极 CD 偏小 0.2μm；在 440+ PPI 面板点亮时，低灰阶驱动电场不足导致液晶偏转凹陷，宏观呈现几何对应的暗团缺陷（Dark Cluster Mura）；采用陶瓷低热导顶针与温区局域补偿彻底收敛。
 
-#### `RULE-THM-02`: Thermal Manifestation & Post-Anneal Inspection Realignment (高分子薄膜退火显像与宏观目检防线后移法则)
-- **Problem / 陷阱**: 在光刻显影后（PHT）进行宏观目检（MAC）显示全良，但在后道却爆发大面积严重 Suji Mura。
-- **Methodology / 方法**:
-  1. *溶剂掩盖假象*：未退火湿膜含 15%~25% 溶剂，微观厚度差的光学相位差极微弱，肉眼不可见。
-  2. *退火体积收缩显像*：230°C 退火坚膜（ANN）使树脂剧烈交联收缩 20%~30%，微观厚度差被几何放大数十倍，条纹剧烈显现。
-  3. *关卡后移与阶梯放行*：严禁在未相变的中间态设卡，将 MAC 目检强制后移至退火（ANN）后；复机执行 Slot 1/15/30 抽检阶梯放行。
+#### `RULE-THM-02`: Phase Transition Shrinkage & Observability Shift Modeling (相变体积收缩与检测站点位移显像模型)
+- **Methodology (方法论准则)**:  
+  在制造中间态（如含溶剂湿膜），材料由于溶胀虚胖，微观厚度波动产生的光学相位差极微弱，处于物理上的“潜伏不可见态”。进入高温交联退火后，高分子剧烈脱溶剂固化伴随 20%~30% 的体积剧烈收缩，微观厚度差异被几何放大数十倍，光学干涉条纹强烈显形。**当产线突发不良率暴增时，算法必须首先判定是否发生了“检测站点后移或相变显像点位移”，防止将观测条件的改变误判为前道机台物理劣化**。
+- **Fab Case Study (实战案例实证)**:  
+  光刻显影后（PHT）光阻含溶剂掩盖厚度差，目检 MAC 站点后移至 230°C 退火坚膜（ANN）后，树脂体积剧烈收缩将相位差几何放大导致条纹大面积显形；系统识别此为“检测显影位移”而非涂布机突然故障。
 
-#### `RULE-THM-03`: Organic Planarization Film Spec Rationalization (高分子有机平坦化层规格解耦与极限减薄准则)
-- **Problem / 陷阱**: 拿无机薄膜的均一性指标（`U% ≤ 5%`）苛求 2~3μm 厚有机膜（PLN），引发产线常态化假报警。
-- **Methodology / 方法**:
-  1. *规格物理合理化*：受流变学挥发制约，量产基准合理界定为 `7%~8%`。
-  2. *三维工程治理*：
-     - 前道：通过 DFM 哑元线填充削减微观台阶段差；
-     - 本道：优化升温阶梯防止表面结皮（Skin Effect）引发火山口；
-     - 量测：坐标与 CAD 叠图避开微观台阶边缘，采用退火态真实动态折射率拟合。
+#### `RULE-THM-03`: Material Rheological Limit & Metrology Decoupling (材料流变极限与动静态量测基准解耦准则)
+- **Methodology (方法论准则)**:  
+  在量测数据异常挖掘中，严禁用不同物理材料体系的指标（如无机刻蚀或常规薄胶公差）苛求高粘度有机高分子膜层；在判定超标时，必须执行“三维工程治理解耦”：① 排查前道微观台阶段差传导；② 优化预热升温阶梯防止表面结皮（Skin Effect）引发自流平阻滞；③ 量测端排查光斑是否打在微观台阶边缘，并采用退火态真实动态折射率（n/k）重新建卡校准。
+- **Fab Case Study (实战案例实证)**:  
+  研发部门误用 LTPS 规格（`U% ≤ 5%`）苛求 2~3μm 厚有机平坦化层（PLN），引发 SPC 频繁假报警；将基准合理放宽至流变学允许的 7%~8%，叠图修正台阶量测坐标，消除管理假警报。
 
 ---
 
-### 4. 机械应力与时空解耦 (RULE-MEC: Mechanical Shock & Spatiotemporal Stress)
+### 4. 时空解耦与暗伤力学 (RULE-MEC: Spatiotemporal Stress & Damage Mechanics)
 
-#### `RULE-MEC-01`: Latent Damage Mechanics & Multi-Pass Exposure Model (暗伤潜伏与多重循环累积暴露因果模型)
-- **Problem / 陷阱**: 基板在后道高温真空腔室（如 CVD 300°C+）粉碎性炸裂，MES 路径分析将所有后道机台列为嫌疑犯，排查瘫痪。
-- **Methodology / 方法**:
-  1. *时空解耦*：前道常温湿法机构（对辊、顶针、机械手）撞击在倒角植入微裂纹（Micro-crack），常温下漏检潜伏；后道急热真空将热应力集中在裂纹尖端引发粉碎。
-  2. *多重循环累积加权*：逆向统计破片在全生命周期经历各前道设备的累积次数（Total Pass Count），通过过机风险比（Multi-pass Risk Ratio）锁定真正始发暗伤机台。
+#### `RULE-MEC-01`: Latent Trauma & Spatiotemporal Stress Detonation (机械接触暗伤潜伏与高温热炸裂时空解耦模型)
+- **Methodology (方法论准则)**:  
+  当脆性基板在后道高温真空腔室发生粉碎性断裂时，传统基于故障发生站点的 MES 路径交叉统计必然失效。**常温机械接触工段（滚轮、顶针、机械手）产生的微观微裂纹（Micro-crack）处于潜伏不可见态（Trauma），而下游高温热应力在缺口尖端剧烈集中才引爆灾难性粉碎（Detonation）**。方法论要求：算法必须逆向统计破片批次在全生命周期经历各前道设备的“多重循环累积暴露次数（Total Pass Count）”与风险比（Multi-pass Risk Ratio），穿透时空阻隔锁定真凶。
+- **Fab Case Study (实战案例实证)**:  
+  基板在后道 CVD 300°C+ 高温腔体炸裂，MES 统计将 CVD 列为假嫌犯；逆向多重过机加权分析，精准锁定前道湿法剥膜机（STR）上下对辊微观撞击植入倒角暗伤，热应力引爆粉碎。
 
-#### `RULE-MEC-02`: Substrate Breakage & Double Roller Impact Chipping (微观暗伤与湿法对辊机械接触应力溯源法则)
-- **Problem / 陷阱**: 全线突发固定坐标倒角微缺损（如 4mm x 26mm bevel chipping）。
-- **Methodology / 方法**:
-  1. *四道关卡截流*：在成膜与刻蚀前后设置高倍显微镜/白光抽检，区间收敛始发工序。
-  2. *对辊卡滞定位*：剥膜清洗机上下驱动对辊（Double Roller）受药液结晶浸润导致上辊导轨阻尼卡滞失去浮动柔性，在玻璃切入时产生硬撞击。清除结晶并调校边缘轴肩间隙。
-
----
-
-### 5. 极简归因与奥卡姆剃刀 (RULE-PAR: Causal Attribution, Parsimony & State Machine)
-
-#### `RULE-PAR-01`: Occam's Razor & Singular Physical Trigger vs 4M Management Narratives (奥卡姆剃刀与极简归因法则)
-- **Problem / 陷阱**: 沉迷于管理汇报 PPT 中的“人机料法环（4M1E）复合借口”，掩盖真实物理机制。
-- **Methodology / 方法**:
-  1. *现场物理的一元性*：成熟机台突然暴雷必是单一的局部物理突变（Single Physical Trigger），绝非十几个微弱因素同时共振。
-  2. *二元排查支路*：
-     - *支路一（观测条件位移）*：瑕疵一直存在，因目检关卡后移到相变区而被突然放大显形；
-     - *支路二（单点边界击穿）*：单一硬件或材料边界被破坏（如刀唇局部干胶、密封圈磨损）。
-
-#### `RULE-PAR-02`: Anti-Over-Retrieval & Mismatched Station Conflation (严防跨工序强行拼装的因果污染法则)
-- **Problem / 陷阱**: 大模型和通用检索为了宏大叙事，把同时期发生的减压干燥（DP）开度实验强行拼凑进厚有机膜（PLN）退火烘箱问题中。
-- **Methodology / 方法**:
-  1. *严守物理站点与工序边界*：无机光阻减压干燥与有机膜退火温场物理不相干，严禁跨工序串联。
-  2. *克制归因（Attribution Parsimony）*：锁定直接因果闭环，剔除并发无关工作。
-
-#### `RULE-PAR-03`: IS/IS-NOT Differential & Tool State Machine Auditing (控制变量对比法与设备硬件状态机穿透归因法则)
-- **Problem / 陷阱**: 出现 1.0μm 级尺寸断崖时盲目微调下游温度或曝光量，引发次生报废。
-- **Methodology / 方法**:
-  1. *倒查 30 天状态机*：断崖突变必是硬件变动，强查前置 30 天是否有 Nozzle 更换、传动轴拆装或机械零点漂移。
-  2. *四维对比（IS / IS-NOT）*：空间（Zone 11 vs 其它）、机型（超高 PPI vs 老品）、机台（100# vs 600#）、衬底（刚性玻璃 vs 柔性 PI）。
-  3. *孤岛配方审查*：硬件大修后主量产品复机正常，独立私有配方仍停留在旧零点引发首跑暴雷。
-
-#### `RULE-PAR-04`: Inspection Gating vs Physical Root Cause Elimination (防守截流 vs 进攻根治：条纹缺陷前后端解耦法则)
-- **Problem / 陷阱**: 把“目检站点后移并拦截不良”当成了质量事故的终局解决方案。
-- **Methodology / 方法**:
-  1. *前后端解耦*：后道设卡是防守止血（缩短检出时间），前端涂布/显影才是进攻根治。
-  2. *分类建库*：防守动作用于 SPC 监控与出货阻断，根治动作用于 Recipe 固化与设备改良。
+#### `RULE-MEC-02`: Dynamic Dampening Stiction & Mechanical Impact Tracing (动态机构阻尼卡滞与接触应力溯源准则)
+- **Methodology (方法论准则)**:  
+  全线爆发固定几何坐标的微观缺损（如倒角定点微崩边）时，排查重心必须置于流转过程中的驱动与对压动态机构。化学药液长期浸润结晶会导致浮动导轨微卡滞，丧失机械缓冲柔性，在玻璃切入瞬间产生刚性碰撞。算法应建立前后工序区间截流抽检，并针对对辊浮动阻尼与轴肩对齐度进行物理排查。
+- **Fab Case Study (实战案例实证)**:  
+  多批次基板倒角固定坐标出现 4mm*26mm 微破损，排查锁定剥膜机上下双滚轮（Double Roller）上辊导轨药液结晶卡滞，清除结晶恢复浮动间隙消除暗伤。
 
 ---
 
-### 6. 本体工程与方法论隔离 (RULE-ONT: Ontology Engineering & Methodology Air-Gap)
+### 5. 极简归因与反因果污染 (RULE-PAR: Attribution Parsimony & Anti-Conflation)
 
-#### `RULE-ONT-01`: Two-Stage Relational Grounding for Enterprise Auto-Ontology (NVIDIA Auto-Ontology 两阶段范式化落地准则)
-- **Problem / 陷阱**: 扁平向量 RAG 无法区分 0.8μm 与 1.5μm，且无法回答确切参数改变量。
-- **Methodology / 方法**:
-  1. *第一阶段（关系范式化）*：自动提纯为 3NF 关系表（`dim_equipment`、`dim_process_layer`、`dim_defect_type`、`fact_defect_incident`、`fact_root_cause_action`），明确参数量纲与前后数值。
-  2. *第二阶段（Auto-Ontology 语义对齐）*：注册认证 Term 与同义词阵列（`Air Knife`、`Suji Mura`），由 Auto-Ontology 编译执行确定性 Text-to-SQL。
+#### `RULE-PAR-01`: Occam's Razor & Singular Physical Trigger (奥卡姆剃刀与单点物理突变归因极简律)
+- **Methodology (方法论准则)**:  
+  企业管理汇报（8D 报告、汇报 PPT）出于管理心理学展示“全面受控”的考量，必然习惯拼凑“人机料法环（4M1E）复合原因矩阵”。但在真实物理世界中，一个成熟稳定的生产系统突然暴雷，**其真正的始发触发点（Trigger）绝非十几个微弱因素同时共振，而必然是一个简单、粗暴、单一的局部物理突变**。算法必须执行奥卡姆剃刀剪枝，仅在“观测条件位移（支路一）”与“单点硬件边界击穿（支路二）”的二叉树路径上收敛归因。
+- **Fab Case Study (实战案例实证)**:  
+  管理汇报罗列温湿度微漂移、机台微振动等 4M 矩阵，一线排查最终证实始发触发点仅为显影风刀气流高度过低引发局部湍流直吹，或待机防干槽液位过低导致刀头局部干胶。
 
-#### `RULE-ONT-02`: Methodology Engine vs Domain Knowledge Store Air-Gap (方法论母机与私有知识库解耦隔离准则)
-- **Problem / 陷阱**: 因担心商业机密泄露，把通用算法框架与测试工具也锁在本地不敢更新。
-- **Methodology / 方法**:
-  1. *开源仓（`knowhow-miner`）*：纯粹沉淀通用提取管线、奥卡姆剃刀校验算法、通用 DDL 与合成基准用例，定期敏捷演进。
-  2. *私有知识库*：真实工厂邮件、具体设备代号与量产配方通过 `.gitignore` 严密锁在本地隔离存储，零机密上云。
+#### `RULE-PAR-02`: Physical Boundary Enforcement & Anti-Over-Retrieval (工序物理边界强隔离与反过度检索拼装法则)
+- **Methodology (方法论准则)**:  
+  大语言模型与通用向量检索极易产生“看到同类词汇就脑补因果宏大叙事”的因果污染通病。知识挖掘管线必须对物理工序、膜层材料设置刚性物理边界，禁止将同一时间段内并发的、分属不同物理工序的无关实验强行捏合成复杂战役的组合拳，保持物理因果的极简性与纯洁性。
+- **Fab Case Study (实战案例实证)**:  
+  严禁将无机光刻胶减压干燥（DP）开度实验，强行揉捏拼凑进厚有机平坦化膜（PLN）的高温退火烘箱温场与排气问题中，坚决执行工序物理隔离。
+
+#### `RULE-PAR-03`: Hardware State Machine Precedence & IS/IS-NOT Matrix (硬件状态机优先审查与四维控制变量归因准则)
+- **Methodology (方法论准则)**:  
+  面对断崖式参数突变（如关键尺寸突然偏小 1.0μm），严禁在下游盲目微调曝光量或温度进行代偿。必须强制优先审查前置 30 天设备维护状态机（PM、刀头更换、轴承拆装、机械零点变动），并通过空间、产品、机台、衬底四维差异对比（IS / IS-NOT Matrix）与“孤岛独立配方审查”，排查配方继承断层。
+- **Fab Case Study (实战案例实证)**:  
+  机台更换涂布 Nozzle 后仅拿主跑量机型复机，脱离配方继承树的新品私有配方仍停留在旧零点，首跑即爆发断崖式尺寸异常；倒查状态机与孤岛配方瞬间恢复。
+
+#### `RULE-PAR-04`: Inspection Gating vs Physical Root Cause Decoupling (防守截流与进攻根治前后端解耦准则)
+- **Methodology (方法论准则)**:  
+  在质量防御体系中，检验站点的设置仅能起到“缩短不良检出时间（MTTD）、防止异常流出”的防守截流作用，绝不是问题的物理解决方案。采掘系统必须在知识库中严格解耦：**防守动作用于 SPC 监控与卡闸放行，进攻根治动作用于前端配方与硬件改造**，严防把“目检后移拦截”误当作“缺陷已根除”。
+- **Fab Case Study (实战案例实证)**:  
+  退火后目检（MAC）仅是防御设卡防止流出，真正的进攻根治沉淀于狭缝涂布刀头树脂刮片擦拭、防干槽溶剂死锁与供胶软管定期报废淘汰。
+
+---
+
+### 6. 确定性本体与隔离防御 (RULE-ONT: Ontology Grounding & Methodology Air-Gap)
+
+#### `RULE-ONT-01`: Two-Stage Relational Grounding for Enterprise Auto-Ontology (工业关系范式化与语义层双阶段确定性落地准则)
+- **Methodology (方法论准则)**:  
+  通用扁平向量 RAG 在工业高精密参数检索上面临不可避免的“参数致盲（0.8μm 与 1.5μm 向量距离相近）”与“长文本因果倒置”缺陷。必须采用两阶段确定性落地：第一阶段将非结构化工程讨论提纯为标准 3NF 关系表（设备、膜层、缺陷维表与事件、根因事实表），明确参数量纲与前后绝对数值；第二阶段由 NVIDIA Auto-Ontology 进行专业术语同义词图谱映射，通过确定性 Text-to-SQL 输出可溯源答案。
+- **Fab Case Study (实战案例实证)**:  
+  将显影风刀流量从 1200 增至 1650 L/min 的参数对策，编译为 Auto-Ontology 中的认证术语映射，外部 Agent 通过 MCP 查询即刻获得带量纲、带报告出处的确定性 SQL 结果。
+
+#### `RULE-ONT-02`: Methodology Engine vs Domain Knowledge Store Air-Gap (方法论母机与私有知识库物理绝缘解耦准则)
+- **Methodology (方法论准则)**:  
+  必须在概念与架构上彻底切分“方法论工具（开源代码仓）”与“私有工厂数据（本地隔离空间）”。开源仓只包含通用的因果提取管线、奥卡姆剃刀校验算法、通用 DDL 与脱敏基准用例；真实工厂邮件与绝密配方通过 `.gitignore` 严密锁在本地私有环境中，确保方法论持续公开演进，私有数据零泄漏。
+- **Fab Case Study (实战案例实证)**:  
+  `Feng-H/knowhow-miner` 开源仓持续演进通用方法论与自动化评估套件，而数万封企业内部邮件及真机参数库安全留存在本地高防服务器与私有 NAS 中。
