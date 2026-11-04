@@ -37,9 +37,10 @@ Every feature addition, bug fix, or architectural change must be tracked systema
    - Must follow [Keep a Changelog](https://keepachangelog.com/) standards under `[Unreleased]` or semantic version tags (`[X.Y.Z]`).
    - Group entries under `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, or `Security`.
    - Use synthetic placeholders (`David Chen` / `陈大卫`) for any persona examples.
-2. **`README.md` Consistency**:
-   - Maintain parity between English and Chinese sections.
-   - When new modules or methods are added to `miner/`, update both the English and Chinese module structure sections simultaneously.
+2. **`README.md` & `README_zh.md` Consistency**:
+   - Maintain parity between English `README.md` and Chinese `README_zh.md`.
+   - When new modules, methods, or engineering rules are added, update both `README.md` and `README_zh.md` simultaneously.
+   - Maintain reciprocal language switch links at the top of both files (`[English](README.md) | [中文说明](README_zh.md)`).
 3. **Commit Messages**:
    - Follow Conventional Commits (`feat:`, `fix:`, `docs:`, `legal:`, `refactor:`).
    - Commit messages must be purely technical; never mention real personnel or internal projects.
@@ -68,5 +69,5 @@ When modifying causal extraction logic or adding features to `miner/`:
 Before running `git push`, the agent must verify:
 - [ ] `git diff` contains no real personnel names or unredacted enterprise labels.
 - [ ] `CHANGELOG.md` reflects all architectural and functional changes.
-- [ ] English and Chinese sections in `README.md` are synchronized.
+- [ ] `README.md` and `README_zh.md` are synchronized and contain reciprocal links.
 - [ ] Test suite and evaluation benchmark pass (`python3 -m miner.eval_runner`).

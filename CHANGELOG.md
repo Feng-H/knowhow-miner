@@ -33,7 +33,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Changed
 - Enhanced dual-reality decoupling to flag multi-factor composite excuses and reward parsimonious physical mechanisms.
-- Updated bilingual documentation highlighting the Deterministic Semantic Layer and Auto-Ontology integration methodology.
+- Separated bilingual documentation into independent, reciprocal files: `README.md` (English) and `README_zh.md` (Chinese), preventing bloated multilingual mixing.
+- Added explicit upstream attribution and acknowledgment to the [NVIDIA Auto-Ontology](https://github.com/NVIDIA/auto-ontology) open-source framework across all documentation.
 
 ---
 
