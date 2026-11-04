@@ -48,9 +48,21 @@ Unstructured vector RAG over technical manufacturing communication inevitably pr
 1. **Relation Formalization**: Automatically normalizes mined causal quintets into 3NF relational schemas (`dim_equipment`, `dim_process_layer`, `dim_defect_type`, `fact_defect_incident`, `fact_root_cause_action`), explicitly recording parameter boundaries, units, and verification deltas.
 2. **Semantic Layer Compilation (NVIDIA Auto-Ontology)**: Generates domain terms (`Air Knife`, `Suji Mura`, `Organic Layer`, `Root Cause & Action`) with synonym dictionaries, mapping them to relational columns. Exposes deterministic Text-to-SQL queries through MCP, backed by verifiable physical evidence.
 
-### Frontline Physical Rules: Parsimony & Visibility Shifts
+### Frontline Physical Rules & Causality Codebook
+The repository codifies frontline manufacturing physical heuristics and causality disambiguation rules into `miner/validator.py` and the centralized engineering codebook [`docs/ENGINEERING_RULES.md`](docs/ENGINEERING_RULES.md):
+
+- **Rule 41 (Mentor Anchor vs Apprentice Noise Suppression)**: Downweights high-frequency shift logs and anchors ground truth to senior master engineers (`[MENTOR]` / `David Chen`).
+- **Rule 43 (Bilingual Alias Resolution)**: Unifies bilingual English aliases and Chinese names to resolve split discussion trees.
+- **Rule 45 (Equipment Physical Boundary Probing)**: Solves high-viscosity thick organic film failures by pushing past conservative OEM guidelines to actual hardware interference limits.
+- **Rule 46 (Fluid Anisotropy & DFM Alignment)**: Models micro-step fluid barrier pinning to enforce DFM layout rules aligning dense metal routing with coater scan directions.
+- **Rule 47 (Thermal Sink & Dark Cluster Mitigation)**: Resolves 440+ PPI local CD shrinkage and optical dark clusters caused by hot plate lift pin thermal sinks via ceramic pins and multi-zone thermal tuning.
+- **Rule 50 (IS/IS-NOT Differential & Tool State Machine)**: Mandates 30-day pre-incident hardware maintenance audits and island recipe checks to prevent secondary fallout.
 - **Rule 52 (Parsimony & Anti-Conflation)**: LLMs naturally mimic corporate 8D presentations by fabricating verbose multi-factor composite hypotheses (4M: Man, Machine, Material, Method). The Parsimony Engine enforces Occam's razor: when a singular empirical parameter delta (e.g. Air Knife flow rate from 1200 to 1650 L/min, roller bearing stiction clearance) accounts for yield recovery, speculative composite excuses are pruned.
 - **Rule 53 (Process Visibility Shift Modeling)**: Disentangles inline physical degradation from inspection gate shifts. For example, moving macro inspection (MAC) from wet photoresist (PHT) to post-annealing (ANN) does not mean the coater suddenly failed; rather, 230°C thermal annealing induces 20-30% resin volume shrinkage, geometrically amplifying nanometer thickness variations into visible optical interference stripes.
+- **Rule 54 & 55 (Latent Micro-Cracks & Double Roller Chipping)**: Formulates multi-pass exposure models where upstream wet strip double-roller mechanical impacts cause latent bevel micro-cracks that catastrophically shatter in downstream high-temperature vacuum chambers.
+- **Rule 59 (Longitudinal Stripe Mura & Air Knife Micro-Etch)**: Disproves false slit coater assumptions by demonstrating that stripe mura is driven by developer air knife turbulence (height too low) or trace TMAH micro-droplets evaporating and etching organic films during post-bake.
+
+*For the full specification of all 20+ engineering rules, see [`docs/ENGINEERING_RULES.md`](docs/ENGINEERING_RULES.md).*
 
 ### Two-Tier Know-how Retrieval (Cognitive Cache Architecture)
 Generic vector RAG fails on manufacturing corpora (parameter-level distinctions like `0.8μm` vs `1.5μm` are invisible to embeddings, and chunking severs causal email threads). Instead, this repo implements an adaptive two-tier architecture that stays fast as the archive grows:
@@ -321,9 +333,21 @@ If you are evaluating this engine on your own internal fab communications (such 
 1. **结构化范式沉淀（Relation Formalization）**：将非结构化工程讨论自动蒸馏为严格的 3NF 关系型数据（`dim_equipment`、`dim_process_layer`、`dim_defect_type`、`fact_defect_incident`、`fact_root_cause_action`），参数改动前（`param_before`）与改动后（`param_after`）具有明确量纲，杜绝向量模糊匹配。
 2. **语义层治理与 Text-to-SQL 桥接（NVIDIA Auto-Ontology）**：自动提取行业术语（`显影风刀/AK`、`竖条纹/Suji Mura`、`厚胶有机膜`、`根因对策`）及其同义词映射，绑定至数据库字段。外部 Agent（Hermes、Cursor、Claude）通过 MCP 发起查询时，由 Auto-Ontology 翻译为高可靠的确定性 SQL 执行，言必有据、带血统溯源。
 
-### 一线实战物理准则：极简因果与检测显影位移
+### 一线实战物理准则与因果代码本（Engineering Rules & Causality Codebook）
+本仓库将产线一线实战物理启示与因果解耦法则固化于 `miner/validator.py` 及统一的实战工程准则文档 [`docs/ENGINEERING_RULES.md`](docs/ENGINEERING_RULES.md)：
+
+- **Rule 41（组织阵眼与新人噪声对冲法则）**：抑制新人高频值班汇报事务性噪音，将技术事实定锚于发信频次低但字字千钧的资深主管与师傅（`[MENTOR]` / `David Chen`）。
+- **Rule 43（中英文干部别名实体消歧法则）**：打通中英文署名与别名映射，防止同人异名撕裂会话决策树。
+- **Rule 45（倒逼设备物理极限与安全边界探针）**：突破原厂保守参数限制，逼出狭缝涂布绝对机械干涉底线（如 60μm），在安全边界上方建立极限参数带解决特种厚膜破膜。
+- **Rule 46（流体各向异性与 DFM 走线拓扑反推）**：微观密集走线垂直涂布如同拦水坝诱发空化脱气，反推 CAD 设计端强制主走线与涂布方向平行。
+- **Rule 47（顶针热沉诱发 CD 收缩与宏观暗团闭环）**：贯通预烘热板顶针局部导热漏热 ➔ CD 偏小 0.2μm ➔ 高 PPI 低灰阶电场驱动不足发暗 ➔ 陶瓷顶针与多温区局域热学补偿治理。
+- **Rule 50（控制变量法与设备硬件状态机穿透归因）**：发生 1.0μm 级灾难突变时严禁下游盲目补偿，强制倒查前置 30 天硬件维护记录与孤岛独立配方。
 - **Rule 52（奥卡姆剃刀与反复合原因编造）**：企业 8D 汇报为应付评审往往习惯拼凑“人机料法环（4M1E）”复合假象。管线内置反编造守门员：当现场存在清晰的单一物理参数变动（如显影风刀流量由 1200 增至 1650 L/min、滚轮轴承卡滞间隙）与良率恢复直接因果闭环时，强行剪枝宏观泛化的 4M 借口，锁定极简物理触发点。
 - **Rule 53（检测站点迁移与缺陷显影位移建模）**：解耦机台真实物理劣化与目检关卡后移。例如：涂布显影后（PHT）光阻含溶剂掩盖微观厚度差，目检站点后移至 230℃ 退火坚膜（ANN）后，树脂 20%~30% 体积剧烈收缩导致微观相位差被几何放大而显形。系统能准确识别此类型“假性突发异常”，防止错判前道机台劣化。
+- **Rule 54 & 55（微观潜伏暗伤与湿法对辊撞击破片）**：建立多重循环累积暴露因果模型，揭示剥膜段双滚轮药液结晶卡滞在倒角植入微裂纹、后道 CVD 高温真空腔热应力剧烈引爆粉碎的跨工段时空解耦机理。
+- **Rule 59（宏观纵向条纹与显影风刀微腐蚀机理）**：颠覆纵向条纹必然是涂布机堵刀的假象，揭示显影风刀高度过低引发局部湍流直吹、或风量不足导致残存微量 TMAH 在烘烤时急剧浓缩微溶有机膜形成白条的物理本质。
+
+*完整 20 余条一线实战因果准则规范详见 [`docs/ENGINEERING_RULES.md`](docs/ENGINEERING_RULES.md)。*
 
 ### 两层认知缓存与全文检索架构（Two-Tier Retrieval）
 通用向量 RAG 在制造业语料上会失效（embedding 分不清 `0.8μm` 与 `1.5μm` 的毫厘之差，切块会切断邮件因果链）。本仓库实现自适应双层架构，**系统不随邮件库增长而变慢**：

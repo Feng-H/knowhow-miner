@@ -12,6 +12,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [1.3.0] - 2026-11-04
 
 ### Added
+- **Centralized Frontline Industrial Engineering Rules (`docs/ENGINEERING_RULES.md`)**:
+  - Published comprehensive codebook formalizing 20 frontline physical heuristics and causality principles (Rules 41 to 61).
+  - Codified key physical mechanisms: Mentor Anchor tracking (Rule 41), bilingual cadre entity disambiguation (Rule 43), OEM physical safety boundary probing (Rule 45), fluid anisotropy & DFM layout routing alignment (Rule 46), lift pin thermal sink & dark cluster mitigation (Rule 47), IS/IS-NOT hardware state machine audits (Rule 50), latent micro-crack damage & multi-pass exposure models (Rule 54/55), thermal manifestation & post-anneal visual inspection gating (Rule 56/57), Occam's razor singular physical attribution (Rule 58), and developer air knife turbulent/evaporative stripe mura mechanisms (Rule 59).
 - **Parsimony Engine & Anti-Conflation (Rule 52)**:
   - Implemented Occam's razor validation in `miner/validator.py` to counter LLM reporting bias. Distinguishes genuine shopfloor single physical triggers (e.g. Air Knife velocity boundary, mechanical roller bearing stiction, isolated recipe inheritance failure) from verbose composite 4M1E excuses (Man, Machine, Material, Method) commonly packaged in corporate 8D presentations.
 - **Process Visibility Shift Modeling (Rule 53)**:
