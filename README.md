@@ -39,6 +39,18 @@ The system architecture is inspired by frontline engineering experiences as a **
 - `miner/eval_runner.py`: The automated evaluation benchmark runner testing cleaning precision, triage accuracy, and physical sanity.
 - `miner/mock_generator.py`: Generates realistic mock incident datasets.
 - `miner/pipeline.py`: End-to-end batch processing pipeline orchestrator.
+- `miner/auto_ontology_bridge.py`: Bridges mined industrial causal quintets into normalized relational schemas (`dim_equipment`, `dim_process_layer`, `dim_defect_type`, `fact_defect_incident`, `fact_root_cause_action`) and semantic terms for **NVIDIA Auto-Ontology**.
+- `schemas/industrial_ontology_schema.sql`: Standard relational DDL for deploying deterministic manufacturing semantic layers.
+
+### Deterministic Semantic Layer & NVIDIA Auto-Ontology Integration
+Unstructured vector RAG over technical manufacturing communication inevitably produces hallucinations and cannot handle precise parameter deltas (e.g. *\"What was the exact CDA flow rate change on the developer air knife?\"*). **knowhow-miner** implements a deterministic two-stage architecture:
+
+1. **Relation Formalization**: Automatically normalizes mined causal quintets into 3NF relational schemas (`dim_equipment`, `dim_process_layer`, `dim_defect_type`, `fact_defect_incident`, `fact_root_cause_action`), explicitly recording parameter boundaries, units, and verification deltas.
+2. **Semantic Layer Compilation (NVIDIA Auto-Ontology)**: Generates domain terms (`Air Knife`, `Suji Mura`, `Organic Layer`, `Root Cause & Action`) with synonym dictionaries, mapping them to relational columns. Exposes deterministic Text-to-SQL queries through MCP, backed by verifiable physical evidence.
+
+### Frontline Physical Rules: Parsimony & Visibility Shifts
+- **Rule 52 (Parsimony & Anti-Conflation)**: LLMs naturally mimic corporate 8D presentations by fabricating verbose multi-factor composite hypotheses (4M: Man, Machine, Material, Method). The Parsimony Engine enforces Occam's razor: when a singular empirical parameter delta (e.g. Air Knife flow rate from 1200 to 1650 L/min, roller bearing stiction clearance) accounts for yield recovery, speculative composite excuses are pruned.
+- **Rule 53 (Process Visibility Shift Modeling)**: Disentangles inline physical degradation from inspection gate shifts. For example, moving macro inspection (MAC) from wet photoresist (PHT) to post-annealing (ANN) does not mean the coater suddenly failed; rather, 230°C thermal annealing induces 20-30% resin volume shrinkage, geometrically amplifying nanometer thickness variations into visible optical interference stripes.
 
 ### Two-Tier Know-how Retrieval (Cognitive Cache Architecture)
 Generic vector RAG fails on manufacturing corpora (parameter-level distinctions like `0.8μm` vs `1.5μm` are invisible to embeddings, and chunking severs causal email threads). Instead, this repo implements an adaptive two-tier architecture that stays fast as the archive grows:
@@ -300,6 +312,18 @@ If you are evaluating this engine on your own internal fab communications (such 
 - `miner/mock_generator.py`: 合成数据生成器，供外部开发者快速体验管线逻辑。
 - `miner/eval_runner.py`: 自动化工业评测运行器（Eval Harness），多级指标量化评测清洗保真度、意图分类与物理因果。
 - `miner/pipeline.py`: 端到端批量提炼执行入口。
+- `miner/auto_ontology_bridge.py`: 工业本体语义桥接器，将提取的工业制造因果事实转换为标准三范式关系表（设备维表、膜层维表、缺陷维表、异常事实表、根因对策表），并自动生成 **NVIDIA Auto-Ontology** 规范的专业术语同义词词典与 Text-to-SQL 语义层实体。
+- `schemas/industrial_ontology_schema.sql`: 工业确定性语义层与实体关系数据库标准 DDL。
+
+### 确定性语义层与 NVIDIA Auto-Ontology 架构打通
+通用向量 RAG 在制造业高精密数据上面临不可避免的“幻觉与参数失真”缺陷（大模型无法准确回答“显影风刀 CDA 流量究竟改动了多少 L/min”）。**knowhow-miner** 提供两阶段确定性治理方案：
+
+1. **结构化范式沉淀（Relation Formalization）**：将非结构化工程讨论自动蒸馏为严格的 3NF 关系型数据（`dim_equipment`、`dim_process_layer`、`dim_defect_type`、`fact_defect_incident`、`fact_root_cause_action`），参数改动前（`param_before`）与改动后（`param_after`）具有明确量纲，杜绝向量模糊匹配。
+2. **语义层治理与 Text-to-SQL 桥接（NVIDIA Auto-Ontology）**：自动提取行业术语（`显影风刀/AK`、`竖条纹/Suji Mura`、`厚胶有机膜`、`根因对策`）及其同义词映射，绑定至数据库字段。外部 Agent（Hermes、Cursor、Claude）通过 MCP 发起查询时，由 Auto-Ontology 翻译为高可靠的确定性 SQL 执行，言必有据、带血统溯源。
+
+### 一线实战物理准则：极简因果与检测显影位移
+- **Rule 52（奥卡姆剃刀与反复合原因编造）**：企业 8D 汇报为应付评审往往习惯拼凑“人机料法环（4M1E）”复合假象。管线内置反编造守门员：当现场存在清晰的单一物理参数变动（如显影风刀流量由 1200 增至 1650 L/min、滚轮轴承卡滞间隙）与良率恢复直接因果闭环时，强行剪枝宏观泛化的 4M 借口，锁定极简物理触发点。
+- **Rule 53（检测站点迁移与缺陷显影位移建模）**：解耦机台真实物理劣化与目检关卡后移。例如：涂布显影后（PHT）光阻含溶剂掩盖微观厚度差，目检站点后移至 230℃ 退火坚膜（ANN）后，树脂 20%~30% 体积剧烈收缩导致微观相位差被几何放大而显形。系统能准确识别此类型“假性突发异常”，防止错判前道机台劣化。
 
 ### 两层认知缓存与全文检索架构（Two-Tier Retrieval）
 通用向量 RAG 在制造业语料上会失效（embedding 分不清 `0.8μm` 与 `1.5μm` 的毫厘之差，切块会切断邮件因果链）。本仓库实现自适应双层架构，**系统不随邮件库增长而变慢**：

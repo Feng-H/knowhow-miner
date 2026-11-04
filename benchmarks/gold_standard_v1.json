@@ -175,6 +175,87 @@
         "action": "Maintain routine maintenance logs."
       },
       "dfm_rule": null
+    },
+    {
+      "id": "GT_005_DEVELOP_AIR_KNIFE_FLOW_MURA",
+      "meta": {
+        "title": "Organic Layer Stripe Mura Root Cause & Parsimony Verification",
+        "station": "Track_DEV",
+        "layer": "PLN",
+        "product": "Fab-G6_OLED",
+        "expected_intent": "DOE_EXPERIMENT"
+      },
+      "symptom": {
+        "description": "Continuous longitudinal white stripe (suji mura) across OLED organic photoresist layers (PLN/PDL/SPA) post-bake.",
+        "defect_code": "DEV_AK_MURA",
+        "affected_structures": ["PLN", "PDL", "SPA"]
+      },
+      "disputes": [
+        {"dept": "Manufacturing / Shift Lead", "hypothesis": "Manufacturing management proposed 4M composite model: coater slit nozzle vibration and ambient cleanroom humidity drift."},
+        {"dept": "Photolithography / Photo", "hypothesis": "Frontline photolithography engineering demonstrated singular rinse drying failure and air knife velocity boundary insufficiency."}
+      ],
+      "validation_probe": {
+        "method": "Air knife flow rate step sweep from (1200, 1200) to (1700, 1650) L/min and height distance adjustment (10mm to 15mm)."
+      },
+      "ground_truth_physics": {
+        "mechanism": "Developer rinse drying insufficiency leaves residual micro-droplets containing traces of TMAH on glass surface; subsequent hard-bake accelerates local resist dissolution forming optical phase stripe mura.",
+        "chemical_reaction": "Resist + residual TMAH -> micro-dissolution thinning at 230 deg C hard bake",
+        "root_cause_category": "FLUID_DYNAMICS_DRYING"
+      },
+      "pr_vs_physics_decoupling": {
+        "external_8d_narrative": "Slit coater mechanical micro-stutter and cleanroom humidity fluctuation.",
+        "internal_ground_truth": "Developer air knife flow rate deficiency and turbulent straight-blow distance."
+      },
+      "pca_solution": {
+        "action": "Increase DEV AK flow rate to (1700, 1650) L/min and lift nozzle gap to 15mm with pressure equalization manifold.",
+        "parameter_delta": "Flow: 1200->1650 L/min, Height: 10->15 mm"
+      },
+      "dfm_rule": {
+        "rule_id": "FPD-DFM-TRK-001",
+        "name": "Developer Air Knife Drying Velocity Margin Rule",
+        "formula": "V_dry >= Q_air / (A_slit * rho_air) * cos(theta_knife) > 18 m/s",
+        "min_enclosure_um": 0.0
+      }
+    },
+    {
+      "id": "GT_006_INSPECTION_STATION_VISIBILITY_SHIFT",
+      "meta": {
+        "title": "Post-Anneal Volume Shrinkage Phase Contrast Visibility Shift",
+        "station": "Track_Bake",
+        "layer": "Halftone",
+        "product": "Fab-G6_LTPS",
+        "expected_intent": "REPORT_8D"
+      },
+      "symptom": {
+        "description": "Apparent sudden explosion of suji mura defect rate after engineering inspection relocation.",
+        "defect_code": "MAC_STATION_ESC",
+        "affected_structures": ["Halftone_Resist"]
+      },
+      "disputes": [
+        {"dept": "Operations / Shopfloor", "hypothesis": "Operations claimed track coater unit experienced hardware degradation."},
+        {"dept": "Process Engineering", "hypothesis": "Process analysis showed coater parameters were constant; inspection criteria shifted from PHT to post-ANN."}
+      ],
+      "validation_probe": {
+        "method": "Split lot inspection before and after 230 deg C annealing."
+      },
+      "ground_truth_physics": {
+        "mechanism": "Unbaked photoresist retains 15-25% solvent masking nanometer thickness variations; 230 deg C annealing causes 20-30% resin volume shrinkage, geometrically amplifying optical interference phase difference into visible stripes under inspection lamps.",
+        "chemical_reaction": "Cross-linking desolvation -> 25% volume shrinkage -> delta_n * delta_d amplification",
+        "root_cause_category": "OPTICAL_PHASE_AMPLIFICATION"
+      },
+      "pr_vs_physics_decoupling": {
+        "external_8d_narrative": "Coater nozzle degradation over time.",
+        "internal_ground_truth": "Optical interference phase contrast amplification due to inspection gate shift to post-ANN."
+      },
+      "pca_solution": {
+        "action": "Standardize MAC inspection station to post-ANN gate across all thick-film halftone recipes."
+      },
+      "dfm_rule": {
+        "rule_id": "FPD-DFM-BAK-002",
+        "name": "Thermal Anneal Thickness Phase Contrast Threshold Rule",
+        "formula": "Delta_Phase = (4 * pi / lambda) * (n_film * d_film * (1 - S_shrink))",
+        "min_enclosure_um": 0.0
+      }
     }
   ]
 }

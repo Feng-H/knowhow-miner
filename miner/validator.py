@@ -36,7 +36,30 @@ class LogicValidator:
         r"环境波动",
         r"设备临近PM周期",
         r"操作失误",
-        r"人员培训不足"
+        r"人员培训不足",
+        r"多因素复合影响",
+        r"4M复合因素"
+    ]
+
+    PARSIMONY_PHYSICAL_PATTERNS = [
+        r"风刀.*(流量|高度|气流)",
+        r"Air Knife|AK.*(flow|height)",
+        r"滚轮.*(卡滞|轴承|轴肩)",
+        r"roller.*(clearance|stiction|bearing)",
+        r"顶针.*(温差|offset|接触)",
+        r"lift pin.*(offset|temp)",
+        r"孤岛配方|recipe inherit",
+        r"狭缝.*(结晶|挂胶|清洗)",
+        r"nozzle.*(clog|residue|wash)"
+    ]
+
+    VISIBILITY_SHIFT_PATTERNS = [
+        r"MAC.*(移至|后移|迁移).*ANN",
+        r"检测站点.*(变更|后移)",
+        r"坚膜.*(收缩|体积收缩|相位差)",
+        r"脱溶剂.*(干涉|显形)",
+        r"量测坐标.*(段差|台阶边缘)",
+        r"假报警|false alarm"
     ]
 
     INTERNAL_GROUND_TRUTH_PATTERNS = [
@@ -65,7 +88,9 @@ class LogicValidator:
             "has_customer_excuse": False,
             "has_ground_truth": False,
             "is_closed_loop": False,
-            "has_actionable_offset": False
+            "has_actionable_offset": False,
+            "is_parsimonious_physical": False,
+            "is_visibility_shift": False
         }
 
         # 1. Check required fields
@@ -95,6 +120,19 @@ class LogicValidator:
         for pat in cls.INTERNAL_GROUND_TRUTH_PATTERNS:
             if re.search(pat, root_cause):
                 flags["has_ground_truth"] = True
+                break
+
+        # Rule 52: Parsimony check (anti-conflation of composite 4M narratives)
+        for pat in cls.PARSIMONY_PHYSICAL_PATTERNS:
+            if re.search(pat, root_cause, re.I) or re.search(pat, pca, re.I):
+                flags["is_parsimonious_physical"] = True
+                flags["has_ground_truth"] = True
+                break
+
+        # Rule 53: Process visibility shift detection (station relocation / phase contrast)
+        for pat in cls.VISIBILITY_SHIFT_PATTERNS:
+            if re.search(pat, root_cause, re.I) or re.search(pat, symptom, re.I):
+                flags["is_visibility_shift"] = True
                 break
 
         # 3. Check Actionable Recipe / Design Redline

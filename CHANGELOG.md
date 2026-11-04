@@ -9,6 +9,26 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
+## [1.3.0] - 2026-11-04
+
+### Added
+- **Parsimony Engine & Anti-Conflation (Rule 52)**:
+  - Implemented Occam's razor validation in `miner/validator.py` to counter LLM reporting bias. Distinguishes genuine shopfloor single physical triggers (e.g. Air Knife velocity boundary, mechanical roller bearing stiction, isolated recipe inheritance failure) from verbose composite 4M1E excuses (Man, Machine, Material, Method) commonly packaged in corporate 8D presentations.
+- **Process Visibility Shift Modeling (Rule 53)**:
+  - Formulated inspection gate transition and optical phase contrast magnification modeling in `miner/validator.py`. Distinguishes inline hardware degradation from metrology threshold shifts (e.g., inspection relocating from wet PHT to post-ANN, where 230°C thermal annealing induces 20-30% resin volume shrinkage, geometrically amplifying nanometer thickness variations into visible optical interference stripes).
+- **NVIDIA Auto-Ontology Semantic Bridge**:
+  - Implemented `miner/auto_ontology_bridge.py` and `schemas/industrial_ontology_schema.sql` to compile mined causal quintets into normalized relational schemas (`dim_equipment`, `dim_process_layer`, `dim_defect_type`, `fact_defect_incident`, `fact_root_cause_action`).
+  - Added automated term and synonym generation (`Air Knife`, `Suji Mura`, `Organic Layer`, `Root Cause & Action`) for NVIDIA Auto-Ontology semantic layer integration.
+  - Enabled deterministic Text-to-SQL query generation over physical parameter deltas, bypassing probabilistic vector RAG hallucinations.
+- **Benchmark Fixtures Expansion**:
+  - Added synthetic benchmark cases `GT_005_DEVELOP_AIR_KNIFE_FLOW_MURA` and `GT_006_INSPECTION_STATION_VISIBILITY_SHIFT` into `benchmarks/gold_standard_v1.json` with 100% test coverage in `tests/test_auto_ontology_bridge.py`.
+
+### Changed
+- Enhanced dual-reality decoupling to flag multi-factor composite excuses and reward parsimonious physical mechanisms.
+- Updated bilingual documentation highlighting the Deterministic Semantic Layer and Auto-Ontology integration methodology.
+
+---
+
 ## [1.2.0] - 2026-10-30
 
 ### Added
