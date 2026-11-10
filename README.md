@@ -1,4 +1,4 @@
-# knowhow-miner: Industrial Manufacturing Know-how Mining & Causal Pipeline
+# knowhow-miner: Universal Industrial Cognitive Reverse-Engineering & Decision State Machine Extraction Framework
 
 [English](README.md) | [中文说明](README_zh.md)
 
@@ -10,12 +10,21 @@
 
 ---
 
-### Overview & Author Background
-**knowhow-miner** is an engineering-first knowledge extraction and causal graph reconstruction pipeline tailored for semiconductor and Flat Panel Display (FPD/Array) manufacturing. 
+### Methodological Philosophy & Overview
+**knowhow-miner** is an open-source **methodological engine and benchmark framework** designed to reverse-engineer tacit engineering expertise from messy, uncurated industrial communications (multi-department emails, shift handovers, and 8D dispute threads).
 
-The system architecture is inspired by frontline engineering experiences as a **Photolithography (Yellow Beam / Photo Track) Engineer** in high-volume FPD fabs. It bridges the critical "cognitive divide" between design centers (CAD/EDA layout) and the physical shop floor (wafer/glass fabrication), transforming thousands of multi-department engineering emails, shift handovers, and 8D reports into structured **Recipe Tuning Offsets** and **Design-for-Manufacturing (DFM) Redline Rules**.
+Rather than collecting static FAQs or hardcoding concrete equipment troubleshooting SOPs (e.g. "how to clean nozzle X"), **knowhow-miner** formalizes the universal cognitive methodology behind shopfloor problem-solving:
 
-> **License Notice**: This project is licensed under the **[Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License (CC BY-NC-SA 4.0)](LICENSE)**. It is strictly free for academic research, education, and personal study. **Commercial use, unauthorized resale, proprietary integration, or commercial derivative redistribution without an explicit commercial license is strictly prohibited.** Commercial licensing contact: `huangfengjob@gmail.com`.
+| Paradigm | Static Industrial RAG / FAQ | knowhow-miner (Decision State Machine) |
+| :--- | :--- | :--- |
+| **Input** | Discrete defect keywords (e.g., `Mura`, `CD OOC`) | **Trigger & Fab Noise**: Initial alarms, sensor drift, and inter-departmental deflection hypotheses. |
+| **Cognitive Core** | Flat answers ("Tune parameter to Y") | **First-Principles Deduction**: Deductive pruning tracing *why* senior leads rejected superficial explanations using physical common sense and boundary checks. |
+| **Shopfloor Reality** | Idealized instantaneous fixes | **Trade-off & Interlock**: Multi-stage engineering compromises (Phase 1: temporary margins sacrificed to avoid line shutdowns vs. Phase 2: permanent DFM redline locks during scheduled PM windows). |
+| **Deliverable** | Passive documentation | **Verifiable Evaluation Benchmarks (Gyms)** for measuring whether industrial reasoning agents can deduce ground-truth actions from noisy raw telemetry. |
+
+> **Empirical Pilot Grounding**: The framework's cognitive models are battle-tested and calibrated against high-volume semiconductor and Flat Panel Display (FPD/Array) photolithography manufacturing cases. Real shopfloor data (wafer/glass fabrication, fluid boundary probing, thermal sinks) serves strictly as empirical evidence to prevent overfitting abstract algorithms to synthetic toys.
+
+> **License Notice**: This project is licensed under the **[Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License (CC BY-NC-SA 4.0)](LICENSE)**. Free for academic research, education, and personal study. Commercial licensing & inquiries: `john.huang@knowhowcraft.com`.
 
 ---
 
