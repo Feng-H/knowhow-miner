@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>knowhow-miner: 微纳半导体与显示制造因果知识采掘核心架构</title>
+  <title>knowhow-miner: 通用工业认知逆向工程母机与决策状态机提取分层架构</title>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -16,7 +16,7 @@
     }
     .mono { font-family: 'JetBrains Mono', Consolas, monospace; }
     .container {
-      max-width: 1200px;
+      max-width: 1240px;
       margin: 0 auto;
     }
     .header {
@@ -31,7 +31,7 @@
     .pulse-dot {
       width: 12px;
       height: 12px;
-      background: #22d3ee;
+      background: #34d399;
       border-radius: 50%;
       animation: pulse 2s infinite;
     }
@@ -58,14 +58,15 @@
       overflow-x: auto;
       box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
-    svg {
+    svg, object {
       width: 100%;
-      min-width: 1080px;
+      height: auto;
+      aspect-ratio: 1180 / 820;
       display: block;
     }
     .cards {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
       gap: 1.25rem;
       margin-top: 1.75rem;
     }
@@ -89,6 +90,7 @@
     .card-dot.cyan { background: #22d3ee; }
     .card-dot.emerald { background: #34d399; }
     .card-dot.amber { background: #fbbf24; }
+    .card-dot.violet { background: #a78bfa; }
     .card-dot.rose { background: #fb7185; }
     .card h3 {
       font-size: 0.95rem;
@@ -121,15 +123,14 @@
     <div class="header">
       <div class="header-row">
         <div class="pulse-dot"></div>
-        <h1>knowhow-miner 核心工程架构图解 (Core Architecture)</h1>
+        <h1>knowhow-miner 系统分层架构 (Layered Architecture)</h1>
       </div>
       <p class="subtitle">
-        微纳半导体与显示制造（Array 黄光/光刻）因果知识采掘管线 • 四阶段提纯与自动化评测闭环
+        面向复杂工业通信的认知逆向工程母机 • 工程师四阶决策状态机提取 (RULE-PAR-05) • 工业 Reasoning Agent 评测基准
       </p>
     </div>
 
     <div class="diagram-container">
-      <!-- 引入 architecture_zh.svg 内容 -->
       <object data="architecture_zh.svg" type="image/svg+xml" width="100%"></object>
     </div>
 
@@ -137,49 +138,48 @@
       <!-- Card 1 -->
       <div class="card">
         <div class="card-header">
-          <div class="card-dot cyan"></div>
-          <h3>1. 语料清洗脱水与特征打标</h3>
+          <div class="card-dot emerald"></div>
+          <h3>1. 核心层：认知逆向工程与状态机</h3>
         </div>
         <ul>
-          <li>• <strong>多层嵌套引用切除</strong>：精确剥离 10+ 层历史回帖，仅保留发件人增量增量文本（Delta）。</li>
-          <li>• <strong>法务免责与隐私中性化</strong>：剥离商业免责，电话/工号/邮箱替换为统一角色标签。</li>
-          <li>• <strong>关键工艺参数零误删</strong>：硬核保护机台号（HP04）、配方剂量（28mJ）、卡匣片位（slot 4-6）。</li>
-          <li>• <strong>制造意图加权分类</strong>：对跨工序争端（DISPUTE）与分件实验（DOE）赋予优先高权重。</li>
+          <li>• <strong>四阶决策状态机 (RULE-PAR-05)</strong>：提取 Trigger & Noise ➔ First-Principles Deduction ➔ Tactical Compromise ➔ State Lock。</li>
+          <li>• <strong>双轨因果解耦</strong>：剥离 8D 管理公关免责辞令，直击物理第一性原理真因。</li>
+          <li>• <strong>奥卡姆剃刀剪枝 (RULE-PAR-01)</strong>：剔除 4M 复合编造借口，锁定单点物理突变。</li>
+          <li>• <strong>观测位移判定 (RULE-THM-02)</strong>：识别检测工位后移与相变脱溶剂收缩带来的假性劣化。</li>
         </ul>
       </div>
 
       <!-- Card 2 -->
       <div class="card">
         <div class="card-header">
-          <div class="card-dot emerald"></div>
-          <h3>2. 会话树聚合与因果五元组提纯</h3>
+          <div class="card-dot amber"></div>
+          <h3>2. 应用层：确定性语义与 MCP 接口</h3>
         </div>
         <ul>
-          <li>• <strong>跨文件夹 BCC 聚合</strong>：联结个人主箱密送与代收文件夹，找齐拍板定案指令闭环。</li>
-          <li>• <strong>二进制附件深度穿透</strong>：自动解构 PPT 5-Why 树与 Excel Split Table 调机矩阵。</li>
-          <li>• <strong>五元组因果推演</strong>：表象绑定 $\rightarrow$ 部门争议 $\rightarrow$ 实证探针 $\rightarrow$ 物理根因 $\rightarrow$ DFM红线。</li>
-          <li>• <strong>双轨内外解耦</strong>：剥离对外 8D 公关免责词，提纯微光学驻波与电化学自催化真实机理。</li>
+          <li>• <strong>标准 MCP Server 协议</strong>：原生 SSE 与 JSON-RPC 端点，秒级挂载至 Claude / Cursor / WorkBuddy。</li>
+          <li>• <strong>NVIDIA Auto-Ontology 语义层</strong>：3NF 关系表与行业术语同义词图谱映射，确定性 Text-to-SQL 零幻觉。</li>
+          <li>• <strong>双重资产落地交付</strong>：流片前 DFM 规则公式（Enclosure 裕量）+ 产线调机 Offset 补偿账本。</li>
         </ul>
       </div>
 
       <!-- Card 3 -->
       <div class="card">
         <div class="card-header">
-          <div class="card-dot amber"></div>
-          <h3>3. 四级量化评测体系 (Eval Harness)</h3>
+          <div class="card-dot rose"></div>
+          <h3>3. 贯穿层：五级评测沙盒 (Eval Gym)</h3>
         </div>
         <ul>
-          <li>• <strong>Level 1 (清洗保真度)</strong>：免责过滤 100%，工艺参数误删率 0%，增量正文留存 100%。</li>
-          <li>• <strong>Level 2 (意图分流)</strong>：DISPUTE 争端召回与工序多标签匹配率 100%。</li>
-          <li>• <strong>Level 3 (因果保真度)</strong>：五元组链条完整度 100%，8D 对外/对内解耦率 100%。</li>
-          <li>• <strong>Level 4 (红线有效性)</strong>：DFM 公式数学不等式与物理参数量纲合规率 100%。</li>
+          <li>• <strong>Level 1 (清洗脱敏)</strong>：法务免责过滤 100%，工艺参数零误删 (0 FP)，正文抽取 100%。</li>
+          <li>• <strong>Level 3 (状态机与因果)</strong>：8D 解耦率 100%，四阶工程师决策状态机提取率 100%。</li>
+          <li>• <strong>Level 4-5 (可执行性与血统)</strong>：DFM 公式解析 100%，原始邮件 Message-ID 溯源 100%。</li>
+          <li>• <strong>Agent 推理沙盒</strong>：验证工业智能体能否基于真实杂乱现场推导出正确决策（基准得分 93.5/100）。</li>
         </ul>
       </div>
     </div>
 
     <div class="footer mono">
       <p>
-        遵循 <a href="../LICENSE">CC BY-NC-SA 4.0</a> • 严禁未授权商用 • 
+        遵循 <a href="../LICENSE">CC BY-NC-SA 4.0</a> • 商业授权咨询：<a href="mailto:john.huang@knowhowcraft.com">john.huang@knowhowcraft.com</a> • 
         代码仓库：<a href="https://github.com/Feng-H/knowhow-miner">Feng-H/knowhow-miner</a>
       </p>
     </div>

@@ -30,9 +30,9 @@
 
 ### 核心架构图
 <p align="center">
-  <img src="assets/architecture.svg" alt="knowhow-miner 核心架构图" width="100%"/>
+  <img src="assets/architecture_zh.svg" alt="knowhow-miner 核心架构图" width="100%"/>
 </p>
-<p align="center"><em>可交互独立 HTML 架构演示位于 <a href="assets/architecture.html">assets/architecture.html</a>。</em></p>
+<p align="center"><em>可交互独立 HTML 架构演示位于 <a href="assets/architecture_zh.html">assets/architecture_zh.html</a>。</em></p>
 
 ---
 

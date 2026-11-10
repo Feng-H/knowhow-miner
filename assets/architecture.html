@@ -3,23 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>knowhow-miner: Industrial Manufacturing Know-how Mining & Causal Pipeline Architecture</title>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <title>knowhow-miner: Layered Architecture for Industrial Cognitive Reverse-Engineering</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background: #020617;
       min-height: 100vh;
-      padding: 2rem;
-      color: white;
+      padding: 2rem 1.5rem;
+      color: #F8FAFC;
     }
+    .mono { font-family: 'JetBrains Mono', Consolas, monospace; }
     .container {
-      max-width: 1100px;
+      max-width: 1240px;
       margin: 0 auto;
     }
     .header {
@@ -34,23 +31,24 @@
     .pulse-dot {
       width: 12px;
       height: 12px;
-      background: #22d3ee;
+      background: #34d399;
       border-radius: 50%;
       animation: pulse 2s infinite;
     }
     @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.4; }
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
     }
     h1 {
-      font-size: 1.4rem;
+      font-size: 1.45rem;
       font-weight: 700;
-      letter-spacing: -0.025em;
+      letter-spacing: -0.02em;
     }
     .subtitle {
       color: #94a3b8;
-      font-size: 0.85rem;
+      font-size: 0.88rem;
       margin-left: 1.75rem;
+      line-height: 1.5;
     }
     .diagram-container {
       background: rgba(15, 23, 42, 0.6);
@@ -58,29 +56,31 @@
       border: 1px solid #1e293b;
       padding: 1rem;
       overflow-x: auto;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
-    svg {
+    svg, object {
       width: 100%;
-      min-width: 960px;
+      height: auto;
+      aspect-ratio: 1180 / 820;
       display: block;
     }
     .cards {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1rem;
-      margin-top: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1.75rem;
     }
     .card {
       background: rgba(15, 23, 42, 0.6);
       border-radius: 0.75rem;
       border: 1px solid #1e293b;
-      padding: 1.25rem;
+      padding: 1.25rem 1.4rem;
     }
     .card-header {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-      margin-bottom: 0.75rem;
+      gap: 0.6rem;
+      margin-bottom: 0.85rem;
     }
     .card-dot {
       width: 8px;
@@ -89,22 +89,32 @@
     }
     .card-dot.cyan { background: #22d3ee; }
     .card-dot.emerald { background: #34d399; }
+    .card-dot.amber { background: #fbbf24; }
     .card-dot.violet { background: #a78bfa; }
+    .card-dot.rose { background: #fb7185; }
     .card h3 {
-      font-size: 0.85rem;
-      font-weight: 600;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #F8FAFC;
     }
     .card ul {
       list-style: none;
+      font-size: 0.84rem;
       color: #94a3b8;
-      font-size: 0.75rem;
-      line-height: 1.6;
+      line-height: 1.7;
+    }
+    .card li strong {
+      color: #F8FAFC;
     }
     .footer {
+      margin-top: 2rem;
       text-align: center;
-      margin-top: 1.5rem;
-      color: #475569;
-      font-size: 0.75rem;
+      font-size: 0.8rem;
+      color: #64748b;
+    }
+    .footer a {
+      color: #22d3ee;
+      text-decoration: none;
     }
   </style>
 </head>
@@ -113,60 +123,66 @@
     <div class="header">
       <div class="header-row">
         <div class="pulse-dot"></div>
-        <h1>knowhow-miner Architecture</h1>
+        <h1>knowhow-miner Layered System Architecture</h1>
       </div>
-      <p class="subtitle">Industrial FPD / Semiconductor Manufacturing Knowledge & Causal Graph Engine</p>
+      <p class="subtitle">
+        Universal Cognitive Reverse-Engineering Engine • Engineering Decision State Machine Mining (RULE-PAR-05) • Reasoning Agent Benchmark Gym
+      </p>
     </div>
 
     <div class="diagram-container">
-      <!-- Embed SVG directly -->
       <object data="architecture.svg" type="image/svg+xml" width="100%"></object>
     </div>
 
     <div class="cards">
-      <div class="card">
-        <div class="card-header">
-          <div class="card-dot cyan"></div>
-          <h3>Stage 1: Ingestion & Disambiguation</h3>
-        </div>
-        <ul>
-          <li>• Strict zero-leakage PII redaction and disclaimer elimination</li>
-          <li>• Intent categorization: Alarms, Disputes, DOE splits, 8D closures</li>
-          <li>• Operational noise filtering (purges administrative requests)</li>
-          <li>• Multi-dimensional tagging: Backplane, Stations, Film layers</li>
-        </ul>
-      </div>
-
+      <!-- Card 1 -->
       <div class="card">
         <div class="card-header">
           <div class="card-dot emerald"></div>
-          <h3>Stage 2: DAG Reconstruction & Deep Extraction</h3>
+          <h3>1. Core: Cognitive Reverse-Engineering</h3>
         </div>
         <ul>
-          <li>• Blind-carbon BCC loop recovery across personal & enterprise folders</li>
-          <li>• Full lifecycle event staging: Initial → Investigation → DOE → Closed</li>
-          <li>• Deep parsing of binary attachments: PPT 5-Why & Excel split tables</li>
-          <li>• Five-tuple causal distillation: Symptom, Probe, True Root Cause, PCA</li>
+          <li>• <strong>4-Stage Decision State Machine (RULE-PAR-05)</strong>: Trigger & Noise ➔ First-Principles Deduction ➔ Tactical Compromise ➔ State Lock.</li>
+          <li>• <strong>Dual-Reality Decoupling</strong>: Separates defensive 8D customer excuses from internal physical ground truth.</li>
+          <li>• <strong>Occam's Razor Pruning (RULE-PAR-01)</strong>: Strips composite 4M1E management noise to isolate singular physical triggers.</li>
+          <li>• <strong>Observability Shift (RULE-THM-02)</strong>: Decouples inspection gate relocation from genuine hardware degradation.</li>
         </ul>
       </div>
 
+      <!-- Card 2 -->
       <div class="card">
         <div class="card-header">
-          <div class="card-dot violet"></div>
-          <h3>Stage 3: Validation & Visual Knowledge Mesh</h3>
+          <div class="card-dot amber"></div>
+          <h3>2. App: Semantic Layer & MCP Protocols</h3>
         </div>
         <ul>
-          <li>• Machine physical boundary sanity checks (Dose, Focus, Temps)</li>
-          <li>• Dual-reality decoupling: 8D customer defense vs internal physics</li>
-          <li>• Topological causal graph generation with Vis.js interactive canvas</li>
-          <li>• Derivation of actionable DFM CAD redlines (e.g. Via Enclosure Margin)</li>
+          <li>• <strong>Standard MCP Server</strong>: Native SSE & JSON-RPC interfaces for Claude, Cursor, and WorkBuddy.</li>
+          <li>• <strong>NVIDIA Auto-Ontology</strong>: 3NF relational schemas + domain synonym mapping for zero-hallucination Text-to-SQL.</li>
+          <li>• <strong>Dual Deliverable Assets</strong>: Tape-out DFM redlines (Enclosure margin) + shopfloor recipe tuning offsets.</li>
+        </ul>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-dot rose"></div>
+          <h3>3. Cross-Cutting: 5-Tier Eval Gym</h3>
+        </div>
+        <ul>
+          <li>• <strong>Level 1 (Cleaning Fidelity)</strong>: 100% disclaimer removal, 0 false positives on engineering tokens.</li>
+          <li>• <strong>Level 3 (State Machine & Truth)</strong>: 100% 8D decoupling rate and 100% decision state machine extraction.</li>
+          <li>• <strong>Level 4-5 (Executability & Lineage)</strong>: 100% DFM formula syntax validity and 100% Message-ID lineage anchoring.</li>
+          <li>• <strong>Agent Reasoning Gym</strong>: Benchmarks whether LLM agents can deduce ground truth from noisy shopfloor logs (Score: 93.5/100).</li>
         </ul>
       </div>
     </div>
 
-    <p class="footer">
-      knowhow-miner • CC BY-NC-SA 4.0 • Yellow Beam Photolithography Engineering Knowledge
-    </p>
+    <div class="footer mono">
+      <p>
+        Licensed under <a href="../LICENSE">CC BY-NC-SA 4.0</a> • Commercial Licensing: <a href="mailto:john.huang@knowhowcraft.com">john.huang@knowhowcraft.com</a> • 
+        Repository: <a href="https://github.com/Feng-H/knowhow-miner">Feng-H/knowhow-miner</a>
+      </p>
+    </div>
   </div>
 </body>
 </html>
