@@ -9,6 +9,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
+## [1.5.0] - 2026-11-10
+
+### Added
+- **Full Alignment with NVIDIA Auto-Ontology Specs**:
+  - Implemented `generate_model_interchange_document()` in `miner/auto_ontology_bridge.py` conforming to NVIDIA's official `AutoOntologyModelDocument` schema.
+  - Generates full `data_layer` (databases, schemas, tables, columns, foreign_keys, joins) and `semantic_layer` (terms, column_attributes, semantic_fks, sql_attributes, custom_analyses).
+  - Added `export_auto_ontology_yaml()` with pure-Python fallback for zero-dependency seamless ingestion into Auto-Ontology via `POST /api/model/import`.
+  - Added unit test suite in `tests/test_auto_ontology_bridge.py` verifying full round-trip generation.
+
 ## [1.4.0] - 2026-11-10
 
 ### Added

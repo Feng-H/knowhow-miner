@@ -67,5 +67,19 @@ class TestAutoOntologyBridge(unittest.TestCase):
         self.assertIn("auto-ontology", cfg["mcpServers"])
         self.assertEqual(cfg["mcpServers"]["auto-ontology"]["env"]["AUTO_ONTOLOGY_API_URL"], "http://192.168.101.101:3000")
 
+    def test_model_interchange_document_generation(self):
+        doc = AutoOntologyBridge.generate_model_interchange_document(database_name="test_fab_db")
+        self.assertIn("data_layer", doc)
+        self.assertIn("semantic_layer", doc)
+        self.assertIn("databases", doc["data_layer"])
+        self.assertEqual(len(doc["data_layer"]["databases"][0]["schemas"][0]["tables"]), 5)
+        self.assertEqual(len(doc["semantic_layer"]["terms"]), 3)
+        self.assertEqual(len(doc["semantic_layer"]["sql_attributes"]["manual"]), 2)
+
+        yaml_str = AutoOntologyBridge.export_auto_ontology_yaml(database_name="test_fab_db")
+        self.assertIn("data_layer:", yaml_str)
+        self.assertIn("semantic_layer:", yaml_str)
+        self.assertIn("dim_equipment", yaml_str)
+
 if __name__ == "__main__":
     unittest.main()

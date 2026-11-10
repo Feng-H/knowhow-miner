@@ -50,7 +50,7 @@ Rather than collecting static FAQs or hardcoding concrete equipment troubleshoot
 - `miner/eval_runner.py`: The automated evaluation benchmark runner testing cleaning precision, triage accuracy, and physical sanity.
 - `miner/mock_generator.py`: Generates realistic mock incident datasets.
 - `miner/pipeline.py`: End-to-end batch processing pipeline orchestrator.
-- `miner/auto_ontology_bridge.py`: Bridges mined industrial causal quintets into normalized relational schemas (`dim_equipment`, `dim_process_layer`, `dim_defect_type`, `fact_defect_incident`, `fact_root_cause_action`) and semantic terms for **NVIDIA Auto-Ontology**.
+- `miner/auto_ontology_bridge.py`: Industrial ontology bridge aligning mined causal quintets with **NVIDIA Auto-Ontology** (Apache-2.0). Emits normalized 3NF relational schemas, Model Context Protocol (MCP) tool configurations, and official **AutoOntologyModelDocument** interchange YAML documents for seamless ingestion via NVIDIA's `/api/model/import` endpoint.
 - `schemas/industrial_ontology_schema.sql`: Standard relational DDL for deploying deterministic manufacturing semantic layers.
 
 ---

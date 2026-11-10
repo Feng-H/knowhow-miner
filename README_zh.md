@@ -50,7 +50,7 @@
 - `miner/eval_runner.py`: 自动化六级工业评测套件，量化评估清洗保真度、意图分流与因果物理有效性。
 - `miner/mock_generator.py`: 合成数据生成器，供外部开发者快速体验管线逻辑。
 - `miner/pipeline.py`: 端到端批量提炼执行入口。
-- `miner/auto_ontology_bridge.py`: 工业本体语义桥接器，将提取的工业制造因果事实转换为标准三范式关系表（设备维表、膜层维表、缺陷维表、异常事实表、根因对策表），并自动生成 **NVIDIA Auto-Ontology** 规范的专业术语同义词词典与 Text-to-SQL 语义层实体。
+- `miner/auto_ontology_bridge.py`: 工业本体语义桥接器，将提取的制造因果事实转换为标准三范式关系表，并生成符合 **NVIDIA Auto-Ontology** 规范的官方 **AutoOntologyModelDocument** 模型交换 YAML 文档（支持直接经由 `/api/model/import` 导入发布），同时输出标准 MCP 端点工具配置。
 - `schemas/industrial_ontology_schema.sql`: 工业确定性语义层与实体关系数据库标准 DDL。
 
 ---
