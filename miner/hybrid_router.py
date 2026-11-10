@@ -89,15 +89,28 @@ class HybridRouter:
     # ------------------------------------------------------------------
     def _match_l1(self, fingerprint: Dict[str, Any]) -> Dict[str, Any]:
         candidates: List[Dict[str, Any]] = []
-        for code in fingerprint["defect_codes"] or [None]:
-            for layer in fingerprint["layers"] or [None]:
-                rows = self.store.lookup(
-                    layer=layer,
-                    station=fingerprint["stations"][0] if fingerprint["stations"] else None,
-                    equipment=fingerprint["equipment_ids"][0] if fingerprint["equipment_ids"] else None,
-                    defect_code=code,
-                )
+        has_entity = bool(fingerprint["defect_codes"] or fingerprint["layers"] or
+                          fingerprint["stations"] or fingerprint["equipment_ids"])
+
+        if not has_entity:
+            # Try searching by symptom keywords if available
+            for kw in fingerprint.get("keywords", []):
+                rows = self.store.lookup(keyword=kw)
                 candidates.extend(rows)
+            if not candidates:
+                return {"confidence": 0.0, "matches": []}
+        else:
+            for code in fingerprint["defect_codes"] or [None]:
+                for layer in fingerprint["layers"] or [None]:
+                    if code is None and layer is None and not (fingerprint["stations"] or fingerprint["equipment_ids"]):
+                        continue
+                    rows = self.store.lookup(
+                        layer=layer,
+                        station=fingerprint["stations"][0] if fingerprint["stations"] else None,
+                        equipment=fingerprint["equipment_ids"][0] if fingerprint["equipment_ids"] else None,
+                        defect_code=code,
+                    )
+                    candidates.extend(rows)
 
         # Deduplicate by incident_id, keep the best confidence
         best: Dict[str, Dict[str, Any]] = {}
