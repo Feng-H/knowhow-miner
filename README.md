@@ -36,7 +36,7 @@ The system architecture is inspired by frontline engineering experiences as a **
   - `ppt_parser.py`: Extracts slide texts, tables, and 5-Why comparisons from `.pptx` and legacy `.ppt` OLE streams.
   - `excel_parser.py`: Parses DOE Split Tables, identifying POR baselines vs experimental trial conditions.
 - `miner/causal_extractor.py`: Distills structured causal quintets, recipe offsets, and DFM redline rules with **temporal causality enforcement**, **process-step topological validation**, and **original sender unwrapping** (accurately stripping envelope forwarder artifacts from auto-forwarded corporate mailboxes to prevent misattributing third-party memos as primary author directives).
-- `miner/validator.py`: Physics boundary verification and dual-reality decoupling (8D public defense vs physical ground truth).
+- **`miner/validator.py`**: Epistemological quality gate engine ensuring parsimonious attribution, cognitive trajectory completeness, and decoupling between defensive customer 8D narratives vs internal physical ground truth. Free of domain-specific hardcoded physical constants.
 - `miner/graph_builder.py`: Constructs the domain knowledge graph and exports interactive dark-themed HTML diagrams (Vis.js network).
 - `miner/eval_runner.py`: The automated evaluation benchmark runner testing cleaning precision, triage accuracy, and physical sanity.
 - `miner/mock_generator.py`: Generates realistic mock incident datasets.
