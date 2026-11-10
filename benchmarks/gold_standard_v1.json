@@ -42,6 +42,12 @@
         "external_8d_narrative": "Attributed to machine PM cycle fluctuation and temporary micro-particle contamination; resolved via in-situ passivated pump-down purge to prevent batch containment.",
         "internal_ground_truth": "Layout DRC enclosure failure leading to dry etch Cl2 chemical attack and moisture-induced corrosion."
       },
+      "decision_trajectory": {
+        "initial_trigger_noise": "Lighting test reports high density Data line opens; PI suspects DET chamber water vapor while DET blames Photo thin resist.",
+        "first_principles_deduction": "Worst-case alignment budget simulation reveals DRC via enclosure design margin deficit, ruling out machine-specific chamber degradation.",
+        "phase1_tactical_compromise": "Enforce strict dry-etch to wet-strip Q-Time < 4 hours to suppress hygroscopic autocatalytic corrosion while maintaining full line throughput.",
+        "phase2_strategic_pca": "Execute tape-out mask revision with unilateral 1.5μm sizing out enclosure and lock via enclosure rule into DFM design rule check."
+      },
       "pca_solution": {
         "action": "Tape-out mask revision enforcing unilateral 1.5μm sizing out enclosure of M2 over ILD vias; strictly enforce dry etch to wet strip Q-Time < 4 hours."
       },
@@ -88,6 +94,12 @@
         "external_8d_narrative": "Standard seasonal environmental temperature/humidity compensation and Track bake plate thermal tuning.",
         "internal_ground_truth": "Supplier unannounced PR PAC ratio modification altering photochemical cleavage threshold Eth."
       },
+      "decision_trajectory": {
+        "initial_trigger_noise": "Steppers show step jump in CD mean (+0.12μm); equipment suspects sensor decay or developer decay.",
+        "first_principles_deduction": "Cross-stepper and cross-line simultaneous step shift correlates 100% with CCSS photoresist drum changeover timestamp.",
+        "phase1_tactical_compromise": "Feedforward exposure dose offset +1.2mJ to prevent immediate line shutdown while isolating affected raw material batch.",
+        "phase2_strategic_pca": "Establish incoming QA pulse Eth testing checkpoint with +/-0.2% strict gatekeeping to lock supplier formulation."
+      },
       "pca_solution": {
         "action": "Implement incoming QA pulse Eth testing checkpoint for every incoming PR batch; apply feedforward exposure dose offset +1.2mJ for affected batches."
       },
@@ -133,6 +145,12 @@
       "pr_vs_physics_decoupling": {
         "external_8d_narrative": "Coating speed optimization and exposure lamp calibration.",
         "internal_ground_truth": "Thin-film optical interference phase swing amplifying PVD 200Å thickness tolerance into downstream CD variation."
+      },
+      "decision_trajectory": {
+        "initial_trigger_noise": "Periodic 0.1μm CD fluctuation across glass after PVD ITO; photo blames PVD thickness uniformity while PVD insists 450±25Å is in spec.",
+        "first_principles_deduction": "Transparent ITO index n ≈ 2.0 creates optical path difference OPD = 2*n*d; destructive interference node modulates coupled light intensity by 10-15%.",
+        "phase1_tactical_compromise": "Temporarily tune exposure dose swing offset on active lots to compensate for batch phase delta.",
+        "phase2_strategic_pca": "Lock PVD target thickness strictly at extrema of swing curve (dE/dd ≈ 0) and introduce BARC bottom anti-reflective coating on next-gen mask sets."
       },
       "pca_solution": {
         "action": "Lock PVD target thickness strictly at the extrema (flat derivative dE/dd ≈ 0) of the optical swing curve; integrate anti-reflective bottom coating (BARC) on critical layers."
@@ -206,6 +224,12 @@
         "external_8d_narrative": "Slit coater mechanical micro-stutter and cleanroom humidity fluctuation.",
         "internal_ground_truth": "Developer air knife flow rate deficiency and turbulent straight-blow distance."
       },
+      "decision_trajectory": {
+        "initial_trigger_noise": "Management proposed composite 4M model alleging coater slit nozzle vibration and humidity drift.",
+        "first_principles_deduction": "Coater nozzle wiped three times without effect; drying velocity boundary model proves micro-droplets of trace TMAH evaporate and concentrate during hard bake.",
+        "phase1_tactical_compromise": "Increase air knife height from 10mm to 15mm immediately to eliminate turbulent direct blow on wet film.",
+        "phase2_strategic_pca": "Upgrade CDA flow from 1200 to 1650 L/min to guarantee total water film severance and lock formula into Track drying DFM rule."
+      },
       "pca_solution": {
         "action": "Increase DEV AK flow rate to (1700, 1650) L/min and lift nozzle gap to 15mm with pressure equalization manifold.",
         "parameter_delta": "Flow: 1200->1650 L/min, Height: 10->15 mm"
@@ -246,6 +270,12 @@
       "pr_vs_physics_decoupling": {
         "external_8d_narrative": "Coater nozzle degradation over time.",
         "internal_ground_truth": "Optical interference phase contrast amplification due to inspection gate shift to post-ANN."
+      },
+      "decision_trajectory": {
+        "initial_trigger_noise": "Operations claimed track coater unit experienced hardware degradation after sudden defect rate spike.",
+        "first_principles_deduction": "Coater process parameters remained completely flat; defect explosion coincided exactly with moving MAC inspection from wet resist (PHT) to post-annealing (ANN).",
+        "phase1_tactical_compromise": "Split lot verification confirming unbaked film retains solvent masking phase differences; prevent false hardware teardowns.",
+        "phase2_strategic_pca": "Establish formal inspection baseline standardizing thick-film halftone visibility to post-ANN and update SPC threshold limits."
       },
       "pca_solution": {
         "action": "Standardize MAC inspection station to post-ANN gate across all thick-film halftone recipes."

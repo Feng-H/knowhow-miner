@@ -227,7 +227,8 @@ class HarnessEvaluator:
                 "root_cause_internal": inc["ground_truth_physics"]["mechanism"],
                 "root_cause_customer": inc["pr_vs_physics_decoupling"]["external_8d_narrative"],
                 "pca_countermeasure": inc["pca_solution"]["action"],
-                "verification_evidence": inc["validation_probe"]["method"]
+                "verification_evidence": inc["validation_probe"]["method"],
+                "decision_trajectory": inc.get("decision_trajectory", {})
             }
 
             v_report = LogicValidator.validate_causal_triplet(triplet_mock)
@@ -236,22 +237,29 @@ class HarnessEvaluator:
             if v_report.flags.get("has_ground_truth", False):
                 decoupling_accuracy_count += 1
 
+            # Decision state machine trajectory bonus
+            has_state_machine = v_report.flags.get("has_decision_state_machine", False)
+
             details.append({
                 "incident_id": inc["id"],
                 "quintet_complete": is_complete,
                 "ground_truth_flagged": v_report.flags.get("has_ground_truth", False),
+                "decision_state_machine_flagged": has_state_machine,
                 "validation_score": v_report.score
             })
 
         completeness_rate = (chain_completeness_count / total_evaluable) if total_evaluable else 1.0
         decoupling_rate = (decoupling_accuracy_count / total_evaluable) if total_evaluable else 1.0
-        l3_score = (completeness_rate * 50.0) + (decoupling_rate * 50.0)
+        state_machine_count = sum(1 for d in details if d.get("decision_state_machine_flagged", False))
+        state_machine_rate = (state_machine_count / total_evaluable) if total_evaluable else 1.0
+        l3_score = (completeness_rate * 40.0) + (decoupling_rate * 40.0) + (state_machine_rate * 20.0)
 
         return {
             "level": "Level 3: Causal Quintet & Decoupling",
             "score": round(l3_score, 1),
             "chain_completeness_rate": round(completeness_rate * 100, 1),
             "pr_vs_physics_decoupling_rate": round(decoupling_rate * 100, 1),
+            "decision_state_machine_rate": round(state_machine_rate * 100, 1),
             "total_evaluable": total_evaluable,
             "details": details
         }
@@ -488,6 +496,7 @@ def print_terminal_report(report: Dict[str, Any]):
     print(f"\n[Level 3: Causal Quintet & Ground Truth]            Score: {l3['score']}/100")
     print(f"  * Causal Quintet Completeness Rate:     {l3['chain_completeness_rate']}%")
     print(f"  * PR vs Physics Decoupling Rate:        {l3['pr_vs_physics_decoupling_rate']}%")
+    print(f"  * Decision State Machine Mining Rate:   {l3.get('decision_state_machine_rate', 100.0)}% (RULE-PAR-05)")
 
     print(f"\n[Level 4: Physics & DFM Rule Executability]         Score: {l4['score']}/100")
     print(f"  * DFM Formula Mathematical Validity:    {l4['formula_syntax_validity']}%")

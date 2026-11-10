@@ -9,6 +9,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
+## [1.4.0] - 2026-11-10
+
+### Added
+- **Decision State Machine Mining (RULE-PAR-05)**:
+  - Formulated universal engineering rule `RULE-PAR-05` enforcing 4-stage cognitive trajectory extraction:
+    1. `Trigger & Fab Noise` (initial telemetry alarm, false correlation, inter-departmental deflection)
+    2. `First-Principles Deduction` (physical common sense, boundary simulation, alignment budget checking)
+    3. `Trade-off & Interlock` (phase-1 line continuity sacrifice vs phase-2 maintenance window root cause)
+    4. `State Lock & DFM Redline` (irreversible recipe and design enclosure rule locks)
+  - Extended `miner/validator.py` with `has_decision_state_machine` quality gate verification.
+  - Upgraded `benchmarks/gold_standard_v1.json` with formal `decision_trajectory` objects across all manufacturing benchmarks.
+  - Updated `miner/eval_runner.py` to evaluate and score decision state machine extraction rates.
+
 ## [1.3.0] - 2026-11-04
 
 ### Added

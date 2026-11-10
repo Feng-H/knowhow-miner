@@ -90,8 +90,14 @@ class LogicValidator:
             "is_closed_loop": False,
             "has_actionable_offset": False,
             "is_parsimonious_physical": False,
-            "is_visibility_shift": False
+            "is_visibility_shift": False,
+            "has_decision_state_machine": False
         }
+
+        # RULE-PAR-05: Decision State Machine (Context -> Deduction -> Trade-off -> Verification)
+        traj = triplet.get("decision_trajectory") or {}
+        if isinstance(traj, dict) and traj.get("initial_trigger_noise") and traj.get("first_principles_deduction"):
+            flags["has_decision_state_machine"] = True
 
         # 1. Check required fields
         root_cause = str(triplet.get("root_cause") or triplet.get("root_cause_internal") or "")

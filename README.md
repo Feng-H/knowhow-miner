@@ -67,6 +67,7 @@ The repository codifies frontline manufacturing physical heuristics and causalit
 - **`RULE-MEC-01` & `RULE-MEC-02` (Latent Trauma & Multi-Pass Exposure Models)**: Decouples upstream mechanical micro-cracks (e.g., wet strip roller stiction) from downstream thermal shock detonation (e.g., CVD high-temp vacuum fracture).
 - **`RULE-PAR-01` (Occam's Razor & Singular Physical Trigger)**: Enforces parsimonious attribution to single physical change points over composite 4M1E management excuses.
 - **`RULE-PAR-03` (Hardware State Machine Precedence & IS/IS-NOT Matrix)**: Mandates 30-day pre-incident hardware maintenance audits and island recipe checks to prevent secondary fallout.
+- **`RULE-PAR-05` (Cognitive Trajectory & State-Machine Mining)**: Rejects static FAQ extraction in favor of 4-stage engineering decision state machines (Trigger & Noise → First-Principles Deduction → Tactical Compromise → DFM State Lock), creating evaluation benchmarks for industrial agents.
 
 *For the full specification across all six domain categories (`RULE-ORG`, `RULE-FLU`, `RULE-THM`, `RULE-MEC`, `RULE-PAR`, `RULE-ONT`), see [`docs/ENGINEERING_RULES.md`](docs/ENGINEERING_RULES.md).*
 
