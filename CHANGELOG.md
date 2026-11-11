@@ -9,6 +9,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
+## [1.7.0] - 2026-11-11
+
+### Added
+- **Enterprise 6-Pillar Manufacturing Ontology Baseline**:
+  - Added `dim_fab` (Fab ID, name, generation, mother glass substrate dimensions, cleanroom class, target temp/humidity, vibration criteria VC-C).
+  - Added `dim_material_spec` (chemical formulation, viscosity in cP, solid content %, solvent type, storage temperature, vendor).
+  - Expanded data layer to **11 relational tables** and semantic layer to **7 certified business terms**.
+  - Established cross-pillar foreign keys: `dim_product_model.fab_id`, `dim_equipment.fab_id`, `dim_process_layer.material_id`, and `fact_defect_incident.fab_id`.
+  - Deployed updated 11-table DDL, seeded frontline fab profiles (Fab-G5.5, Fab-G6, Fab-G8.5), material parameters, and successfully imported into NVIDIA Auto-Ontology on fnOS NAS.
+
 ## [1.6.0] - 2026-11-11
 
 ### Added

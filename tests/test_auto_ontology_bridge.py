@@ -52,6 +52,8 @@ class TestAutoOntologyBridge(unittest.TestCase):
             }
         ]
         tables = AutoOntologyBridge.transform_incidents_to_relational_rows(incidents)
+        self.assertEqual(len(tables["dim_fab"]), 1)
+        self.assertEqual(len(tables["dim_material_spec"]), 1)
         self.assertEqual(len(tables["dim_equipment"]), 1)
         self.assertEqual(tables["dim_equipment"][0]["equipment_id"], "PHT200")
         self.assertEqual(len(tables["dim_process_layer"]), 1)
@@ -76,9 +78,9 @@ class TestAutoOntologyBridge(unittest.TestCase):
         self.assertIn("data_layer", doc)
         self.assertIn("semantic_layer", doc)
         self.assertIn("databases", doc["data_layer"])
-        self.assertEqual(len(doc["data_layer"]["databases"][0]["schemas"][0]["tables"]), 9)
-        self.assertEqual(len(doc["semantic_layer"]["terms"]), 5)
-        self.assertEqual(len(doc["semantic_layer"]["sql_attributes"]["manual"]), 2)
+        self.assertEqual(len(doc["data_layer"]["databases"][0]["schemas"][0]["tables"]), 11)
+        self.assertEqual(len(doc["semantic_layer"]["terms"]), 7)
+        self.assertEqual(len(doc["semantic_layer"]["sql_attributes"]["manual"]), 0)
 
         yaml_str = AutoOntologyBridge.export_auto_ontology_yaml(database_name="test_fab_db")
         self.assertIn("data_layer:", yaml_str)
