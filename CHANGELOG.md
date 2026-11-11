@@ -9,6 +9,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
+## [1.6.0] - 2026-11-11
+
+### Added
+- **Enterprise MES/YMS Aligned Architecture (`Product -> Route -> Step -> Recipe`)**:
+  - Expanded industrial ontology schema from 5 tables to 9 tables:
+    - `dim_product_model`: Product model specs (display size, resolution, PPI, panel technology, glass generation).
+    - `dim_process_route`: Manufacturing route flow and mask counts.
+    - `dim_route_step`: Operation station sequencing across Photo, Etch, Clean, CVD, and Inspection.
+    - `dim_recipe`: Equipment process recipes (dose, focus offset, temperature, flow rate, scan speed, version).
+  - Updated `fact_defect_incident` with foreign keys to `product_id`, `step_id`, and `recipe_id`.
+  - Updated `miner/auto_ontology_bridge.py` to emit complete 9-table `data_layer` and enriched `semantic_layer`.
+  - Added custom cross-table analysis: `Product Model Yield Loss and Recipe Sensitivity`.
+  - Deployed full 9-table schema, dimensional sample seed data, and model import to live NVIDIA Auto-Ontology instance on fnOS NAS.
+
 ## [1.5.0] - 2026-11-10
 
 ### Added
